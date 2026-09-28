@@ -1,0 +1,55 @@
+---
+title: Blog | UI/UX, Figma, pricing and freelancing tips | Freelancer College
+description: Practical articles for Sri Lankan freelancers on UI/UX design, Figma, pricing in dollars, Fiverr and building a freelance career.
+kind: Page
+---
+<section class="page-hero" style="padding-bottom:40px">
+  <div class="mesh-bg" aria-hidden="true"></div>
+  <div class="container rel">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>Blog</span></nav>
+    <h1 data-split>Notes from <span class="red-glow">the system.</span></h1>
+    <p class="lead">Practical, no hype articles on design, pricing and landing international clients.</p>
+  </div>
+</section>
+<section class="section-sm" style="padding-top:0">
+  <div class="container">
+    <div class="filters">
+      <div class="filter-group" role="group" aria-label="Category">
+        <button class="chip" aria-pressed="true" data-cat="all">All</button>
+        <button class="chip" aria-pressed="false" data-cat="UI/UX">UI/UX</button>
+        <button class="chip" aria-pressed="false" data-cat="Fiverr">Fiverr</button>
+        <button class="chip" aria-pressed="false" data-cat="Pricing">Pricing</button>
+        <button class="chip" aria-pressed="false" data-cat="Figma">Figma</button>
+        <button class="chip" aria-pressed="false" data-cat="Career">Career</button>
+      </div>
+    </div>
+    <div class="post-grid" data-posts data-stagger>
+{{> _post-card }}
+    </div>
+    <p class="no-results" data-no-posts>No posts in this category yet. More coming soon.</p>
+  </div>
+</section>
+<section class="section-sm">
+  <div class="container container-sm">
+    <div class="card center" data-form-wrap>
+      <form class="newsletter" style="max-width:520px;margin-inline:auto;justify-content:center" data-lead-form data-type="newsletter" data-magnet="blog-index" novalidate>
+        <div style="width:100%"><h3>One useful tip a week.</h3><p class="muted mt-1">Pricing, portfolios and Fiverr, straight to your inbox.</p></div>
+        <label for="bi-email" class="sr-only">Email</label>
+        <input id="bi-email" name="email" type="email" placeholder="you@email.com" required autocomplete="email">
+        <button class="btn btn-primary btn-sm" type="submit">Subscribe</button>
+        <p class="form-msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = [...document.querySelectorAll("[data-posts] > a")];
+  document.querySelectorAll("[data-cat]").forEach((b) => b.tagName === "BUTTON" && b.addEventListener("click", () => {
+    document.querySelectorAll("button[data-cat]").forEach((x) => x.setAttribute("aria-pressed", x === b));
+    let n = 0;
+    cards.forEach((c) => { const ok = b.dataset.cat === "all" || c.dataset.cat === b.dataset.cat; c.style.display = ok ? "" : "none"; n += ok; });
+    document.querySelector("[data-no-posts]").style.display = n ? "none" : "block";
+  }));
+});
+</script>

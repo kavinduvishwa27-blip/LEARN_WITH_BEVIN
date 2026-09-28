@@ -1,0 +1,479 @@
+{
+  "faqs": {
+    "home": [
+      {
+        "q": "What programs do you currently teach?",
+        "a": "Designer X, a live UI/UX and freelancing cohort, is open now. Linux Master, a recorded Linux fundamentals program, is coming soon. More will be added once they are ready to teach properly, not before."
+      },
+      {
+        "q": "Do I need any experience to join?",
+        "a": "No. Every program starts from zero and builds up. If you can commit around 10 focused hours a week, the foundations are covered for you."
+      },
+      {
+        "q": "Is everything taught in Sinhala?",
+        "a": "Yes. Lessons are taught in Sinhala, with the English design and tech terms you will use with international clients (Figma, client, portfolio, gig) kept as they are."
+      },
+      {
+        "q": "Can I really earn in USD from Sri Lanka?",
+        "a": "Yes. Sri Lankan freelancers earn from clients worldwide every day. Designer X includes a dedicated module on how to get paid from Sri Lanka, step by step, and it is only available to enrolled students."
+      },
+      {
+        "q": "What is the difference between live and recorded programs?",
+        "a": "Live programs run as a cohort on Zoom with a batch date, real deadlines and personal feedback. Recorded programs are self paced: you start anytime and move at your own speed."
+      },
+      {
+        "q": "How do I pay? Can I pay in parts?",
+        "a": "You can pay by bank transfer or card. Pay in full for just {{ site.cohort.currency }} {{ site.cohort.price_full }}, or reserve your seat with a {{ site.cohort.currency }} {{ site.cohort.deposit }} deposit and pay the remaining {{ site.cohort.currency }} {{ site.cohort.balance }} by {{ site.cohort.balance_due_human }}."
+      },
+      {
+        "q": "Will I get a certificate?",
+        "a": "Yes. When you complete the program and pass the assignments you receive a verifiable certificate. But the real proof is your portfolio and your first client."
+      },
+      {
+        "q": "Who is actually teaching?",
+        "a": "{{ site.brand.founder }}, a Fiverr Top Rated Seller who has freelanced for over {{ site.stats.years }} years. Every program is built from what actually worked, not a borrowed curriculum."
+      }
+    ],
+    "designer_x": [
+      {
+        "q": "What language is it taught in?",
+        "a": "Sinhala and English together, so explanations are clear without losing important design vocabulary in translation."
+      },
+      {
+        "q": "Do I need design experience to start?",
+        "a": "No. It is built for absolute beginners. If you can commit to the projects, the foundations are covered for you."
+      },
+      {
+        "q": "How much time does it take each week?",
+        "a": "About 10 focused hours a week. That covers live sessions, assignments and project work, and it is enough time to actually finish what you start."
+      },
+      {
+        "q": "Is it live or recorded?",
+        "a": "Designer X runs as a live cohort over Zoom: {{ site.cohort.schedule }}. Every session is recorded, so you can catch up if you miss one."
+      },
+      {
+        "q": "What computer do I need?",
+        "a": "Any laptop or desktop that runs a modern browser. Figma works in the browser, so you do not need an expensive machine. A stable internet connection matters more than specs."
+      },
+      {
+        "q": "What do I actually leave with?",
+        "a": "A complete UI/UX skillset, two live client projects for your portfolio, a freelancer profile ready to take orders, and a launch plan for landing your first USD clients."
+      },
+      {
+        "q": "How do payments work?",
+        "a": "The full course fee is {{ site.cohort.currency }} {{ site.cohort.price_regular }}. With the {{ site.cohort.early_discount_pct }}% early bird offer it is {{ site.cohort.currency }} {{ site.cohort.price_early }}. Pay in full and you get another {{ site.cohort.currency }} {{ site.cohort.full_discount }} off, so you pay just {{ site.cohort.currency }} {{ site.cohort.price_full }}. Or reserve your seat with a {{ site.cohort.currency }} {{ site.cohort.deposit }} deposit and pay the remaining {{ site.cohort.currency }} {{ site.cohort.balance }} by {{ site.cohort.balance_due_human }}. Bank transfer and card are both accepted."
+      }
+    ],
+    "linux": [
+      {
+        "q": "Do I need any Linux experience?",
+        "a": "No. It starts from zero and builds up, the same way every program here does."
+      },
+      {
+        "q": "Is it live or recorded?",
+        "a": "Fully recorded. You start anytime and move at your own pace."
+      },
+      {
+        "q": "Is it taught in Sinhala?",
+        "a": "Yes. Every lesson is taught in Sinhala."
+      },
+      {
+        "q": "When does it open?",
+        "a": "As soon as it is finished properly. Join the waitlist and you will hear first."
+      }
+    ],
+    "payments": [
+      {
+        "q": "How do I reserve a seat?",
+        "a": "Go to the <a class=\"link-arrow\" href=\"/checkout/designer-x\">checkout page</a>, pick pay in full or deposit, and pay by bank transfer or card. We confirm on WhatsApp."
+      },
+      {
+        "q": "I paid by bank transfer. What now?",
+        "a": "Send a photo of the slip with your reference on WhatsApp to {{ site.contact.phone_display }}. We confirm your seat, usually within a few hours."
+      },
+      {
+        "q": "Can I pay from abroad in USD?",
+        "a": "Yes. Message us on WhatsApp and we will send international payment options."
+      },
+      {
+        "q": "Do you offer discounts?",
+        "a": "We protect the price and add bonuses instead. The early bird price is the lowest price for each batch."
+      },
+      {
+        "q": "What is your refund policy?",
+        "a": "See the full <a class=\"link-arrow\" href=\"/legal/refunds\">refund policy</a>."
+      }
+    ],
+    "during": [
+      {
+        "q": "What if I miss a live class?",
+        "a": "Every class is recorded and added to your student portal, usually the same day."
+      },
+      {
+        "q": "Where do I log in?",
+        "a": "At the <a class=\"link-arrow\" href=\"{{ site.links.login }}\">student portal</a>. Your login is sent after enrollment is confirmed."
+      },
+      {
+        "q": "Can I share my account?",
+        "a": "No. Accounts are personal and limited to two active devices. Content is watermarked."
+      }
+    ]
+  },
+  "testimonials": [
+    {
+      "video": false,
+      "quote": "I stopped guessing. For the first time I had a process I could repeat, and the orders followed.",
+      "name": "Designer X student",
+      "tag": "First order, week 6",
+      "initials": "DX",
+      "color": "#7f1d1d",
+      "filter": "first-order",
+      "before": "Random gigs, no orders",
+      "did": "Rebuilt portfolio and gigs with LEAP",
+      "result": "First order in week 6",
+      "video_url": "",
+      "featured": true,
+      "caption": ""
+    },
+    {
+      "video": true,
+      "quote": "",
+      "name": "Video story",
+      "tag": "Designer X batch",
+      "initials": "▶",
+      "color": "#991b1b",
+      "filter": "",
+      "before": "",
+      "did": "",
+      "result": "",
+      "video_url": "",
+      "caption": "Student story video. Add a Bunny Stream or TikTok link here.",
+      "featured": true
+    },
+    {
+      "video": false,
+      "quote": "The Sinhala made it click. No translating in my head, just learning and building.",
+      "name": "Designer X student",
+      "tag": "Now freelancing full time",
+      "initials": "DX",
+      "color": "#b91c1c",
+      "filter": "full-time",
+      "before": "Struggling with English tutorials",
+      "did": "Learned in Sinhala, built 2 client projects",
+      "result": "Now freelancing full time",
+      "video_url": "",
+      "featured": true,
+      "caption": ""
+    },
+    {
+      "video": false,
+      "quote": "It never felt like a hype course. It felt like someone handing me their actual system.",
+      "name": "Designer X student",
+      "tag": "Portfolio to paid in 3 months",
+      "initials": "DX",
+      "color": "#dc2626",
+      "filter": "portfolio",
+      "before": "No portfolio",
+      "did": "Case study portfolio + priced packages",
+      "result": "Portfolio to paid in 3 months",
+      "video_url": "",
+      "featured": true,
+      "caption": ""
+    },
+    {
+      "video": true,
+      "quote": "",
+      "name": "Video story",
+      "tag": "Designer X batch",
+      "initials": "▶",
+      "color": "#7f1d1d",
+      "filter": "",
+      "before": "",
+      "did": "",
+      "result": "",
+      "video_url": "",
+      "caption": "Student story video. Add a Bunny Stream or TikTok link here.",
+      "featured": true
+    }
+  ],
+  "curriculum": [
+    {
+      "label": "Phase 1 · Foundation · Weeks 1 to 4",
+      "title": "Learn the language of design",
+      "modules": [
+        {
+          "num": "01",
+          "title": "Introduction to UI/UX and software setup",
+          "body": "Start with a rock solid foundation. Understand what separates UI from UX using real world examples, learn the role of a modern product designer, and get fully set up with Figma and a professional workflow from day one.",
+          "tags": [
+            "UI basics",
+            "UX basics",
+            "Tool setup",
+            "Figma basics"
+          ],
+          "project": false
+        },
+        {
+          "num": "02",
+          "title": "User research and personas",
+          "body": "Design that wins clients starts with understanding people. Learn qualitative and quantitative research, empathy mapping, and how to turn interviews and surveys into personas that reveal real pain points.",
+          "tags": [
+            "User research",
+            "Personas",
+            "Problem finding"
+          ],
+          "project": false
+        },
+        {
+          "num": "03",
+          "title": "Wireframing, layouts and grids",
+          "body": "Turn raw ideas into structured screens. Master low and high fidelity wireframes, proven grid systems and responsive layout principles, then build a real landing page wireframe.",
+          "tags": [
+            "Wireframing",
+            "Grid systems",
+            "Responsive thinking"
+          ],
+          "project": false
+        },
+        {
+          "num": "04",
+          "title": "Color theory and iconography",
+          "body": "Make every screen look intentional. Explore color harmony, palette building tools and icon best practices, then lock in consistency with Figma styles and tokens like a professional.",
+          "tags": [
+            "Color theory",
+            "Palettes",
+            "Icons",
+            "Visual consistency"
+          ],
+          "project": false
+        }
+      ]
+    },
+    {
+      "label": "Phase 2 · Craft · Weeks 5 to 8",
+      "title": "Build like a professional",
+      "modules": [
+        {
+          "num": "05",
+          "title": "Typography",
+          "body": "Typography makes or breaks a design. Learn font fundamentals, pairing, hierarchy, spacing and accessibility, then build a reusable type system and apply it to real UI sections.",
+          "tags": [
+            "Font pairing",
+            "Hierarchy",
+            "Type systems"
+          ],
+          "project": false
+        },
+        {
+          "num": "06",
+          "title": "Live client project: business website",
+          "body": "This is not a practice file. Working from a real client brief, you design a complete business website live, end to end: requirements, wireframe and final UI. You see exactly how a professional makes decisions, and walk away with a portfolio piece that looks like paid work, because it is built like paid work.",
+          "tags": [
+            "Client brief",
+            "Design workflow",
+            "UI execution"
+          ],
+          "project": true
+        },
+        {
+          "num": "07",
+          "title": "Design systems and components",
+          "body": "Design like a team of ten. Learn atomic design to create reusable components, manage variants and organise scalable component libraries with Figma best practices.",
+          "tags": [
+            "Components",
+            "Variants",
+            "Reusable UI"
+          ],
+          "project": false
+        },
+        {
+          "num": "08",
+          "title": "Prototyping and animations",
+          "body": "Bring your designs to life. Page linking, micro interactions and transitions, then present interactive prototypes that impress stakeholders and win over developers.",
+          "tags": [
+            "User flows",
+            "Smart animate",
+            "Presentation"
+          ],
+          "project": false
+        }
+      ]
+    },
+    {
+      "label": "Phase 3 · Execution · Weeks 9 to 10",
+      "title": "Ship real work, fast",
+      "modules": [
+        {
+          "num": "09",
+          "title": "Auto Layout mastery (Figma)",
+          "body": "Build interfaces that adapt automatically. Spacing, alignment, padding and nested layouts so your components flex and scale. This is the skill that makes your files developer friendly and client ready.",
+          "tags": [
+            "Auto Layout",
+            "Responsive design",
+            "Flexible components"
+          ],
+          "project": false
+        },
+        {
+          "num": "10",
+          "title": "Live client project: mobile app with AI",
+          "body": "Your second client style build, at 2026 speed. Design a complete mobile app live, with AI as your creative assistant for ideation, layout and UX writing. Learn how AI supports, not replaces, your design decisions, and finish with portfolio project number two.",
+          "tags": [
+            "Client brief",
+            "AI assisted",
+            "Mobile design"
+          ],
+          "project": true
+        }
+      ]
+    }
+  ],
+  "bonuses": [
+    {
+      "label": "BONUS 01",
+      "title": "Getting paid from Sri Lanka",
+      "body": "The exact setup to receive USD from international clients. Never offered free, anywhere.",
+      "value": "Included",
+      "note": "members only"
+    },
+    {
+      "label": "BONUS 02",
+      "title": "Fiverr gig launch checklist",
+      "body": "Titles, thumbnails, packages and FAQs, built the way top rated sellers do it.",
+      "value": "Included",
+      "note": ""
+    },
+    {
+      "label": "BONUS 03",
+      "title": "Freelance pricing sheet",
+      "body": "Basic, Standard and Premium package templates, priced in USD.",
+      "value": "Included",
+      "note": ""
+    },
+    {
+      "label": "BONUS 04",
+      "title": "Portfolio review",
+      "body": "Your finished portfolio reviewed before you pitch, so you launch with confidence.",
+      "value": "Included",
+      "note": ""
+    }
+  ],
+  "posts": [
+    {
+      "slug": "first-fiverr-order-system",
+      "title": "How to get your first Fiverr order: a system, not luck",
+      "seo_title": "How to get your first Fiverr order: a system, not luck | Freelancer College",
+      "description": "Bevin waited almost a year for his first Fiverr order. This is the system that ended the silence, step by step.",
+      "category": "Fiverr",
+      "cover": "Your first order is a system.",
+      "date": "2026-09-01",
+      "published": true,
+      "body": "<p>Almost a year. That is how long Bevin waited for his first Fiverr order. Not because he lacked skill, but because he had no system. Here is what changed.</p>\n\n<h2>1. Stop selling everything</h2>\n<p>A gig that says \"I will do any design\" competes with millions of others. A gig that says \"I will design a mobile app UI for fitness startups\" competes with a handful. Specific wins.</p>\n\n<h2>2. Match your portfolio to your gig</h2>\n<p>If your gig sells app UI, your gig images and portfolio must show app UI. Three strong, relevant samples beat twenty random ones. Buyers decide in seconds.</p>\n\n<h2>3. Write the title for search, the description for humans</h2>\n<p>Your title should contain the words buyers type: \"mobile app UI\", \"Figma\", \"landing page\". Your description should talk about the buyer's problem first, then how you solve it. Our free <a href=\"/tools#gig\">AI gig generator</a> gives you a strong first draft.</p>\n\n<h2>4. Price with three packages</h2>\n<p>Basic to get clicks, Standard as the real offer, Premium to make Standard look reasonable. Read <a href=\"/blog/pricing-mistake-sri-lankan-freelancers\">the biggest pricing mistake</a> before you set yours.</p>\n\n<h2>5. Be active and fast</h2>\n<ul>\n  <li>Reply to messages within an hour when you can. Response time matters.</li>\n  <li>Stay online during your buyers' working hours, not just yours.</li>\n  <li>Send thoughtful Buyer Request replies, not copy paste templates.</li>\n</ul>\n\n<h2>6. Improve weekly, not randomly</h2>\n<p>Every week, check impressions, clicks and messages. Low impressions means fix the title and tags. Low clicks means fix the thumbnail and price. Low orders after messages means fix your replies.</p>\n<blockquote>The silence at the start is normal. Staying in it is optional.</blockquote>\n<p>Want to do this with guidance and feedback? That is exactly what <a href=\"/courses/designer-x\">Designer X</a> is built for.</p>"
+    },
+    {
+      "slug": "pricing-mistake-sri-lankan-freelancers",
+      "title": "The biggest pricing mistake Sri Lankan freelancers make",
+      "seo_title": "The biggest pricing mistake Sri Lankan freelancers make | Freelancer College",
+      "description": "Pricing for the local market when you sell to the world. Why it keeps you busy and broke, and how to price in dollars without losing orders.",
+      "category": "Pricing",
+      "cover": "Never work for less.",
+      "date": "2026-09-10",
+      "published": true,
+      "body": "<p>You open Fiverr, look at what other sellers from Sri Lanka charge, and price yourself a little lower so you get noticed. It feels smart. It is the most expensive decision you will make as a freelancer.</p>\n\n<h2>The mistake: pricing for the wrong market</h2>\n<p>Your buyers are not in Colombo. They are in New York, London, Sydney and Berlin. A US startup founder does not compare your price to a Sri Lankan salary. They compare it to what a designer in their own country costs.</p>\n<p>When you price at $5 for a logo or $15 for a landing page, you do not look affordable. You look risky. Serious buyers skip you, and the buyers who stay are the ones who want unlimited revisions for nothing.</p>\n<blockquote>Cheap prices do not attract good clients. They repel them.</blockquote>\n\n<h2>What low prices actually cost you</h2>\n<ul>\n  <li><strong>More work for less money.</strong> You need ten small orders to earn what one proper order pays.</li>\n  <li><strong>Worse clients.</strong> The lowest budgets usually come with the most demands.</li>\n  <li><strong>No time to improve.</strong> You are too busy delivering cheap work to build the skills that get better work.</li>\n  <li><strong>A ceiling on your reviews.</strong> Your profile fills with small jobs that do not prove you can handle big ones.</li>\n</ul>\n\n<h2>How to price on value instead</h2>\n<p>Start from the outcome the buyer gets, not the hours you spend. A landing page that brings in customers is worth far more to a business than the time it took you to design it.</p>\n<ol>\n  <li><strong>Pick a specific buyer.</strong> \"SaaS startups\" can pay more than \"anyone who needs a website\".</li>\n  <li><strong>Build three packages.</strong> Basic, Standard and Premium. Make Standard the obvious choice.</li>\n  <li><strong>Price Standard around a real hourly rate.</strong> Even as a beginner, aim for $12 to $15 an hour of real work.</li>\n  <li><strong>Raise prices after every five good reviews.</strong> Small steps, consistently.</li>\n</ol>\n<div class=\"callout\">Try it now: the free <a href=\"/tools#price\">freelance price calculator</a> turns your hours, skill and income goal into three USD packages.</div>\n\n<h2>\"But I won't get orders if I charge more\"</h2>\n<p>You will get fewer inquiries from the wrong people and more from the right ones. The fix for no orders is almost never a lower price. It is a clearer niche, a better portfolio and a gig that speaks to one type of buyer.</p>\n<p>That is the whole idea behind <a href=\"/leap-method\">LEAP</a>: learn the skill, execute real projects, assemble a portfolio that gets chosen, then pitch and price like a professional. Never work for less.</p>"
+    },
+    {
+      "slug": "ui-vs-ux-explained",
+      "title": "UI vs UX explained simply, and which one pays",
+      "seo_title": "UI vs UX explained simply (and which one pays) | Freelancer College",
+      "description": "The difference between UI and UX design in plain language, what each designer actually does, and why clients pay for both together.",
+      "category": "UI/UX",
+      "cover": "UI is how it looks. UX is how it works.",
+      "date": "2026-08-20",
+      "published": true,
+      "body": "<p>UI and UX get mixed up all the time. Here is the simplest way to understand them, and why the freelancers who understand both earn the most.</p>\n\n<h2>UX: how it works</h2>\n<p>UX (user experience) is about the journey. Can people find what they need? Is checkout easy? Do they understand what to do next? UX designers research users, map flows and sketch wireframes before anything looks pretty.</p>\n\n<h2>UI: how it looks</h2>\n<p>UI (user interface) is the visual layer. Colors, typography, buttons, spacing and icons. UI designers make the structure beautiful, consistent and clear.</p>\n\n<table>\n  <thead><tr><th></th><th>UX</th><th>UI</th></tr></thead>\n  <tbody>\n    <tr><td>Question</td><td>Does it work for people?</td><td>Does it look and feel right?</td></tr>\n    <tr><td>Outputs</td><td>Research, flows, wireframes</td><td>Screens, styles, components</td></tr>\n    <tr><td>Tools</td><td>Interviews, FigJam, Figma</td><td>Figma</td></tr>\n  </tbody>\n</table>\n\n<h2>Which one pays?</h2>\n<p>Clients rarely want only one. A startup wants an app that works and looks great. Freelancers who can do both, and explain their decisions, are the ones who win bigger projects and charge in dollars.</p>\n<div class=\"callout\">Start with the free <a href=\"/learning-paths\">90 Day UI/UX Designer Path</a>, or learn both live in Sinhala in <a href=\"/courses/designer-x\">Designer X</a>.</div>"
+    }
+  ],
+  "legal": {
+    "privacy": {
+      "title": "Privacy Policy",
+      "description": "How Freelancer College collects, uses and protects your personal data.",
+      "updated": "25 September 2026",
+      "body": "<div class=\"callout\">This is a starting template. Have it reviewed by a qualified lawyer in Sri Lanka before relying on it.</div>\n\n<p>{{ site.brand.company }} (\"we\") runs Freelancer College. This policy explains what personal data we collect and how we use it, in line with the Sri Lanka Personal Data Protection Act No. 9 of 2022.</p>\n<h2>What we collect</h2><ul><li>Details you give us in forms: name, WhatsApp number, email, city, messages.</li><li>Enrollment and payment records (we do not store full card numbers; card payments are processed by PayHere).</li><li>Basic usage data such as pages visited and the campaign that brought you here (UTM parameters).</li><li>Analytics cookies, only if you allow them.</li></ul>\n<h2>How we use it</h2><ul><li>To send what you asked for: resources, webinar reminders, course updates.</li><li>To run your enrollment, classes, certificates and support.</li><li>To improve our website and programs.</li><li>To send occasional tips and offers. You can opt out any time.</li></ul>\n<h2>Who we share it with</h2><p>Service providers that help us operate (hosting, email, WhatsApp messaging, payments, analytics), only as needed. We never sell your data.</p>\n<h2>How long we keep it</h2><p>As long as needed for the purposes above, or as required by law. Ask us to delete your data at any time.</p>\n<h2>Your rights</h2><p>You can ask to access, correct or delete your data, or withdraw consent for marketing.</p>\n<p>Questions: <a href=\"mailto:{{ site.contact.email }}\">{{ site.contact.email }}</a> · {{ site.contact.phone_display }} · {{ site.brand.company }}, {{ site.brand.address }}.</p>"
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "description": "The terms for using the Freelancer College website and programs.",
+      "updated": "25 September 2026",
+      "body": "<div class=\"callout\">This is a starting template. Have it reviewed by a qualified lawyer in Sri Lanka before relying on it.</div>\n\n<p>By using this website or enrolling in a program you agree to these terms.</p>\n<h2>Programs and access</h2><ul><li>Enrollment gives one person personal access to the program for the stated batch or period.</li><li>Accounts cannot be shared. We may limit active devices and suspend accounts that are shared.</li><li>Live class links are for enrolled students only.</li></ul>\n<h2>Content and intellectual property</h2><p>All videos, files, templates and materials belong to {{ site.brand.company }}. You may use them for your own learning and projects, but not copy, resell or redistribute them.</p>\n<h2>Results</h2><p>We teach skills and systems. Income and client results depend on your effort and circumstances and are not guaranteed.</p>\n<h2>Payments</h2><p>Prices are shown in LKR unless stated. Deposits reserve a seat; the balance must be paid before the stated deadline or the seat may be released.</p>\n<h2>Conduct</h2><p>Be respectful in classes and communities. We may remove anyone who harasses others.</p>\n<h2>Governing law</h2><p>These terms are governed by the laws of Sri Lanka.</p>\n<p>Questions: <a href=\"mailto:{{ site.contact.email }}\">{{ site.contact.email }}</a> · {{ site.contact.phone_display }} · {{ site.brand.company }}, {{ site.brand.address }}.</p>"
+    },
+    "refunds": {
+      "title": "Refund Policy",
+      "description": "When and how refunds work for Freelancer College programs.",
+      "updated": "25 September 2026",
+      "body": "<div class=\"callout\">This is a starting template. Have it reviewed by a qualified lawyer in Sri Lanka before relying on it.</div>\n\n<h2>Live cohorts (Designer X)</h2><ul><li>If the program is not right for you, request a refund in writing before the second week of classes begins.</li><li>Refunds are paid to the original payment method within 14 business days, less any payment processing fees.</li><li>After the second week begins, fees are non refundable, but you may ask to transfer to a future batch once.</li><li>Seat deposits are refundable on the same terms.</li></ul>\n<h2>Self paced programs</h2><p>Request a refund within 7 days of purchase if you have watched less than 20% of the lessons.</p>\n<h2>How to request</h2><p>Message us on WhatsApp or email with your name and payment reference.</p>\n<p>Questions: <a href=\"mailto:{{ site.contact.email }}\">{{ site.contact.email }}</a> · {{ site.contact.phone_display }} · {{ site.brand.company }}, {{ site.brand.address }}.</p>"
+    },
+    "cookies": {
+      "title": "Cookie Policy",
+      "description": "How Freelancer College uses cookies and similar technology.",
+      "updated": "25 September 2026",
+      "body": "<div class=\"callout\">This is a starting template. Have it reviewed by a qualified lawyer in Sri Lanka before relying on it.</div>\n\n<h2>Essential</h2><p>Needed for the site to work, such as remembering your cookie choice and form details on this device. These are always on.</p>\n<h2>Analytics and marketing</h2><p>Google Analytics, Meta Pixel, TikTok Pixel and Microsoft Clarity help us understand which pages help people and measure our ads. They load only after you click \"Allow analytics\".</p>\n<h2>Change your choice</h2><p><button class=\"btn btn-ghost btn-sm\" data-cookie-settings>Open cookie settings</button></p>\n<p>Questions: <a href=\"mailto:{{ site.contact.email }}\">{{ site.contact.email }}</a> · {{ site.contact.phone_display }} · {{ site.brand.company }}, {{ site.brand.address }}.</p>"
+    }
+  },
+  "seat_booking": {
+    "title": "Book your seat",
+    "intro": "Answer a few quick questions, then continue to payment. Your seat is confirmed once your payment is received.",
+    "details_title": "Your details for the enrollment",
+    "button": "Continue to payment",
+    "questions": [
+      {
+        "q": "Which program are you interested in?",
+        "options": [
+          "Designer X (UI/UX + freelancing, live)",
+          "Linux Master (self paced)",
+          "Not sure yet, help me choose"
+        ]
+      },
+      {
+        "q": "How much design experience do you have?",
+        "options": [
+          "None, starting from zero",
+          "I have played with Canva or Photoshop",
+          "I know some Figma",
+          "I already freelance as a designer"
+        ]
+      },
+      {
+        "q": "What is your main goal?",
+        "options": [
+          "Earn my first income in USD",
+          "Switch to a design career",
+          "Get more clients on Fiverr or Upwork",
+          "Add a skill for my current job"
+        ]
+      },
+      {
+        "q": "How many hours can you give each week?",
+        "options": [
+          "Less than 5 hours",
+          "5 to 10 hours",
+          "More than 10 hours"
+        ]
+      },
+      {
+        "q": "Do you have a laptop or desktop computer?",
+        "options": [
+          "Yes",
+          "Not yet, only a phone"
+        ]
+      },
+      {
+        "q": "How would you prefer to pay if you join?",
+        "options": [
+          "Pay in full (early bird)",
+          "Seat deposit, balance later",
+          "I need to discuss this"
+        ]
+      }
+    ]
+  }
+}

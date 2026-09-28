@@ -1,0 +1,80 @@
+---
+title: Learning Paths | Free step by step roadmaps | Freelancer College
+description: Free guided roadmaps for Sri Lankan freelancers. The 90 day UI/UX designer path, zero to first Fiverr order, and Figma mastery. Track your progress stop by stop.
+kind: Page
+---
+<section class="page-hero" style="padding-bottom:48px">
+  <div class="mesh-bg" aria-hidden="true"></div>
+  <div class="container rel">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>Learning paths</span></nav>
+    <h1 data-split>Pick a line. <span class="red-glow">Ride it to the end.</span></h1>
+    <p class="lead">Three free roadmaps, laid out like a metro map. Tap a stop to mark it done. Your progress is saved on this device.</p>
+  </div>
+</section>
+
+<section class="section-sm" style="padding-top:0">
+  <div class="container metro">
+    <article class="card line-card" style="--c:#c81e27" data-line="uiux">
+      <div class="line-head">
+        <div><h2 class="h3"><span class="dot" style="background:#c81e27"></span>90 Day UI/UX Designer Path</h2><p class="muted mt-1">From zero to a client ready portfolio in 90 days.</p></div>
+        <span class="pill" data-progress>0 of 6 done</span>
+      </div>
+      <div class="stations">
+        <label class="station"><input type="checkbox"><span class="stop">1</span><p class="when">Days 1 to 10</p><b>UI vs UX basics</b><p>Learn what designers actually do and set up Figma.</p><a href="/blog/ui-vs-ux-explained">Read the guide →</a></label>
+        <label class="station"><input type="checkbox"><span class="stop">2</span><p class="when">Days 11 to 25</p><b>Layout, grids, type</b><p>The visual rules that make screens look professional.</p><a href="/free-resources#figma-templates">Get templates →</a></label>
+        <label class="station"><input type="checkbox"><span class="stop">3</span><p class="when">Days 26 to 45</p><b>Research and wireframes</b><p>Understand users, then sketch structure before pixels.</p><a href="/free-resources#roadmap">Get the roadmap →</a></label>
+        <label class="station"><input type="checkbox"><span class="stop">4</span><p class="when">Days 46 to 65</p><b>Components and prototypes</b><p>Design systems, Auto Layout and interactive flows.</p><a href="/tools#checklist">Portfolio checklist →</a></label>
+        <label class="station"><input type="checkbox"><span class="stop">5</span><p class="when">Days 66 to 80</p><b>Two portfolio projects</b><p>Real briefs, full case studies.</p><a href="/leap-method">LEAP Method →</a></label>
+        <label class="station terminus"><input type="checkbox"><span class="stop">★</span><p class="when">Days 81 to 90</p><b>Launch and pitch</b><p>Profiles, pricing, first clients.</p><a href="/courses/designer-x">Do it live in Designer X →</a></label>
+      </div>
+    </article>
+
+    <article class="card line-card" style="--c:#f59e0b" data-line="fiverr">
+      <div class="line-head">
+        <div><h2 class="h3"><span class="dot" style="background:#f59e0b"></span>Zero to First Fiverr Order</h2><p class="muted mt-1">For anyone with a skill and an empty inbox.</p></div>
+        <span class="pill" data-progress>0 of 5 done</span>
+      </div>
+      <div class="stations">
+        <label class="station"><input type="checkbox"><span class="stop">1</span><p class="when">Week 1</p><b>Pick a niche</b><p>One skill, one buyer type. Specific beats generic.</p><a href="/tools#quiz">Take the skill quiz →</a></label>
+        <label class="station"><input type="checkbox"><span class="stop">2</span><p class="when">Week 1</p><b>Price in USD</b><p>Three packages that make the middle one obvious.</p><a href="/tools#price">Price calculator →</a></label>
+        <label class="station"><input type="checkbox"><span class="stop">3</span><p class="when">Week 2</p><b>Write your gig</b><p>Titles, description, tags and FAQs that convert.</p><a href="/tools#gig">AI gig generator →</a></label>
+        <label class="station"><input type="checkbox"><span class="stop">4</span><p class="when">Week 2</p><b>Build 3 samples</b><p>Portfolio pieces that match the gig exactly.</p><a href="/blog/first-fiverr-order-system">Read the system →</a></label>
+        <label class="station terminus"><input type="checkbox"><span class="stop">★</span><p class="when">Week 3+</p><b>First order</b><p>Stay active, reply fast, improve weekly.</p><a href="/webinar">Free webinar →</a></label>
+      </div>
+    </article>
+
+    <article class="card line-card" style="--c:#a855f7" data-line="figma">
+      <div class="line-head">
+        <div><h2 class="h3"><span class="dot" style="background:#a855f7"></span>Figma Mastery Path</h2><p class="muted mt-1">From clicking around to building like a product team.</p></div>
+        <span class="pill" data-progress>0 of 5 done</span>
+      </div>
+      <div class="stations">
+        <label class="station"><input type="checkbox"><span class="stop">1</span><p class="when">Stage 1</p><b>Frames and shapes</b><p>The canvas, frames, layers and basic tools.</p></label>
+        <label class="station"><input type="checkbox"><span class="stop">2</span><p class="when">Stage 2</p><b>Styles and tokens</b><p>Color, type and effect styles for consistency.</p></label>
+        <label class="station"><input type="checkbox"><span class="stop">3</span><p class="when">Stage 3</p><b>Auto Layout</b><p>Designs that resize themselves. The pro skill.</p></label>
+        <label class="station"><input type="checkbox"><span class="stop">4</span><p class="when">Stage 4</p><b>Components and variants</b><p>Build once, reuse everywhere.</p></label>
+        <label class="station terminus"><input type="checkbox"><span class="stop">★</span><p class="when">Stage 5</p><b>Prototyping</b><p>Flows and smart animate that impress clients.</p><a href="/courses/designer-x#curriculum">Full curriculum →</a></label>
+      </div>
+    </article>
+  </div>
+</section>
+{{> final-cta }}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const store = window.FC ? FC.store : { get() {}, set() {} };
+  document.querySelectorAll("[data-line]").forEach((line) => {
+    const key = "fc_path_" + line.dataset.line;
+    const boxes = [...line.querySelectorAll(".station input")];
+    const saved = store.get(key) || [];
+    const update = () => {
+      boxes.forEach((b) => b.closest(".station").classList.toggle("done", b.checked));
+      const n = boxes.filter((b) => b.checked).length;
+      line.querySelector("[data-progress]").textContent = `${n} of ${boxes.length} done`;
+      store.set(key, boxes.map((b, i) => (b.checked ? i : -1)).filter((i) => i >= 0));
+    };
+    boxes.forEach((b, i) => { b.checked = saved.includes(i); b.addEventListener("change", update); });
+    line.querySelectorAll(".station a").forEach((a) => a.addEventListener("click", (e) => e.stopPropagation()));
+    update();
+  });
+});
+</script>

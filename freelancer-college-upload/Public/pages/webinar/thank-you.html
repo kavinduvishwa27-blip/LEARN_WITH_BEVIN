@@ -1,0 +1,38 @@
+---
+title: You're registered | Freelancer College
+description: Your seat for the free webinar is saved.
+noindex: true
+---
+<section class="page-hero center" style="min-height:100svh">
+  <div class="mesh-bg" aria-hidden="true"></div>
+  <div class="container container-sm rel">
+    <div class="form-success" style="display:block;padding:0"><div class="tick" style="width:84px;height:84px;font-size:34px">✓</div></div>
+    <p class="eyebrow">Seat saved</p>
+    <h1 style="margin-inline:auto">You're in. See you live.</h1>
+    <p class="lead">{{ site.webinar.title }} · {{ site.webinar.human }} (Sri Lanka time). <span data-localtime="{{ site.webinar.starts_at }}"></span></p>
+    <div class="countdown mt-3" style="justify-content:center" data-countdown="{{ site.webinar.starts_at }}"></div>
+
+    <div class="grid-3 mt-5" style="text-align:left">
+      <div class="card stack"><span style="font-size:28px">📅</span><h4>1. Add it to your calendar</h4><p class="muted" style="font-size:14px">So you do not miss it.</p><div class="row"><a class="btn btn-ghost btn-sm" data-gcal target="_blank" rel="noopener">Google</a><button class="btn btn-ghost btn-sm" data-ics>Apple / Outlook</button></div></div>
+      <div class="card stack"><span style="font-size:28px">💬</span><h4>2. Join the WhatsApp group</h4><p class="muted" style="font-size:14px">The Zoom link is shared there.</p><a class="btn btn-primary btn-sm" href="{{ site.social.whatsapp_group }}" target="_blank" rel="noopener">Join group</a></div>
+      <div class="card stack"><span style="font-size:28px">🎁</span><h4>3. Grab your bonus</h4><p class="muted" style="font-size:14px">The LEAP Method Guide, free.</p><a class="btn btn-ghost btn-sm" href="/free-resources#leap-guide">Get the guide</a></div>
+    </div>
+    <p class="muted mt-4">While you wait: <a class="link-arrow" href="/tools#price">price your work in dollars →</a></p>
+  </div>
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const W = (window.FC && FC.SITE.webinar) || {};
+  const start = new Date(W.starts_at), end = new Date(start.getTime() + (+W.duration_min || 90) * 60000);
+  const fmt = (d) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  const title = W.title + " (Freelancer College)";
+  const details = "Free live webinar in Sinhala with Bevin Bosilu. Zoom link is sent on WhatsApp.";
+  document.querySelector("[data-gcal]").href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${fmt(start)}/${fmt(end)}&details=${encodeURIComponent(details)}&location=Zoom`;
+  document.querySelector("[data-ics]").addEventListener("click", () => {
+    const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Freelancer College//Webinar//EN", "BEGIN:VEVENT", `UID:${fmt(start)}@freelancercollege.lk`, `DTSTAMP:${fmt(new Date())}`, `DTSTART:${fmt(start)}`, `DTEND:${fmt(end)}`, `SUMMARY:${title}`, `DESCRIPTION:${details}`, "LOCATION:Zoom", "BEGIN:VALARM", "TRIGGER:-PT15M", "ACTION:DISPLAY", "DESCRIPTION:Webinar starts in 15 minutes", "END:VALARM", "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+    a.download = "freelancer-college-webinar.ics"; a.click();
+  });
+});
+</script>

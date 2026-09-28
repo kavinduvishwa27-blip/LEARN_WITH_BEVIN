@@ -1,0 +1,9 @@
+{{#each posts}}<a href="{{ this.url }}" class="card post-card card-hover spotlight" data-cat="{{ this.category }}">
+  <div class="cover"><span>{{ this.cover }}</span></div>
+  <div class="body">
+    <div class="meta"><span class="red-text">{{ this.category }}</span><span>·</span><span>{{ this.readtime }} min read</span></div>
+    <h3>{{ this.title }}</h3>
+    <p>{{ this.description }}</p>
+  </div>
+</a>
+{{/each}}

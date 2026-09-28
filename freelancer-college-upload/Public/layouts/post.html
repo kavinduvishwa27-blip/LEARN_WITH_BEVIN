@@ -1,0 +1,59 @@
+<article>
+  <header class="page-hero" style="padding-bottom:48px">
+    <div class="mesh-bg" aria-hidden="true"></div>
+    <div class="container container-sm rel">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/blog">Blog</a><span>/</span><span>{{ post.category }}</span></nav>
+      <h1 data-split style="max-width:22ch">{{ post.title }}</h1>
+      <p class="lead">{{ post.description }}</p>
+      <div class="row mt-3 muted" style="font-size:14px;gap:18px">
+        <span><b style="color:var(--text)">{{ site.brand.founder }}</b></span>
+        <span>{{ post.date_human }}</span>
+        <span>{{ post.readtime }} min read</span>
+        <button class="pill" data-share>Share ↗</button>
+      </div>
+    </div>
+  </header>
+  <div class="container" style="padding-bottom:96px">
+    <div class="article-wrap">
+      <aside class="toc" aria-label="On this page"><p class="eyebrow">On this page</p><nav data-toc></nav></aside>
+      <div>
+        <div class="prose" data-prose>
+{{{ post.body }}}
+        </div>
+        <div class="inline-cta mt-5">
+          <div><p class="eyebrow">Next step</p><h3 class="mt-1">Want the full system, taught live in Sinhala?</h3><p class="muted mt-1">Designer X {{ site.cohort.name }} batch is open. {{ site.cohort.seats_left }} seats left.</p></div>
+          <a href="/courses/designer-x" class="btn btn-primary" data-magnetic>See Designer X <span class="arrow">→</span></a>
+        </div>
+        <div class="card author-box mt-3">
+          <span class="av">BB</span>
+          <div><b>{{ site.brand.founder }}</b><p class="muted" style="font-size:14.5px">Founder of Freelancer College. Fiverr Top Rated Seller with {{ site.stats.years }}+ years of freelancing. Started as a photo editor who waited a year for his first order.</p></div>
+        </div>
+        <div class="card mt-3" data-form-wrap>
+          <form class="newsletter" style="max-width:none" data-lead-form data-type="newsletter" data-magnet="blog-{{ post.category }}" novalidate>
+            <div style="width:100%"><h4>Get one practical freelancing tip every week.</h4><p class="muted" style="font-size:14px">No spam. Unsubscribe anytime.</p></div>
+            <label for="post-nl" class="sr-only">Email</label>
+            <input id="post-nl" name="email" type="email" placeholder="you@email.com" required autocomplete="email">
+            <button class="btn btn-primary btn-sm" type="submit">Subscribe</button>
+            <p class="form-msg" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":{{json post.title}},"description":{{json post.description}},"datePublished":{{json post.date}},"author":{"@type":"Person","name":"{{ site.brand.founder }}"},"publisher":{"@type":"Organization","name":"{{ site.brand.name }}"},"mainEntityOfPage":"{{ site.url }}{{ post.url }}"}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const toc = document.querySelector("[data-toc]");
+  const hs = [...document.querySelectorAll("[data-prose] h2")];
+  hs.forEach((h, i) => {
+    h.id = h.id || "s-" + (i + 1) + "-" + h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 40);
+    const a = document.createElement("a"); a.href = "#" + h.id; a.textContent = h.textContent; toc.appendChild(a);
+  });
+  const links = [...toc.querySelectorAll("a")];
+  const io = new IntersectionObserver((en) => en.forEach((e) => { if (e.isIntersecting) links.forEach((l) => l.classList.toggle("on", l.hash === "#" + e.target.id)); }), { rootMargin: "0px 0px -70% 0px" });
+  hs.forEach((h) => io.observe(h));
+});
+</script>

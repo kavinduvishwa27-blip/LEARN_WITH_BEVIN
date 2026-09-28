@@ -1,0 +1,17 @@
+<section class="section-sm" aria-labelledby="wb-title">
+  <div class="container">
+    <div class="webinar-block theme-dark" data-reveal>
+      <div>
+        <span class="pill pill-live"><i></i> Free live webinar</span>
+        <h2 id="wb-title" class="mt-2">{{ site.webinar.title }}</h2>
+        <p class="lead mt-2">90 minutes, in Sinhala. How to price in dollars, build a portfolio clients pick, and land your first order without a year of silence.</p>
+        <p class="mt-2"><b>{{ site.webinar.human }}</b> <span class="muted">(Sri Lanka time)</span><br><small class="dim" data-localtime="{{ site.webinar.starts_at }}"></small></p>
+      </div>
+      <div class="stack">
+        <div class="countdown" data-countdown="{{ site.webinar.starts_at }}" data-expired="This session has ended. Register for the replay and the next one."></div>
+        <a href="/webinar" class="btn btn-white btn-lg" data-magnetic>Save my free seat <span class="arrow">→</span></a>
+        <small class="muted">Free. Zoom link and reminders sent on WhatsApp.</small>
+      </div>
+    </div>
+  </div>
+</section>

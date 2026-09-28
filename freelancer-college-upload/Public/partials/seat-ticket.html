@@ -1,0 +1,19 @@
+<!-- Ticket-style countdown to the next Designer X batch, with "Book your seat". -->
+<section class="ticket-wrap" aria-label="Next Designer X batch">
+  <div class="container">
+    <div class="ticket" data-reveal>
+      <div class="ticket-main">
+        <div class="ticket-title">
+          <b>{{ site.cohort.course }} · UI/UX Design &amp; Freelancing</b>
+          <span>Batch starts {{ site.cohort.start_human }}</span>
+        </div>
+        <div class="countdown ticket-cd" data-countdown="{{ site.cohort.start_date }}T00:00:00+05:30" data-long data-expired="The batch has started. Book a seat for the next one."></div>
+        <button class="btn ticket-btn" type="button" data-book-seat data-magnetic>Book your seat</button>
+      </div>
+      <div class="ticket-stub" aria-hidden="false">
+        <span class="t-chip"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M5 3L2 6M19 3l3 3"/></svg>{{ site.cohort.weeks }} Weeks</span>
+        <span class="t-chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>Live</span>
+      </div>
+    </div>
+  </div>
+</section>

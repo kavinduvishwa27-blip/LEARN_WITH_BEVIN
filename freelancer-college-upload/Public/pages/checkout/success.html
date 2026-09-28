@@ -1,0 +1,67 @@
+---
+title: You're almost in | Freelancer College
+description: Complete your Designer X enrollment.
+noindex: true
+bodyclass: page-success
+---
+<section class="page-hero center" style="min-height:100svh">
+  <div class="mesh-bg" aria-hidden="true"></div>
+  <div class="container container-sm rel">
+    <div class="form-success" style="display:block;padding:0"><div class="tick" style="width:84px;height:84px;font-size:34px">✓</div></div>
+    <p class="eyebrow">Enrollment started</p>
+    <h1 style="margin-inline:auto">You're almost in<span data-first></span>.</h1>
+    <p class="lead" data-paid-msg>Your seat is confirmed as soon as your payment is received. Two quick steps:</p>
+
+    <div class="card mt-4" style="text-align:left" data-bank-steps>
+      <p class="eyebrow no-line">Step 1 · Transfer <b style="color:var(--text)" data-amount></b></p>
+      <div class="bank-box mt-2">
+        <div><span>Bank</span><b>{{ site.bank.bank }}</b></div>
+        <div><span>Branch</span><b>{{ site.bank.branch }}</b></div>
+        <div><span>Account name</span><b>{{ site.bank.account_name }}</b></div>
+        <div><span>Account number</span><b>{{ site.bank.account_no }} <button class="copy-btn" data-copy="{{ site.bank.account_no }}">Copy</button></b></div>
+        <div><span>Reference</span><b><span data-ref>Your name</span> <button class="copy-btn" data-copy-ref>Copy</button></b></div>
+      </div>
+      <p class="note-box mt-2" data-balance-note hidden>After your deposit, pay the remaining <b></b>. We will remind you on WhatsApp.</p>
+      <p class="eyebrow no-line mt-4">Step 2 · Send your slip</p>
+      <p class="muted mt-1">Send a photo of the transfer slip on WhatsApp. We confirm your seat and add you to the batch group, usually within a few hours.</p>
+      <a class="btn btn-primary btn-lg btn-block mt-2" data-wa-slip target="_blank" rel="noopener" href="https://wa.me/{{ site.contact.whatsapp }}">
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 1.9 17.7L.3 23.6l6-1.6a11.8 11.8 0 0 0 5.7 1.5A11.8 11.8 0 0 0 20.5 3.5z"/></svg>
+        Send slip on WhatsApp
+      </a>
+    </div>
+
+    <div class="grid-3 mt-4" style="text-align:left">
+      <div class="card"><b>What happens next</b><p class="muted mt-1" style="font-size:14.5px">You get a WhatsApp and email confirmation with your student portal login.</p></div>
+      <div class="card"><b>Before day one</b><p class="muted mt-1" style="font-size:14.5px">Create a free Figma account and join the batch group. We send the Zoom link 1 hour before each class.</p></div>
+      <div class="card"><b>Meanwhile</b><p class="muted mt-1" style="font-size:14.5px"><a href="/learning-paths" class="link-arrow">Start the free learning path →</a></p></div>
+    </div>
+  </div>
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  let o = {};
+  try { o = JSON.parse(localStorage.getItem("fc_order") || "{}"); } catch {}
+  const C = (window.FC && FC.SITE.cohort) || {};
+  const params = new URLSearchParams(location.search);
+  if (o.name) document.querySelector("[data-first]").textContent = ", " + o.name.split(" ")[0];
+  const ref = params.get("order_id") || o.ref || "";
+  if (ref) document.querySelector("[data-ref]").textContent = ref;
+  document.querySelector("[data-copy-ref]").addEventListener("click", async () => { try { await navigator.clipboard.writeText(ref); FC.toast("Reference copied"); } catch {} });
+  document.querySelector("[data-amount]").textContent = (C.currency || "LKR") + " " + (o.amount || C.price_full);
+  if (o.plan === "deposit") {
+    const due = C.balance_due_human || o.balance_due;
+    const note = document.querySelector("[data-balance-note]");
+    note.hidden = false;
+    note.querySelector("b").textContent = `${C.currency || "LKR"} ${o.balance || C.balance} by ${due}`;
+  }
+  const wa = document.querySelector("[data-wa-slip]");
+  wa.href += "?text=" + encodeURIComponent(`Hi! Here is my Designer X payment slip. Reference: ${ref}. Name: ${o.name || ""}`);
+  // Returned from PayHere card payment
+  if (params.get("paid") === "1") {
+    document.querySelector("[data-bank-steps]").style.display = "none";
+    document.querySelector("h1").firstChild.textContent = "You're in";
+    document.querySelector("[data-paid-msg]").textContent = "Payment received. Your confirmation and student portal login are on the way to WhatsApp and email.";
+    FC.track("purchase", { value: +(String(o.amount || "").replace(/\D/g, "")), currency: "LKR", reference: ref });
+  }
+});
+</script>

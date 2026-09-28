@@ -1,0 +1,8 @@
+<div class="faq" data-exclusive data-stagger>
+{{#each faqs.home}}  <details><summary>{{ this.q }}<span class="pm"></span></summary><div class="answer"><p>{{{ this.a }}}</p></div></details>
+{{/each}}</div>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{{#each faqs.home}}{"@type":"Question","name":{{json this.q}},"acceptedAnswer":{"@type":"Answer","text":{{json this.a}}}}{{#unless @last}},{{/unless}}
+{{/each}}]}
+</script>

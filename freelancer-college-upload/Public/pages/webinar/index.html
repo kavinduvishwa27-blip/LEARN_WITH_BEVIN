@@ -1,0 +1,65 @@
+---
+title: Free Webinar: {{ site.webinar.title }} | Freelancer College
+description: A free live webinar in Sinhala. Learn how to price in dollars, build a portfolio clients pick and land your first international order. {{ site.webinar.human }}.
+bodyclass: page-webinar
+kind: Event
+---
+<section class="dx-hero" aria-labelledby="wb-h">
+  <div class="mesh-bg" aria-hidden="true"></div>
+  <div class="grid-lines" aria-hidden="true"></div>
+  <div class="container rel">
+    <div class="dx-hero-grid">
+      <div>
+        <span class="pill pill-live"><i></i> Free live webinar · In Sinhala</span>
+        <h1 id="wb-h" data-split>{{ site.webinar.title }}</h1>
+        <p class="lead">90 minutes with {{ site.brand.founder }}, Fiverr Top Rated Seller. The exact system for earning in dollars from Sri Lanka, without the year of silence.</p>
+        <div class="card glass mt-3" style="padding:22px">
+          <div class="row" style="justify-content:space-between;gap:18px">
+            <div><p class="label">📅 {{ site.webinar.human }}</p><small class="muted">Sri Lanka time · <span data-localtime="{{ site.webinar.starts_at }}"></span></small><br><small class="muted">📍 {{ site.webinar.platform }}</small></div>
+          </div>
+          <div class="countdown sm mt-2" data-countdown="{{ site.webinar.starts_at }}" data-expired="This session has ended. Register below to get the replay and the next date."></div>
+        </div>
+      </div>
+      <aside class="card glass batch-card" data-form-wrap id="register">
+        <form class="form" data-lead-form data-type="webinar" data-magnet="webinar-{{ site.webinar.starts_at }}" data-redirect="/webinar/thank-you" novalidate>
+          <p class="eyebrow no-line">Save your free seat</p>
+          <h3>Register in 20 seconds.</h3>
+          <div class="field"><label for="wb-name">Name</label><input id="wb-name" name="name" autocomplete="name" required><span class="field-error"></span></div>
+          <div class="field"><label for="wb-phone">WhatsApp number</label><input id="wb-phone" name="phone" inputmode="tel" autocomplete="tel" placeholder="07X XXX XXXX" required><span class="field-error"></span><span class="hint">The Zoom link and reminders come here.</span></div>
+          <div class="field"><label for="wb-email">Email</label><input id="wb-email" name="email" type="email" autocomplete="email"><span class="field-error"></span></div>
+          <button class="btn btn-primary btn-lg btn-block" type="submit" data-magnetic>Save my free seat <span class="arrow">→</span></button>
+          <p class="form-msg" role="status" aria-live="polite"></p>
+          <p class="dim" style="font-size:12.5px">Free. No spam. Reminders 24 hours, 3 hours and 15 minutes before.</p>
+        </form>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="wb-learn">
+  <div class="container">
+    <div class="section-head"><p class="eyebrow">In 90 minutes you will learn</p><h2 id="wb-learn" data-split>Three things that change everything.</h2></div>
+    <div class="grid-3" data-stagger>
+      <div class="card spotlight card-hover"><div class="big-num red">01</div><h3 class="mt-2">How to price in dollars</h3><p class="muted mt-1">Why local pricing keeps you broke, and how to package and price for international buyers without losing orders.</p></div>
+      <div class="card spotlight card-hover"><div class="big-num red">02</div><h3 class="mt-2">A portfolio clients pick</h3><p class="muted mt-1">The three portfolio pieces that matter, and why beginners with 20 random designs never get chosen.</p></div>
+      <div class="card spotlight card-hover"><div class="big-num red">03</div><h3 class="mt-2">Your first order, faster</h3><p class="muted mt-1">The gig and profile system that ended Bevin's year of silence, step by step.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="container instructor">
+    <div class="portrait" data-reveal><span class="ini" aria-hidden="true">BB</span><div class="tagline"><span class="pill pill-live"><i></i> Your host</span></div></div>
+    <div>
+      <p class="eyebrow">Your host</p>
+      <h2 class="mt-2">{{ site.brand.founder }}</h2>
+      <p class="lead mt-2">Fiverr Top Rated Seller, {{ site.stats.years }}+ years freelancing, {{ site.stats.students }}+ students trained.</p>
+      <p class="muted mt-2">Started as a photo editor who waited a year for his first order. Now teaches the system that fixed it, in Sinhala.</p>
+      <a href="#register" class="btn btn-primary mt-3" data-magnetic>Save my free seat <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Event","name":"{{ site.webinar.title }}","startDate":"{{ site.webinar.starts_at }}","eventAttendanceMode":"https://schema.org/OnlineEventAttendanceMode","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"VirtualLocation","url":"{{ site.url }}/webinar"},"isAccessibleForFree":true,"inLanguage":"si","organizer":{"@type":"Organization","name":"{{ site.brand.name }}","url":"{{ site.url }}"},"performer":{"@type":"Person","name":"{{ site.brand.founder }}"}}
+</script>

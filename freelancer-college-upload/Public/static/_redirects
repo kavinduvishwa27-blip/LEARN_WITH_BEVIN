@@ -1,0 +1,10 @@
+# Old and alternate URLs
+/courses/linux-fundamentals   /courses/linux-master   301
+/legal/refund                 /legal/refunds          301
+/login                        https://learn.freelancercollege.lk/   302
+/register                     https://learn.freelancercollege.lk/   302
+/dashboard                    https://learn.freelancercollege.lk/   302
+/dashboard/*                  https://learn.freelancercollege.lk/   302
+/enroll                       /checkout/designer-x   302
+/erp                          /admin/   302
+/erp/                         /admin/   302

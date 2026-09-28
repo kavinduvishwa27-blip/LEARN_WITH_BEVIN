@@ -1,0 +1,54 @@
+---
+title: Free Resources for Freelancers | Roadmaps, templates, checklists | Freelancer College
+description: Free downloads for Sri Lankan freelancers. 90 day UI/UX roadmap, LEAP Method guide, freelance pricing sheet, Figma starter templates and a Fiverr gig checklist.
+kind: Resource
+---
+<section class="page-hero" style="padding-bottom:48px">
+  <div class="mesh-bg" aria-hidden="true"></div>
+  <div class="container rel">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>Free resources</span></nav>
+    <h1 data-split>Free. Useful. <span class="red-glow">No fluff.</span></h1>
+    <p class="lead">The same roadmaps, templates and checklists our students use. Tell us where to send them and they arrive on WhatsApp and email.</p>
+  </div>
+</section>
+
+<section class="section-sm" style="padding-top:0">
+  <div class="container stack" style="gap:24px">
+    <article class="card grid-2" id="roadmap" style="gap:32px;align-items:center">
+      <div class="res-card"><div class="cover"><div class="doc"><b>90 Day UI/UX Roadmap</b><i></i></div></div></div>
+      <div class="stack"><span class="pill">PDF · Most popular</span><h2 class="h3">90 Day UI/UX Learning Roadmap</h2><p class="muted">Exactly what to learn, week by week, from opening Figma for the first time to a portfolio that gets you hired. With free resources for every step.</p>
+        {{> res-form }}
+      </div>
+    </article>
+    <article class="card grid-2" id="leap-guide" style="gap:32px;align-items:center">
+      <div class="res-card"><div class="cover"><div class="doc doc-red"><b>The LEAP Method Guide</b><i></i></div></div></div>
+      <div class="stack"><span class="pill">PDF</span><h2 class="h3">LEAP Method Guide</h2><p class="muted">Learn, Execute, Assemble, Pitch. The whole system on a few pages, with a checklist for each step.</p>
+        {{> res-form }}
+      </div>
+    </article>
+    <article class="card grid-2" id="pricing-sheet" style="gap:32px;align-items:center">
+      <div class="res-card"><div class="cover"><div class="doc doc-ink"><b>Freelance Pricing Sheet</b><i></i></div></div></div>
+      <div class="stack"><span class="pill">Google Sheet</span><h2 class="h3">Freelance Pricing Sheet</h2><p class="muted">Basic, Standard and Premium package templates in USD, with a calculator for your hourly rate and monthly goal.</p>
+        {{> res-form }}
+      </div>
+    </article>
+    <div class="grid-2">
+      <article class="card stack" id="figma-templates"><span class="pill">Figma file</span><h2 class="h3">Figma starter templates</h2><p class="muted">Grids, type scale, color styles and components to start every project properly.</p>{{> res-form }}</article>
+      <article class="card stack" id="gig-checklist"><span class="pill">Checklist</span><h2 class="h3">Fiverr gig checklist</h2><p class="muted">Titles, thumbnails, packages, FAQs and tags. Tick every box before you publish.</p>{{> res-form }}</article>
+    </div>
+  </div>
+</section>
+
+<section class="section-sm">
+  <div class="container">
+    <div class="inline-cta">
+      <div><p class="eyebrow">Want it done with you?</p><h3 class="mt-1">Designer X turns these resources into a finished portfolio.</h3></div>
+      <a href="/courses/designer-x" class="btn btn-primary" data-magnetic>See Designer X <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<script>
+// Tag each resource form with its magnet id (the section id)
+document.querySelectorAll("article[id] form[data-lead-form]").forEach((f) => (f.dataset.magnet = f.closest("article").id));
+</script>

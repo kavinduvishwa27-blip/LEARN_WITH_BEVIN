@@ -1,0 +1,105 @@
+---
+title: All Courses | UI/UX, Figma and freelancing courses in Sinhala | Freelancer College
+description: Browse every Freelancer College program. Live cohorts and self paced courses in Sinhala for UI/UX design, Figma, freelancing and tech skills.
+kind: Page
+---
+<section class="page-hero" style="padding-bottom:48px">
+  <div class="mesh-bg" aria-hidden="true"></div>
+  <div class="container rel">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>Courses</span></nav>
+    <h1 data-split>Programs built to <span class="red-glow">get you paid.</span></h1>
+    <p class="lead">Every program starts from zero, is taught in Sinhala, and ends with the system to turn your skill into income. We only open a program when it is ready.</p>
+  </div>
+</section>
+
+{{> seat-ticket }}
+
+<section class="section-sm" style="padding-top:0">
+  <div class="container">
+    <div class="filters" data-filters>
+      <label class="search-inline"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2"/></svg><span class="sr-only">Search courses</span><input type="search" placeholder="Search courses" data-course-search></label>
+      <div class="filter-group" role="group" aria-label="Format">
+        <button class="chip" aria-pressed="true" data-filter="format" data-value="all">All formats</button>
+        <button class="chip" aria-pressed="false" data-filter="format" data-value="cohort">Live cohort</button>
+        <button class="chip" aria-pressed="false" data-filter="format" data-value="self">Self paced</button>
+      </div>
+      <div class="filter-group" role="group" aria-label="Topic">
+        <button class="chip" aria-pressed="true" data-filter="topic" data-value="all">All topics</button>
+        <button class="chip" aria-pressed="false" data-filter="topic" data-value="uiux">UI/UX</button>
+        <button class="chip" aria-pressed="false" data-filter="topic" data-value="freelancing">Freelancing</button>
+        <button class="chip" aria-pressed="false" data-filter="topic" data-value="figma">Figma</button>
+        <button class="chip" aria-pressed="false" data-filter="topic" data-value="tech">Tech</button>
+      </div>
+    </div>
+
+    <div class="course-grid" data-course-grid>
+      <a href="/courses/designer-x" class="card course-card course-feature spotlight" data-tilt="5" data-format="cohort" data-topic="uiux freelancing figma" data-level="beginner" data-text="designer x ui ux figma freelancing fiverr portfolio live cohort">
+        <div class="thumb">{{> thumb-dx }}</div>
+        <div class="row"><span class="pill pill-live"><i></i> {{ site.cohort.status }}</span><span class="tag">Live cohort</span><span class="tag">Beginner</span></div>
+        <h3 style="font-size:32px">Designer X</h3>
+        <p class="muted">UI/UX design + freelancing. Beginner to global ready in {{ site.cohort.days }} days, with 2 live client projects.</p>
+        <div class="meta"><span>⏱ {{ site.cohort.weeks }} weeks</span><span>📝 {{ site.stats.assignments }} assignments</span><span>★ Top Rated instructor</span></div>
+        <div class="foot"><span class="price"><small class="muted" style="font-size:14px;font-weight:500">From </small>{{ site.cohort.currency }} {{ site.cohort.price_full }}<s>{{ site.cohort.price_regular }}</s></span><span class="btn btn-primary btn-sm">Enroll <span class="arrow">→</span></span></div>
+      </a>
+      <a href="/courses/linux-master" class="card course-card spotlight card-hover" data-tilt="5" data-format="self" data-topic="tech" data-level="beginner" data-text="linux master command line terminal server tech self paced">
+        <div class="thumb">{{> thumb-linux }}</div>
+        <div class="row"><span class="pill pill-soon">{{ site.linux.status }}</span><span class="tag">Self paced</span><span class="tag">Beginner</span></div>
+        <h3 style="font-size:32px">Linux Master</h3>
+        <p class="muted">Zero to confident on the command line, in Sinhala. Real server tasks, done end to end.</p>
+        <div class="meta"><span>🎥 Recorded</span><span>🗓 Start anytime</span></div>
+        <div class="foot"><span class="price" style="font-size:18px">Join the waitlist</span><span class="btn btn-ghost btn-sm">Get notified</span></div>
+      </a>
+      <div class="card course-card" data-format="all" data-topic="all" data-text="more programs coming soon" style="border-style:dashed;justify-content:center;align-items:flex-start">
+        <span class="pill">In the workshop</span>
+        <h3>More programs are coming.</h3>
+        <p class="muted">We only open a program when it is ready to teach properly. Get told first when the next one opens.</p>
+        <div data-form-wrap style="width:100%">
+          <form class="newsletter" style="max-width:none" data-lead-form data-type="notify" data-magnet="new-programs" novalidate>
+            <label for="np-phone" class="sr-only">WhatsApp number</label>
+            <input id="np-phone" name="phone" inputmode="tel" placeholder="WhatsApp number" required>
+            <button class="btn btn-primary btn-sm" type="submit">Notify me</button>
+            <p class="form-msg" role="status" aria-live="polite"></p>
+          </form>
+          <div class="form-success" style="padding:8px 0;text-align:left"><b>You're on the list. ✓</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="no-results" data-no-results>No courses match that. <button class="link-btn" data-clear-filters>Clear filters</button></div>
+  </div>
+</section>
+
+<section class="section-sm">
+  <div class="container">
+    <div class="grid-3" data-stagger>
+      <a href="/learning-paths" class="card mini-card card-hover spotlight"><span class="ico">🗺</span><div><h3>Not sure where to start?</h3><p class="muted mt-1">Follow a free step by step learning path.</p></div><span class="link-arrow">See learning paths →</span></a>
+      <a href="/tools#quiz" class="card mini-card card-hover spotlight"><span class="ico">🧭</span><div><h3>Take the skill quiz</h3><p class="muted mt-1">2 minutes to find the skill that fits you.</p></div><span class="link-arrow">Start the quiz →</span></a>
+      <a href="/webinar" class="card mini-card card-hover spotlight"><span class="ico">🎙</span><div><h3>Join the free webinar</h3><p class="muted mt-1">{{ site.webinar.title }}, live in Sinhala.</p></div><span class="link-arrow">Save a seat →</span></a>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const state = { format: "all", topic: "all", q: "" };
+  const cards = [...document.querySelectorAll("[data-course-grid] > *")];
+  const apply = () => {
+    let n = 0;
+    cards.forEach((c) => {
+      const f = c.dataset.format, t = c.dataset.topic || "";
+      const okF = state.format === "all" || f === state.format || f === "all";
+      const okT = state.topic === "all" || t.split(" ").includes(state.topic) || t === "all";
+      const okQ = !state.q || (c.dataset.text || "").includes(state.q);
+      const show = okF && okT && okQ && !(f === "all" && (state.q || state.format !== "all" || state.topic !== "all"));
+      c.classList.toggle("is-hidden", !show);
+      if (show) n++;
+    });
+    document.querySelector("[data-no-results]").style.display = n ? "none" : "block";
+  };
+  document.querySelectorAll("[data-filter]").forEach((b) => b.addEventListener("click", () => {
+    document.querySelectorAll(`[data-filter="${b.dataset.filter}"]`).forEach((x) => x.setAttribute("aria-pressed", x === b));
+    state[b.dataset.filter] = b.dataset.value; apply();
+  }));
+  document.querySelector("[data-course-search]").addEventListener("input", (e) => { state.q = e.target.value.trim().toLowerCase(); apply(); });
+  document.querySelector("[data-clear-filters]").addEventListener("click", () => location.reload());
+});
+</script>

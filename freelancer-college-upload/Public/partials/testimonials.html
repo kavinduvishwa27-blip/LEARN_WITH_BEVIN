@@ -1,0 +1,36 @@
+<section class="section" id="voices" aria-labelledby="voices-title">
+  <div class="container">
+    <div class="section-head split">
+      <div class="stack">
+        <p class="eyebrow">In their words</p>
+        <h2 id="voices-title" data-split>The quiet kind of proof.</h2>
+      </div>
+      <div class="row" style="gap:16px">
+        <a href="/success-stories" class="link-arrow">All success stories →</a>
+        <div class="carousel-nav">
+          <button class="carousel-btn" data-carousel-prev aria-label="Previous stories"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg></button>
+          <button class="carousel-btn" data-carousel-next aria-label="Next stories"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="h-scroll" data-hscroll>
+    <div class="h-track">
+{{#each testimonials}}{{#if this.featured}}{{#if this.video}}      <article class="card t-card spotlight">
+        {{#if this.video_url}}<a class="t-video" href="{{ this.video_url }}" target="_blank" rel="noopener" data-cursor>{{else}}<div class="t-video" data-cursor>{{/if}}<span class="play"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M8 5v14l11-7z"/></svg></span><span class="cap">{{ this.caption }}</span>{{#if this.video_url}}</a>{{else}}</div>{{/if}}
+        <div class="who"><span class="av" style="background:{{ this.color }}">{{ this.initials }}</span><div><b>{{ this.name }}</b><small>{{ this.tag }}</small></div></div>
+      </article>
+{{else}}      <article class="card t-card spotlight">
+        <div class="quote-mark">“</div>
+        <blockquote>{{ this.quote }}</blockquote>
+        <div class="who"><span class="av" style="background:{{ this.color }}">{{ this.initials }}</span><div><b>{{ this.name }}</b><small>{{ this.tag }}</small></div></div>
+      </article>
+{{/if}}{{/if}}{{/each}}      <article class="card t-card course-feature" style="justify-content:center">
+        <p class="eyebrow">Next chapter</p>
+        <h3 style="font-size:40px">Your story<br>goes here.</h3>
+        <p class="muted">{{ site.cohort.name }} batch is open. Seats are limited.</p>
+        <a href="/courses/designer-x#pricing" class="btn btn-primary" data-magnetic>Reserve a seat <span class="arrow">→</span></a>
+      </article>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,73 @@
+<header class="nav" data-nav>
+  <div class="nav-inner container">
+    <a href="/" class="logo" aria-label="Freelancer College home">
+      <span class="logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="28" height="28"><rect width="32" height="32" rx="9" fill="#c81e27"/><path d="M10 9l12 14M22 9L10 23" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/></svg>
+      </span>
+      <span class="logo-text">Freelancer<b>College</b></span>
+    </a>
+
+    <nav class="nav-links" aria-label="Main">
+      <div class="nav-item has-menu">
+        <button class="nav-link" aria-expanded="false" aria-haspopup="true" data-menu-btn>Courses <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5l3 3 3-3" stroke="currentColor" fill="none" stroke-width="1.5"/></svg></button>
+        <div class="mega" data-menu>
+          <div class="mega-grid">
+            <a href="/courses/designer-x" class="mega-feature">
+              <span class="pill pill-live"><i></i> {{ site.cohort.status }} · {{ site.cohort.name }}</span>
+              <strong>Designer X</strong>
+              <span>From absolute beginner to global ready UI/UX freelancer in {{ site.cohort.days }} days. Live cohort.</span>
+              <span class="mega-cta">View program →</span>
+            </a>
+            <div class="mega-col">
+              <p class="eyebrow">Programs</p>
+              <a href="/courses/designer-x"><b>Designer X</b><small>UI/UX + freelancing, live cohort</small></a>
+              <a href="/courses/linux-master"><b>Linux Master</b><small>Self paced · Coming soon</small></a>
+              <a href="/courses"><b>All courses</b><small>Filter by level and format</small></a>
+            </div>
+            <div class="mega-col">
+              <p class="eyebrow">Start free</p>
+              <a href="/webinar"><b>Free webinar</b><small>{{ site.webinar.title }}</small></a>
+              <a href="/learning-paths"><b>Learning paths</b><small>Step by step roadmaps</small></a>
+              <a href="/free-resources"><b>Free resources</b><small>PDFs, templates, checklists</small></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="nav-link" href="/leap-method">LEAP Method</a>
+      <a class="nav-link" href="/tools">Free Tools</a>
+      <a class="nav-link" href="/success-stories">Stories</a>
+      <a class="nav-link" href="/blog">Blog</a>
+      <a class="nav-link" href="/about">About</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="icon-btn search-btn" data-open-search aria-label="Search the site (Ctrl K)">
+        <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <kbd>Ctrl K</kbd>
+      </button>
+      <a class="nav-link login-link" href="{{ site.links.login }}">Student Login</a>
+      <a class="btn btn-primary btn-sm" href="/courses/designer-x#pricing" data-magnetic>Enroll Now</a>
+      <button class="burger" aria-label="Open menu" aria-expanded="false" data-burger><span></span><span></span></button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" data-mobile-menu>
+    <nav aria-label="Mobile">
+      <a href="/courses/designer-x">Designer X</a>
+      <a href="/courses">All Courses</a>
+      <a href="/leap-method">LEAP Method</a>
+      <a href="/webinar">Free Webinar</a>
+      <a href="/tools">Free Tools</a>
+      <a href="/free-resources">Free Resources</a>
+      <a href="/learning-paths">Learning Paths</a>
+      <a href="/success-stories">Success Stories</a>
+      <a href="/blog">Blog</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+    <div class="mobile-menu-foot">
+      <a class="btn btn-primary" href="/courses/designer-x#pricing">Enroll in Designer X</a>
+      <a class="btn btn-ghost" href="{{ site.links.login }}">Student Login</a>
+    </div>
+  </div>
+</header>

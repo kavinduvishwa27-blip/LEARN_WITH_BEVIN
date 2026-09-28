@@ -1,0 +1,159 @@
+---
+title: Free Freelancer Tools | Price calculator, gig generator, skill quiz | Freelancer College
+description: Free tools for Sri Lankan freelancers. Calculate your USD prices, see what dollar earnings mean in rupees, generate Fiverr gig titles with AI, score your portfolio and find the right skill.
+kind: Tool
+---
+<section class="page-hero" style="padding-bottom:40px">
+  <div class="mesh-bg" aria-hidden="true"></div>
+  <div class="grid-lines" aria-hidden="true"></div>
+  <div class="container rel">
+    <p class="eyebrow">Free tools</p>
+    <h1 data-split>Tools that make you <span class="red-glow">sound expensive.</span></h1>
+    <p class="lead">Price your work in dollars, see what it means in rupees, write gigs that get clicked, and find the skill that fits you. Free, no sign up.</p>
+  </div>
+</section>
+
+<section class="section-sm" style="padding-top:0">
+  <div class="container">
+    <div class="tool-tabs" role="tablist" aria-label="Tools" data-tool-tabs>
+      <button role="tab" aria-selected="true" aria-controls="t-price" id="tab-price" data-tab="price">💵 Price calculator</button>
+      <button role="tab" aria-selected="false" aria-controls="t-fx" id="tab-fx" data-tab="fx">🇱🇰 USD to LKR</button>
+      <button role="tab" aria-selected="false" aria-controls="t-gig" id="tab-gig" data-tab="gig">✨ AI gig generator</button>
+      <button role="tab" aria-selected="false" aria-controls="t-checklist" id="tab-checklist" data-tab="checklist">✅ Portfolio checklist</button>
+      <button role="tab" aria-selected="false" aria-controls="t-quiz" id="tab-quiz" data-tab="quiz">🧭 Skill quiz</button>
+    </div>
+
+    <!-- PRICE CALCULATOR -->
+    <div class="tool-panel" role="tabpanel" id="t-price" aria-labelledby="tab-price">
+      <div class="card stack" style="gap:26px">
+        <div><h2 class="h3">Freelance price calculator</h2><p class="muted mt-1">Stop guessing. Price your packages in USD based on time, skill and the income you want.</p></div>
+        <div class="field"><label for="pc-skill">Your skill</label>
+          <select id="pc-skill" class="input">
+            <option value="1.15">UI/UX design</option>
+            <option value="0.9">Logo and brand design</option>
+            <option value="0.8">Social media design</option>
+            <option value="1.25">Web development</option>
+            <option value="0.95">Video editing</option>
+            <option value="0.85">Content writing</option>
+            <option value="1.05">Linux / server setup</option>
+          </select>
+        </div>
+        <div class="field"><span class="label">Experience level</span>
+          <div class="seg" data-seg="level"><button aria-pressed="true" data-v="12">Beginner</button><button aria-pressed="false" data-v="22">Intermediate</button><button aria-pressed="false" data-v="40">Pro</button></div>
+        </div>
+        <div class="range-field"><div class="top"><label for="pc-hours">Hours for a standard project</label><output id="pc-hours-o">10 h</output></div><input type="range" id="pc-hours" min="2" max="60" value="10"></div>
+        <div class="range-field"><div class="top"><label for="pc-target">Monthly income goal</label><output id="pc-target-o">$1,000</output></div><input type="range" id="pc-target" min="200" max="6000" step="100" value="1000"></div>
+      </div>
+      <div class="card stack" style="gap:22px;position:sticky;top:calc(var(--nav-h) + 90px)">
+        <p class="eyebrow no-line">Your packages</p>
+        <div class="pkg-grid">
+          <div class="pkg"><small>Basic</small><b data-pkg="basic">$0</b><span>Quick, focused scope</span></div>
+          <div class="pkg mid"><small>Standard</small><b data-pkg="standard">$0</b><span>Most buyers pick this</span></div>
+          <div class="pkg"><small>Premium</small><b data-pkg="premium">$0</b><span>Full service + extras</span></div>
+        </div>
+        <div class="grid-2" style="gap:12px">
+          <div class="pkg"><small>Effective hourly</small><b data-out="hourly">$0</b><span data-out="hourly-lkr">LKR 0</span></div>
+          <div class="pkg"><small>Standard orders / month</small><b data-out="orders">0</b><span>to hit your goal</span></div>
+        </div>
+        <div class="note-box" data-out="advice"></div>
+        <div class="row"><button class="btn btn-ghost btn-sm" data-copy-prices>Copy my prices</button><a href="/courses/designer-x" class="link-arrow">Learn to justify premium prices →</a></div>
+      </div>
+    </div>
+
+    <!-- USD TO LKR VISUALISER -->
+    <div class="tool-panel" role="tabpanel" id="t-fx" aria-labelledby="tab-fx" hidden>
+      <div class="card stack" style="gap:26px">
+        <div><h2 class="h3">What do dollars mean in rupees?</h2><p class="muted mt-1">Move the slider and compare freelance USD income with a local salary.</p></div>
+        <div class="range-field"><div class="top"><label for="fx-usd">Monthly freelance income</label><output id="fx-usd-o">$800</output></div><input type="range" id="fx-usd" min="100" max="5000" step="50" value="800"></div>
+        <div class="field"><label for="fx-local">A local monthly salary to compare (LKR)</label><input id="fx-local" class="input" type="number" inputmode="numeric" min="0" step="5000" value="80000"><span class="hint">Use your current salary, or one you are offered.</span></div>
+        <p class="dim" style="font-size:13px" data-fx-rate>Exchange rate loading...</p>
+      </div>
+      <div class="card stack" style="gap:22px">
+        <p class="eyebrow no-line">Every month</p>
+        <div class="big-num" data-fx="lkr">LKR 0</div>
+        <p class="muted" data-fx="x"></p>
+        <div class="bars">
+          <div class="bar-row"><span>Local salary</span><div class="track"><div class="fill grey" data-bar="local"></div></div><b data-fx="local">0</b></div>
+          <div class="bar-row"><span>Freelance USD</span><div class="track"><div class="fill" data-bar="free"></div></div><b data-fx="free">0</b></div>
+        </div>
+        <div class="grid-2" style="gap:12px">
+          <div class="pkg"><small>Per year</small><b data-fx="year" style="font-size:22px">0</b><span>at this rate</span></div>
+          <div class="pkg"><small>Extra per year</small><b data-fx="extra" style="font-size:22px">0</b><span>vs the local salary</span></div>
+        </div>
+        <a href="/webinar" class="btn btn-primary">Learn how in the free webinar <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <!-- GIG GENERATOR -->
+    <div class="tool-panel" role="tabpanel" id="t-gig" aria-labelledby="tab-gig" hidden>
+      <div class="card">
+        <h2 class="h3">AI Fiverr gig generator</h2>
+        <p class="muted mt-1">Get 5 gig titles, a description and search tags written for international buyers.</p>
+        <form class="form mt-3" id="gig-form" novalidate>
+          <div class="field"><label for="g-skill">Your skill</label><input id="g-skill" name="skill" placeholder="e.g. Figma UI/UX design" required></div>
+          <div class="field"><label for="g-niche">Niche (optional)</label><input id="g-niche" name="niche" placeholder="e.g. SaaS dashboards, restaurants, fitness apps"></div>
+          <div class="field"><label for="g-aud">Ideal buyer (optional)</label><input id="g-aud" name="audience" placeholder="e.g. startup founders in the US"></div>
+          <button class="btn btn-primary" type="submit">Generate my gig <span class="arrow">✨</span></button>
+          <p class="form-msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <div class="card stack" style="gap:18px">
+        <p class="eyebrow no-line">Titles</p>
+        <ul class="gen-list" data-gig="titles"><li class="muted" style="animation:none">Your titles will appear here.</li></ul>
+        <p class="eyebrow no-line">Description</p>
+        <div class="note-box" data-gig="desc" style="white-space:pre-line">A gig description will appear here.</div>
+        <p class="eyebrow no-line">Tags</p>
+        <div class="tags" data-gig="tags"></div>
+        <p class="dim" style="font-size:12.5px" data-gig="src"></p>
+      </div>
+    </div>
+
+    <!-- PORTFOLIO CHECKLIST -->
+    <div class="tool-panel" role="tabpanel" id="t-checklist" aria-labelledby="tab-checklist" hidden>
+      <div class="card">
+        <h2 class="h3">Portfolio checklist</h2>
+        <p class="muted mt-1">Tick what your portfolio already has. Your progress is saved on this device.</p>
+        <div class="checklist mt-3" data-checklist>
+          <label><input type="checkbox" value="1"><span>3 to 5 strong projects, not 20 weak ones</span></label>
+          <label><input type="checkbox" value="2"><span>At least one project from a real or realistic client brief</span></label>
+          <label><input type="checkbox" value="3"><span>Each project explains the problem, your process and the result</span></label>
+          <label><input type="checkbox" value="4"><span>Shows wireframes or research, not only final screens</span></label>
+          <label><input type="checkbox" value="5"><span>A clear headline saying what you do and for whom</span></label>
+          <label><input type="checkbox" value="6"><span>Mobile and desktop versions of your designs</span></label>
+          <label><input type="checkbox" value="7"><span>Consistent type, spacing and color across the portfolio</span></label>
+          <label><input type="checkbox" value="8"><span>A testimonial or result (even from a practice client)</span></label>
+          <label><input type="checkbox" value="9"><span>Linked from your Fiverr, Upwork and LinkedIn profiles</span></label>
+          <label><input type="checkbox" value="10"><span>A clear way to contact or hire you</span></label>
+          <label><input type="checkbox" value="11"><span>Loads fast and looks right on a phone</span></label>
+          <label><input type="checkbox" value="12"><span>Spelling and grammar checked by someone else</span></label>
+        </div>
+      </div>
+      <div class="card stack center" style="gap:18px;position:sticky;top:calc(var(--nav-h) + 90px)">
+        <div class="score-ring"><svg viewBox="0 0 160 160" width="160" height="160"><circle class="bg" cx="80" cy="80" r="70"/><circle class="fg" cx="80" cy="80" r="70" stroke-dasharray="439.8" stroke-dashoffset="439.8" data-ring/></svg><div class="val"><b data-score>0</b><small class="muted">out of 100</small></div></div>
+        <h3 data-score-title>Let's build it.</h3>
+        <p class="muted" data-score-text>Tick the items your portfolio already has.</p>
+        <a href="/courses/designer-x" class="btn btn-primary" data-score-cta>Build a client ready portfolio in Designer X <span class="arrow">→</span></a>
+        <button class="link-btn" data-reset-checklist>Reset checklist</button>
+      </div>
+    </div>
+
+    <!-- SKILL QUIZ -->
+    <div class="tool-panel" role="tabpanel" id="t-quiz" aria-labelledby="tab-quiz" hidden style="grid-template-columns:1fr">
+      <div class="card quiz" data-quiz>
+        <div class="quiz-progress"><i data-quiz-bar></i></div>
+        <div data-quiz-body></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-sm">
+  <div class="container">
+    <div class="inline-cta">
+      <div><p class="eyebrow">Tools are the start</p><h3 class="mt-1">The system is what gets you paid.</h3><p class="muted mt-1">Designer X teaches the skill, the portfolio and the pricing, live in Sinhala.</p></div>
+      <a href="/courses/designer-x" class="btn btn-primary" data-magnetic>See Designer X <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<script src="/assets/js/tools.js" defer></script>

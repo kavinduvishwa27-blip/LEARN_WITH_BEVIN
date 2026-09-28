@@ -1,0 +1,128 @@
+---
+title: Enroll in Designer X | Freelancer College
+description: Reserve your seat in the Designer X {{ site.cohort.name }} batch. Pay in full or reserve with a deposit.
+noindex: true
+---
+<section class="page-hero" style="padding-bottom:40px">
+  <div class="mesh-bg" aria-hidden="true"></div>
+  <div class="container rel">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/courses/designer-x">Designer X</a><span>/</span><span>Checkout</span></nav>
+    <h1 style="font-size:clamp(36px,5vw,60px)">Reserve your seat.</h1>
+    <p class="lead">Designer X · {{ site.cohort.name }} batch · starts {{ site.cohort.start_human }}.</p>
+  </div>
+</section>
+
+<section class="section-sm" style="padding-top:0">
+  <div class="container">
+    <div class="grid-2" style="grid-template-columns:1.3fr 1fr;align-items:start" id="checkout-grid">
+      <div class="card form-card" data-form-wrap>
+        <form class="form" data-lead-form data-type="enroll" data-magnet="designer-x" data-redirect="/checkout/success" id="checkout-form" novalidate>
+          <input type="hidden" name="course" value="designer-x">
+          <input type="hidden" name="cohort" value="{{ site.cohort.name }}">
+          <input type="hidden" name="reference" id="ref">
+          <fieldset class="field" style="border:0;padding:0">
+            <legend class="label" style="margin-bottom:10px">1. Choose your plan</legend>
+            <div class="grid-2" style="gap:10px">
+              <label class="check card" style="padding:18px;border-radius:16px"><input type="radio" name="plan" value="full" checked><span><b style="color:var(--text)">Pay in full</b><br>{{ site.cohort.currency }} {{ site.cohort.price_full }} <s class="dim">{{ site.cohort.price_regular }}</s><br><small class="red-text" style="font-weight:600">Extra {{ site.cohort.currency }} {{ site.cohort.full_discount }} off</small></span></label>
+              <label class="check card" style="padding:18px;border-radius:16px"><input type="radio" name="plan" value="deposit"><span><b style="color:var(--text)">Seat deposit</b><br>{{ site.cohort.currency }} {{ site.cohort.deposit }} now, {{ site.cohort.currency }} {{ site.cohort.balance }} by {{ site.cohort.balance_due_human }}</span></label>
+            </div>
+          </fieldset>
+          <p class="label mt-2">2. Your details</p>
+          <div class="field"><label for="co-name">Full name</label><input id="co-name" name="name" autocomplete="name" required><span class="field-error"></span></div>
+          <div class="form-row">
+            <div class="field"><label for="co-phone">WhatsApp number</label><input id="co-phone" name="phone" inputmode="tel" autocomplete="tel" placeholder="07X XXX XXXX" required><span class="field-error"></span></div>
+            <div class="field"><label for="co-email">Email</label><input id="co-email" name="email" type="email" autocomplete="email" required><span class="field-error"></span></div>
+          </div>
+          <div class="form-row">
+            <div class="field"><label for="co-city">City</label><input id="co-city" name="city" autocomplete="address-level2"></div>
+            <div class="field"><label for="co-code">Coupon or referral code <span class="dim">(optional)</span></label><input id="co-code" name="code" autocapitalize="characters"></div>
+          </div>
+          <fieldset class="field" style="border:0;padding:0">
+            <legend class="label mt-2" style="margin-bottom:10px">3. Payment method</legend>
+            <div class="grid-2" style="gap:10px">
+              <label class="check card" style="padding:18px;border-radius:16px"><input type="radio" name="method" value="bank" checked><span><b style="color:var(--text)">Bank transfer</b><br>Transfer, then send the slip on WhatsApp.</span></label>
+              <label class="check card" style="padding:18px;border-radius:16px"><input type="radio" name="method" value="card"><span><b style="color:var(--text)">Card (PayHere)</b><br>Visa, Mastercard, Amex. Secure checkout.</span></label>
+            </div>
+          </fieldset>
+          <label class="check mt-1"><input type="checkbox" name="consent" value="yes"><span>I agree to the <a href="/legal/terms" style="text-decoration:underline">terms</a> and <a href="/legal/refunds" style="text-decoration:underline">refund policy</a>, and to receive class updates on WhatsApp.</span></label>
+          <span class="field-error" id="consent-err"></span>
+          <button class="btn btn-primary btn-lg btn-block mt-1" type="submit">Continue to payment <span class="arrow">→</span></button>
+          <p class="form-msg" role="status" aria-live="polite"></p>
+        </form>
+        <div class="form-success"><div class="tick">🔒</div><h3>Taking you to secure payment...</h3><p class="muted">Please do not close this page.</p></div>
+      </div>
+
+      <aside class="card glass batch-card" style="position:sticky;top:calc(var(--nav-h) + 20px)">
+        <p class="eyebrow no-line">Order summary</p>
+        <div class="row" style="gap:14px;flex-wrap:nowrap"><div style="width:84px;flex-shrink:0;border-radius:12px;overflow:hidden;border:1px solid var(--border)">{{> thumb-dx }}</div><div><b>Designer X</b><br><small class="muted">{{ site.cohort.name }} batch · Live on Zoom</small></div></div>
+        <div>
+          <div class="row-between"><span>Program</span><b>{{ site.cohort.currency }} {{ site.cohort.price_regular }}</b></div>
+          <div class="row-between"><span>Early bird ({{ site.cohort.early_discount_pct }}% off)</span><b class="red-text">- {{ site.cohort.currency }} <span data-saving></span></b></div>
+          <div class="row-between" data-full-row><span>Pay in full discount</span><b class="red-text">- {{ site.cohort.currency }} {{ site.cohort.full_discount }}</b></div>
+          <div class="row-between"><span>Your price</span><b data-total></b></div>
+          <div class="row-between"><span data-due-label>Due today</span><b style="font-family:var(--font-display);font-size:24px" data-due>{{ site.cohort.currency }} {{ site.cohort.price_full }}</b></div>
+          <div class="row-between" data-balance-row hidden><span>Balance, due by {{ site.cohort.balance_due_human }}</span><b>{{ site.cohort.currency }} {{ site.cohort.balance }}</b></div>
+        </div>
+        <ul class="stack" style="list-style:none;padding:0;font-size:14px;color:var(--text-muted);gap:8px">
+          <li>✓ All live classes + recordings</li>
+          <li>✓ {{ site.stats.assignments }} assignments with feedback</li>
+          <li>✓ 2 live client projects</li>
+          <li>✓ All 4 bonuses + certificate</li>
+        </ul>
+        <div class="note-box">🔒 Your details are only used for your enrollment. Questions? <a href="https://wa.me/{{ site.contact.whatsapp }}" target="_blank" rel="noopener" style="text-decoration:underline">WhatsApp us</a>.</div>
+      </aside>
+    </div>
+  </div>
+</section>
+<style>@media (max-width: 900px){ #checkout-grid{ grid-template-columns:1fr !important } #checkout-grid aside{ position:relative !important; top:0 !important } }</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const C = (window.FC && FC.SITE.cohort) || {};
+  const num = (s) => +String(s || "0").replace(/[^0-9]/g, "");
+  const form = document.getElementById("checkout-form");
+  const plan = new URLSearchParams(location.search).get("plan");
+  if (plan === "deposit") form.querySelector('[value="deposit"]').checked = true;
+  const ref = "FCX-" + Date.now().toString(36).toUpperCase().slice(-5) + Math.random().toString(36).slice(2, 4).toUpperCase();
+  document.getElementById("ref").value = ref;
+
+  const update = () => {
+    const p = form.plan.value;
+    const deposit = p === "deposit";
+    const due = deposit ? C.deposit : C.price_full;
+    document.querySelector("[data-due]").textContent = C.currency + " " + due;
+    document.querySelector("[data-due-label]").textContent = deposit ? "Deposit due today" : "Due today";
+    document.querySelector("[data-saving]").textContent = (num(C.price_regular) - num(C.price_early)).toLocaleString();
+    document.querySelector("[data-full-row]").hidden = deposit;
+    document.querySelector("[data-balance-row]").hidden = !deposit;
+    document.querySelector("[data-total]").textContent = C.currency + " " + (deposit ? C.price_early : C.price_full);
+  };
+  form.addEventListener("change", update);
+  update();
+
+  // Save the order locally for the success page, before the lead form redirects
+  form.addEventListener("submit", () => {
+    try { localStorage.setItem("fc_order", JSON.stringify({ ref, plan: form.plan.value, method: form.method.value, name: form.name.value, amount: form.plan.value === "deposit" ? C.deposit : C.price_full, balance: C.balance, balance_due: C.balance_due_human })); } catch {}
+  }, true);
+
+  // Card payments: ask the server for a signed PayHere checkout, post to PayHere
+  const origRedirect = form.dataset.redirect;
+  form.addEventListener("change", () => { form.dataset.redirect = form.method.value === "card" ? "" : origRedirect; });
+  form.addEventListener("fc:submitted", async (e) => {
+    if (form.method.value !== "card") return;
+    try {
+      const r = await fetch("/api/payhere-checkout", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...e.detail, reference: ref }) });
+      if (!r.ok) throw new Error();
+      const { action, fields } = await r.json();
+      const f = document.createElement("form");
+      f.method = "POST"; f.action = action;
+      Object.entries(fields).forEach(([k, v]) => { const i = document.createElement("input"); i.type = "hidden"; i.name = k; i.value = v; f.appendChild(i); });
+      document.body.appendChild(f); f.submit();
+    } catch {
+      FC.toast("Card payments are not switched on yet. Please use bank transfer.");
+      form.method.value = "bank";
+      location.href = origRedirect;
+    }
+  });
+});
+</script>

@@ -1,0 +1,110 @@
+{
+  "url": "https://freelancercollege.lk",
+  "brand": {
+    "name": "Freelancer College",
+    "company": "Learn With Bevin (Pvt) Ltd",
+    "reg_no": "PV 00000000",
+    "address": "Gampaha, Sri Lanka",
+    "tagline": "Real, sellable skills taught in Sinhala, then the system to turn them into paid work.",
+    "founder": "Bevin Bosilu",
+    "year": "2026"
+  },
+  "contact": {
+    "email": "hello@freelancercollege.lk",
+    "phone_display": "076 844 8190",
+    "phone_tel": "+94768448190",
+    "whatsapp": "94768448190",
+    "whatsapp_text": "Hi Freelancer College, I have a question about the programs.",
+    "hours": "Mon to Sat, 9.00 am to 7.00 pm (Sri Lanka time)",
+    "map_embed": "https://www.google.com/maps?q=Gampaha%2C%20Sri%20Lanka&output=embed"
+  },
+  "social": {
+    "tiktok": "https://www.tiktok.com/",
+    "facebook": "https://www.facebook.com/",
+    "youtube": "https://www.youtube.com/",
+    "fiverr": "https://www.fiverr.com/",
+    "whatsapp_group": "https://chat.whatsapp.com/"
+  },
+  "links": {
+    "login": "https://learn.freelancercollege.lk/",
+    "curriculum_pdf": "/assets/files/designer-x-curriculum.pdf"
+  },
+  "stats": {
+    "students": "500",
+    "years": "5",
+    "assignments": "15"
+  },
+  "cohort": {
+    "course": "Designer X",
+    "name": "October 2026",
+    "status": "Enrolling",
+    "start_date": "2026-10-10",
+    "start_human": "Saturday, 10 October 2026",
+    "schedule": "Saturdays and Sundays, 7.30 pm to 9.30 pm (Sri Lanka time) on Zoom",
+    "weeks": "10",
+    "days": "70",
+    "seats": "40",
+    "seats_left": "17",
+    "price_regular": "30,000",
+    "price_early": "15,000",
+    "early_discount_pct": "50",
+    "currency": "LKR",
+    "early_bird_deadline": "2026-10-10T00:00:00+05:30",
+    "early_bird_human": "10 October 2026",
+    "deposit": "5,000",
+    "balance_due_date": "2026-10-21",
+    "balance_due_human": "21 October 2026",
+    "price_early_value": "15000",
+    "deposit_value": "5000",
+    "full_discount": "2,500",
+    "price_full": "12,500",
+    "price_full_value": "12500",
+    "balance": "10,000"
+  },
+  "webinar": {
+    "title": "High Paying Freelancer Blueprint",
+    "starts_at": "2026-10-03T19:30:00+05:30",
+    "duration_min": "90",
+    "human": "Saturday, 3 October 2026 at 7.30 pm",
+    "platform": "Zoom (link sent on WhatsApp)",
+    "bonus_pdf": "/assets/files/leap-method-guide.pdf"
+  },
+  "fx": {
+    "usd_lkr_fallback": "300"
+  },
+  "analytics": {
+    "ga4_id": "",
+    "meta_pixel_id": "",
+    "tiktok_pixel_id": "",
+    "clarity_id": ""
+  },
+  "turnstile_site_key": "",
+  "bank": {
+    "bank": "Bank name",
+    "branch": "Branch",
+    "account_name": "Learn With Bevin (Pvt) Ltd",
+    "account_no": "000 000 0000"
+  },
+  "payments": {
+    "payhere_enabled": "false"
+  },
+  "home": {
+    "hero_line1": "Learn design",
+    "hero_line2": "in Sinhala.",
+    "hero_line3": "Earn in dollars.",
+    "hero_lead": "Freelancer College teaches real, sellable skills in Sinhala, then the system to turn them into paid international work. No hype. Just the mechanics that already worked.",
+    "final_title": "Systems over hustle.",
+    "final_accent": "Start today."
+  },
+  "designer_x": {
+    "hero_line1": "Skills are common.",
+    "hero_line2": "Systems get paid.",
+    "hero_lead": "From absolute beginner to global ready UI/UX freelancer in {{ site.cohort.days }} days. Learn Figma and real design craft, build two live client projects, then launch a profile that lands USD clients."
+  },
+  "linux": {
+    "status": "Coming soon",
+    "open": false,
+    "lessons": "85",
+    "hours": "4h+"
+  }
+}

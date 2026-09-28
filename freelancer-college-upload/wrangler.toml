@@ -1,0 +1,18 @@
+# Cloudflare Pages project config (used by `wrangler pages` commands; optional for Git deploys)
+name = "freelancer-college"
+compatibility_date = "2026-09-01"
+pages_build_output_dir = "dist"
+
+# Database for the admin panel (Cloudflare D1). Create it in the dashboard
+# (Storage & Databases > D1 > Create), then bind it to this Pages project as "DB"
+# (Settings > Bindings > Add > D1 database). Or uncomment and paste the id here:
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "freelancer-college"
+# database_id = "<your-database-id>"
+
+# Optional: KV namespace for lead backup + rate limiting.
+# Create it in the dashboard (Workers & Pages > KV), then uncomment and paste the id.
+# [[kv_namespaces]]
+# binding = "LEADS"
+# id = "<your-kv-namespace-id>"

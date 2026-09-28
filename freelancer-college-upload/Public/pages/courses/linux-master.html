@@ -1,0 +1,63 @@
+---
+title: Linux Master | Linux fundamentals course in Sinhala | Freelancer College
+description: Zero to confident on the command line, in Sinhala. A self paced Linux fundamentals program for freelance and remote tech work. Coming soon, join the waitlist.
+kind: Course
+---
+<section class="dx-hero" aria-labelledby="lx-title">
+  <div class="mesh-bg" aria-hidden="true"></div>
+  <div class="grid-lines" aria-hidden="true"></div>
+  <div class="container rel">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/courses">Courses</a><span>/</span><span>Linux Master</span></nav>
+    <div class="dx-hero-grid mt-3">
+      <div>
+        <div class="row"><span class="pill pill-soon">{{ site.linux.status }}</span><span class="tag">Self paced</span><span class="tag">Sinhala</span></div>
+        <h1 id="lx-title" data-split>Fewer clicks.<br><span class="red-glow">More control.</span></h1>
+        <p class="lead">Zero to confident on the command line, in Sinhala. Comfort with the terminal, real server tasks done end to end, and the fundamentals freelance and remote jobs expect you to already know.</p>
+        <div class="dx-facts">
+          <div><b>{{ site.linux.lessons }}</b><span>bite sized lessons</span></div>
+          <div><b>{{ site.linux.hours }}</b><span>of focused video</span></div>
+          <div><b>0</b><span>experience needed</span></div>
+          <div><b>∞</b><span>start anytime</span></div>
+        </div>
+      </div>
+      <aside class="card glass batch-card" data-form-wrap>
+        <form class="form" data-lead-form data-type="notify" data-magnet="linux-master" novalidate>
+          <p class="eyebrow no-line">Get notified</p>
+          <h3>Be first when it opens.</h3>
+          <p class="muted" style="font-size:14.5px">Waitlist members get the launch price and a free first module.</p>
+          <div class="field"><label for="lx-name">Name</label><input id="lx-name" name="name" autocomplete="name"><span class="field-error"></span></div>
+          <div class="field"><label for="lx-phone">WhatsApp number</label><input id="lx-phone" name="phone" inputmode="tel" placeholder="07X XXX XXXX" required><span class="field-error"></span></div>
+          <button class="btn btn-primary btn-block" type="submit">Join the waitlist <span class="arrow">→</span></button>
+          <p class="form-msg" role="status" aria-live="polite"></p>
+        </form>
+        <div class="form-success"><div class="tick">✓</div><h3>You're on the list.</h3><p class="muted">We will message you on WhatsApp the moment Linux Master opens.</p></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="lx-learn">
+  <div class="container">
+    <div class="section-head"><p class="eyebrow">What you will learn</p><h2 id="lx-learn" data-split>The terminal, without the fear.</h2></div>
+    <div class="grid-3" data-stagger>
+      <div class="card"><h3>Navigate like a pro</h3><p class="muted mt-1">Files, folders, paths, permissions and the commands you will use every single day.</p></div>
+      <div class="card"><h3>Users and permissions</h3><p class="muted mt-1">Who can do what, sudo, groups and chmod, explained so it finally makes sense.</p></div>
+      <div class="card"><h3>Packages and services</h3><p class="muted mt-1">Install software, manage services and keep a system updated and healthy.</p></div>
+      <div class="card"><h3>Text and scripting</h3><p class="muted mt-1">grep, pipes, editors and your first shell scripts to automate boring work.</p></div>
+      <div class="card"><h3>Networking basics</h3><p class="muted mt-1">SSH, ports and remote servers, the skills clients and employers assume you have.</p></div>
+      <div class="card"><h3>Real server tasks</h3><p class="muted mt-1">Set up a web server end to end, the kind of task that becomes a paid freelance gig.</p></div>
+    </div>
+  </div>
+</section>
+
+{{> leap }}
+
+<section class="section" aria-labelledby="lxfaq">
+  <div class="container container-sm">
+    <div class="section-head center"><p class="eyebrow">Before you ask</p><h2 id="lxfaq" data-split>Straight answers.</h2></div>
+    <div class="faq" data-exclusive>
+{{#each faqs.linux}}        <details><summary>{{ this.q }}<span class="pm"></span></summary><div class="answer"><p>{{{ this.a }}}</p></div></details>
+{{/each}}      </div>
+  </div>
+</section>
+{{> final-cta }}

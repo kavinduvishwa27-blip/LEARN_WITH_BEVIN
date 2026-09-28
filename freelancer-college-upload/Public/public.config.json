@@ -1,0 +1,4 @@
+{
+  "part": "public",
+  "about": "The public website. Pages, design, starting content and the server code that serves the site. build.py finds this folder by this file, so the folder can be renamed or moved anywhere inside the project."
+}

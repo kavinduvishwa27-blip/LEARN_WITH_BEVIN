@@ -1,0 +1,29 @@
+<a class="wa-float" href="https://wa.me/{{ site.contact.whatsapp }}?text={{url site.contact.whatsapp_text}}" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp" data-track="whatsapp_click">
+  <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 1.9 17.7L.3 23.6l6-1.6a11.8 11.8 0 0 0 5.7 1.5A11.8 11.8 0 0 0 20.5 3.5zM12 21.4a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.6.9 1-3.5-.2-.4a9.8 9.8 0 1 1 8.2 4.6zm5.4-7.3c-.3-.1-1.8-.9-2-1s-.5-.1-.7.2-.8 1-1 1.2-.4.2-.7 0a8 8 0 0 1-4-3.5c-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.8.4 3.5 3.5 0 0 0-1.1 2.6 6 6 0 0 0 1.3 3.2 13.8 13.8 0 0 0 5.3 4.7c2 .8 2.7.9 3.7.7a3.1 3.1 0 0 0 2-1.4 2.5 2.5 0 0 0 .2-1.4c-.1-.1-.3-.2-.6-.3z"/></svg>
+  <span class="wa-label">Chat on WhatsApp</span>
+</a>
+
+<div class="cookie" role="dialog" aria-live="polite" aria-label="Cookie preferences" data-cookie hidden>
+  <p><b>Cookies, briefly.</b> We use essential cookies to run the site. With your OK we also use analytics to see which pages help people most. <a href="/legal/cookies">Details</a></p>
+  <div class="cookie-actions">
+    <button class="btn btn-ghost btn-sm" data-cookie-choice="essential">Essential only</button>
+    <button class="btn btn-primary btn-sm" data-cookie-choice="all">Allow analytics</button>
+  </div>
+</div>
+
+<div class="palette" data-palette hidden role="dialog" aria-modal="true" aria-label="Search the site">
+  <div class="palette-backdrop" data-close-search></div>
+  <div class="palette-box">
+    <div class="palette-input">
+      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input type="search" placeholder="Search courses, tools, articles..." aria-label="Search" data-search-input autocomplete="off">
+      <kbd>Esc</kbd>
+    </div>
+    <ul class="palette-results" data-search-results role="listbox"></ul>
+    <div class="palette-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to move</span><span><kbd>Enter</kbd> to open</span></div>
+  </div>
+</div>
+
+{{> seat-modal }}
+
+<div class="toast" role="status" aria-live="polite" data-toast></div>

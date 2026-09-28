@@ -1,0 +1,47 @@
+<!-- "Book your seat": questions about the programs, then contact details, then on to payment (checkout).
+     No seat is held without payment. Questions and texts are edited in the ERP. -->
+<div class="seat-modal" data-seat-modal hidden role="dialog" aria-modal="true" aria-labelledby="seat-title">
+  <div class="seat-back" data-seat-close></div>
+  <div class="seat-box" data-form-wrap>
+    <div class="seat-head">
+      <div>
+        <p class="eyebrow no-line" data-seat-step-label>Question 1</p>
+        <h2 id="seat-title" class="h3">{{ seat_booking.title }}</h2>
+      </div>
+      <button class="seat-x" type="button" data-seat-close aria-label="Close">×</button>
+    </div>
+    <div class="seat-progress" aria-hidden="true"><i data-seat-bar></i></div>
+
+    <form class="form seat-form" data-lead-form data-type="seat" data-magnet="seat-booking" novalidate>
+      <input type="hidden" name="course" value="designer-x">
+      <input type="hidden" name="cohort" value="{{ site.cohort.name }}">
+      <input type="hidden" name="answers" data-seat-answers>
+      <p class="muted seat-intro" data-seat-intro>{{ seat_booking.intro }}</p>
+{{#each seat_booking.questions}}      <fieldset class="seat-step" data-seat-step hidden>
+        <legend class="seat-q">{{ this.q }}</legend>
+        <div class="seat-opts">
+{{#each this.options}}          <label class="seat-opt"><input type="radio" name="answer" value="{{ this }}"><span>{{ this }}</span></label>
+{{/each}}        </div>
+      </fieldset>
+{{/each}}      <fieldset class="seat-step" data-seat-step data-seat-details hidden>
+        <legend class="seat-q">{{ seat_booking.details_title }}</legend>
+        <div class="field"><label for="seat-name">Full name</label><input id="seat-name" name="name" autocomplete="name" required><span class="field-error"></span></div>
+        <div class="form-row">
+          <div class="field"><label for="seat-phone">WhatsApp number</label><input id="seat-phone" name="phone" inputmode="tel" autocomplete="tel" placeholder="07X XXX XXXX" required><span class="field-error"></span></div>
+          <div class="field"><label for="seat-email">Email <span class="dim">(optional)</span></label><input id="seat-email" name="email" type="email" autocomplete="email"><span class="field-error"></span></div>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">{{ seat_booking.button }} <span class="arrow">→</span></button>
+        <p class="dim small center">You choose bank transfer or card on the next page.</p>
+        <p class="form-msg" role="status" aria-live="polite"></p>
+      </fieldset>
+      <div class="seat-nav"><button class="link-btn" type="button" data-seat-prev hidden>← Back</button><span class="dim small" data-seat-count></span></div>
+      <p class="seat-free small muted">Not ready to pay yet? <a href="/webinar" class="link-arrow">Join the free webinar →</a></p>
+    </form>
+
+    <div class="form-success">
+      <div class="tick">→</div>
+      <h3>Taking you to payment...</h3>
+      <p class="muted mt-1">Your details are filled in for you.</p>
+    </div>
+  </div>
+</div>

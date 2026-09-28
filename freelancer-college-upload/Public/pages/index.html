@@ -1,0 +1,227 @@
+---
+title: Freelancer College | Learn UI/UX design in Sinhala, earn in dollars
+description: Sri Lanka's systems first freelancing college. Learn UI/UX design and real, sellable skills in Sinhala, then the LEAP system to land international clients. 500+ students trained.
+bodyclass: page-home
+---
+<!-- 1. HERO -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="grid-lines" aria-hidden="true"></div>
+  <div class="hero-ticket">{{> seat-ticket }}</div>
+  <div class="container hero-grid">
+    <div class="hero-content">
+      <h1 id="hero-title" class="display" data-split>
+        <span class="line">{{ site.home.hero_line1 }}</span>
+        <span class="line">{{ site.home.hero_line2 }}</span>
+        <span class="line"><span class="red-glow">{{ site.home.hero_line3 }}</span></span>
+      </h1>
+      <p class="lead" data-reveal="0.3">{{ site.home.hero_lead }}</p>
+      <div class="hero-ctas" data-reveal="0.45">
+        <a href="/courses/designer-x" class="btn btn-primary btn-lg" data-magnetic>Join Designer X <span class="arrow">→</span></a>
+        <a href="/webinar" class="btn btn-ghost btn-lg" data-magnetic>Free Webinar</a>
+      </div>
+      <div class="hero-proof" data-reveal="0.6">
+        <div class="avatars" aria-hidden="true"><span style="background:#7f1d1d">S</span><span style="background:#991b1b">K</span><span style="background:#b91c1c">N</span><span style="background:#dc2626">+</span></div>
+        <span><b style="color:var(--text)">{{ site.stats.students }}+ students</b> trained</span>
+        <span class="stars" aria-hidden="true">★★★★★</span>
+        <span><b style="color:var(--text)">Fiverr Top Rated</b> Seller</span>
+      </div>
+    </div>
+{{> hero-studio }}
+  </div>
+  <div class="scroll-cue" aria-hidden="true">Scroll<i></i></div>
+</section>
+
+<!-- 2. TRUST BAR -->
+<div class="marquee" aria-label="Highlights">
+  <div class="marquee-track">
+    <span class="marquee-item"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>Fiverr Top Rated Seller</span>
+    <span class="marquee-item"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>{{ site.stats.students }}+ students trained</span>
+    <span class="marquee-item"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>{{ site.stats.years }}+ years freelancing</span>
+    <span class="marquee-item"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>Taught in Sinhala</span>
+    <span class="marquee-item"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>Figma · UI/UX · Freelancing</span>
+    <span class="marquee-item"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>2 live client projects</span>
+    <span class="marquee-item"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>Systems over hustle</span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>Fiverr Top Rated Seller</span>
+    <span class="marquee-item" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>{{ site.stats.students }}+ students trained</span>
+    <span class="marquee-item" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>{{ site.stats.years }}+ years freelancing</span>
+    <span class="marquee-item" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>Taught in Sinhala</span>
+    <span class="marquee-item" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>Figma · UI/UX · Freelancing</span>
+    <span class="marquee-item" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>2 live client projects</span>
+    <span class="marquee-item" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>Systems over hustle</span>
+  </div>
+</div>
+
+<!-- 3. ORIGIN STORY -->
+<section class="section" aria-labelledby="story-title">
+  <div class="container story">
+    <div class="story-sticky">
+      <p class="eyebrow">Who's behind this</p>
+      <h2 id="story-title" class="mt-2" data-split>I waited almost a year for my first order.</h2>
+      <p class="lead mt-3">Then I built the system that made the next ones inevitable. Freelancer College is that system, taught in Sinhala.</p>
+      <div class="story-counter" data-story-counter aria-hidden="true">01</div>
+      <a href="/about" class="link-arrow mt-3">Read Bevin's full story →</a>
+    </div>
+    <div class="story-chapters">
+      <article class="chapter" data-chapter="01">
+        <span class="when">Chapter 01 · The start</span>
+        <h3>A photo editor with a laptop and a Fiverr account.</h3>
+        <p>No design degree, no connections. Just editing photos and hoping a client would find me.</p>
+      </article>
+      <article class="chapter" data-chapter="02">
+        <span class="when">Chapter 02 · The silence</span>
+        <h3>Almost a full year. Zero orders.</h3>
+        <p>Nobody tells you the hardest part of freelancing is the silence at the start. I lived in it for months, refreshing an empty inbox.</p>
+      </article>
+      <article class="chapter" data-chapter="03">
+        <span class="when">Chapter 03 · The system</span>
+        <h3>I stopped hustling and started building a system.</h3>
+        <p>Positioning, pricing, portfolio, pitching. A repeatable way to get chosen. The first order came, then the next, then Top Rated.</p>
+      </article>
+      <article class="chapter" data-chapter="04">
+        <span class="when">Chapter 04 · The college</span>
+        <h3>{{ site.stats.students }}+ students later, it became LEAP.</h3>
+        <p>Every program here teaches that same system, in Sinhala, so you can skip the year of silence I went through.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 4. PROBLEM -->
+<section class="section" aria-labelledby="problem-title" style="padding-top:0">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Sound familiar?</p>
+      <h2 id="problem-title" data-split>Three walls every Sri Lankan freelancer hits.</h2>
+      <p class="lead">Hover or scroll to see how the system gets you over each one.</p>
+    </div>
+    <div class="grid-3" data-stagger>
+      <div class="flip" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-face"><span class="num">01</span><div><h3>Local prices that insult your work.</h3><p>Rs. 3,000 for a full logo. Clients who bargain for everything. You work more and earn less.</p></div><span class="flip-hint">The wall</span></div>
+          <div class="flip-face flip-back"><span class="num">01</span><div><h3>Price on value, in USD.</h3><p>We teach you to package, position and price for international clients. Never work for less.</p></div><span class="flip-hint">The system</span></div>
+        </div>
+      </div>
+      <div class="flip" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-face"><span class="num">02</span><div><h3>Family who think freelancing isn't a real job.</h3><p>"Get a government job." "Is this even safe?" Doubt from the people who matter most.</p></div><span class="flip-hint">The wall</span></div>
+          <div class="flip-face flip-back"><span class="num">02</span><div><h3>Proof over promises.</h3><p>A real portfolio, a live profile and your first USD payment. Results end arguments.</p></div><span class="flip-hint">The system</span></div>
+        </div>
+      </div>
+      <div class="flip" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-face"><span class="num">03</span><div><h3>A Fiverr profile with zero orders.</h3><p>Gigs live for months. Impressions but no clicks. Clicks but no messages. Silence.</p></div><span class="flip-hint">The wall</span></div>
+          <div class="flip-face flip-back"><span class="num">03</span><div><h3>A system to get chosen.</h3><p>Gig titles, thumbnails, portfolio pieces and pitches built the way top rated sellers do it.</p></div><span class="flip-hint">The system</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. LEAP METHOD -->
+{{> leap }}
+
+<!-- 6. COURSES -->
+<section class="section" id="courses" aria-labelledby="courses-title">
+  <div class="container">
+    <div class="section-head split">
+      <div class="stack">
+        <p class="eyebrow">Our programs</p>
+        <h2 id="courses-title" data-split>Pick a program. Start the system.</h2>
+      </div>
+      <a href="/courses" class="link-arrow">Browse all courses →</a>
+    </div>
+    <div class="bento" data-stagger>
+      <a href="/courses/designer-x" class="card course-card course-feature span-4 row-2 spotlight" data-tilt="5">
+        <div class="thumb">{{> thumb-dx }}</div>
+        <div class="row"><span class="pill pill-live"><i></i> {{ site.cohort.status }} · {{ site.cohort.name }}</span><span class="tag">Live cohort</span><span class="tag">Beginner</span></div>
+        <h3>Designer X</h3>
+        <p class="muted" style="font-size:17px;max-width:52ch">From absolute beginner to global ready UI/UX freelancer in {{ site.cohort.days }} days. {{ site.stats.assignments }} assignments, 2 live client projects and a launch plan for your first USD clients.</p>
+        <div class="meta"><span>⏱ {{ site.cohort.weeks }} weeks</span><span>🎥 Live on Zoom</span><span>🗣 Sinhala + English</span><span>🎓 Certificate</span></div>
+        <div class="foot">
+          <span class="price"><small class="muted" style="font-size:14px;font-weight:500">From </small>{{ site.cohort.currency }} {{ site.cohort.price_full }}<s>{{ site.cohort.price_regular }}</s></span>
+          <span class="btn btn-primary">View program <span class="arrow">→</span></span>
+        </div>
+      </a>
+      <a href="/courses/linux-master" class="card course-card span-2 spotlight card-hover" data-tilt="6">
+        <div class="thumb">{{> thumb-linux }}</div>
+        <div class="row"><span class="pill pill-soon">{{ site.linux.status }}</span><span class="tag">Self paced</span></div>
+        <h3>Linux Master</h3>
+        <p class="muted">Zero to confident on the command line, in Sinhala.</p>
+        <div class="foot"><span class="link-arrow">Get notified →</span></div>
+      </a>
+      <a href="/tools" class="card mini-card span-2 spotlight card-hover">
+        <span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M14 10h2M8 14h2M14 14h2M8 18h8"/></svg></span>
+        <div><h3>Free freelancer tools</h3><p class="muted mt-1">Price calculator, LKR earnings visualiser, AI gig title generator and more.</p></div>
+        <span class="link-arrow">Try the tools →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 7. RESULTS -->
+<section class="section-sm" aria-labelledby="results-title">
+  <div class="container">
+    <div class="section-head center">
+      <p class="eyebrow">Proof, not promises</p>
+      <h2 id="results-title" data-split>Look, don't listen.</h2>
+    </div>
+    <div class="stats" data-reveal>
+      <div class="stat"><div class="n"><span data-count="{{ site.stats.students }}">0</span><sup>+</sup></div><p>Students trained, and counting.</p></div>
+      <div class="stat"><div class="n"><span data-count="{{ site.stats.years }}">0</span><sup>+</sup></div><p>Years freelancing on Fiverr.</p></div>
+      <div class="stat"><div class="n"><span data-count="{{ site.cohort.days }}">0</span></div><p>Days from beginner to client ready.</p></div>
+      <div class="stat"><div class="n"><span data-count="{{ site.stats.assignments }}">0</span></div><p>Assignments with personal feedback.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. TESTIMONIALS -->
+{{> testimonials }}
+
+<!-- 9. FREE RESOURCES -->
+<section class="section" aria-labelledby="res-title">
+  <div class="container">
+    <div class="section-head split">
+      <div class="stack">
+        <p class="eyebrow">Start free</p>
+        <h2 id="res-title" data-split>Free resources that actually help.</h2>
+      </div>
+      <a href="/free-resources" class="link-arrow">All free resources →</a>
+    </div>
+    <div class="grid-3" data-stagger>
+      <a href="/free-resources#roadmap" class="card res-card card-hover spotlight">
+        <div class="cover"><div class="doc"><b>90 Day UI/UX Roadmap</b><i></i></div></div>
+        <h3>90 Day UI/UX Roadmap</h3><p class="muted">Exactly what to learn, week by week, to go from zero to client ready.</p>
+      </a>
+      <a href="/free-resources#leap-guide" class="card res-card card-hover spotlight">
+        <div class="cover"><div class="doc doc-red"><b>The LEAP Method Guide</b><i></i></div></div>
+        <h3>LEAP Method Guide</h3><p class="muted">The four move system behind every program, in one short PDF.</p>
+      </a>
+      <a href="/free-resources#pricing-sheet" class="card res-card card-hover spotlight">
+        <div class="cover"><div class="doc doc-ink"><b>Freelance Pricing Sheet</b><i></i></div></div>
+        <h3>Freelance Pricing Sheet</h3><p class="muted">Basic, Standard and Premium package templates, priced in USD.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 10. WEBINAR -->
+{{> webinar-block }}
+
+<!-- 11. FAQ -->
+<section class="section" aria-labelledby="faq-title">
+  <div class="container container-sm">
+    <div class="section-head center">
+      <p class="eyebrow">Before you ask</p>
+      <h2 id="faq-title" data-split>Straight answers.</h2>
+    </div>
+    {{> faq-home }}
+    <p class="center mt-4 muted">Still unsure? <a href="https://wa.me/{{ site.contact.whatsapp }}" class="link-arrow" target="_blank" rel="noopener">Ask us on WhatsApp →</a></p>
+  </div>
+</section>
+
+<!-- 12. FINAL CTA -->
+{{> final-cta }}
+
+<script src="/assets/js/hero-studio.js" defer></script>

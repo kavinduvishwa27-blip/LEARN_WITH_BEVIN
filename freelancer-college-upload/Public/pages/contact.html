@@ -1,0 +1,45 @@
+---
+title: Contact Freelancer College | WhatsApp, email and phone
+description: Questions about a program, enrollment or payments? Reach Freelancer College on WhatsApp, email or phone. Based in Gampaha, Sri Lanka.
+kind: Page
+---
+<section class="page-hero" style="padding-bottom:48px">
+  <div class="mesh-bg" aria-hidden="true"></div>
+  <div class="container rel">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>Contact</span></nav>
+    <h1 data-split>Real answers, <span class="red-glow">not a chatbot.</span></h1>
+    <p class="lead">Questions about a program, enrollment or anything else. A real person replies, usually within a few hours during business hours.</p>
+  </div>
+</section>
+
+<section class="section-sm" style="padding-top:0">
+  <div class="container grid-2" style="grid-template-columns:1fr 1.2fr;align-items:start;gap:24px" id="contact-grid">
+    <div class="stack">
+      <a class="card card-hover spotlight row" style="gap:18px;flex-wrap:nowrap" href="https://wa.me/{{ site.contact.whatsapp }}?text={{url site.contact.whatsapp_text}}" target="_blank" rel="noopener">
+        <span class="ico" style="width:52px;height:52px;border-radius:16px;background:#25d366;color:#04210f;display:grid;place-items:center;flex-shrink:0"><svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 1.9 17.7L.3 23.6l6-1.6a11.8 11.8 0 0 0 5.7 1.5A11.8 11.8 0 0 0 20.5 3.5z"/></svg></span>
+        <div><p class="eyebrow no-line">Fastest</p><b style="font-size:18px">Chat on WhatsApp</b><br><span class="muted">{{ site.contact.phone_display }}</span></div>
+      </a>
+      <a class="card card-hover spotlight" href="mailto:{{ site.contact.email }}"><p class="eyebrow no-line">Email</p><b style="font-size:18px">{{ site.contact.email }}</b></a>
+      <a class="card card-hover spotlight" href="tel:{{ site.contact.phone_tel }}"><p class="eyebrow no-line">Phone</p><b style="font-size:18px">{{ site.contact.phone_display }}</b><br><span class="muted" style="font-size:14px">{{ site.contact.hours }}</span></a>
+      <div class="card"><p class="eyebrow no-line">Based in</p><b>{{ site.brand.company }}</b><br><span class="muted">{{ site.brand.address }}</span><iframe class="map-embed mt-2" src="{{ site.contact.map_embed }}" loading="lazy" title="Map of Gampaha, Sri Lanka" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+    </div>
+    <div class="card form-card" data-form-wrap>
+      <form class="form" data-lead-form data-type="contact" data-magnet="contact" novalidate>
+        <h2 class="h3">Send a message</h2>
+        <div class="form-row">
+          <div class="field"><label for="c-name">Name</label><input id="c-name" name="name" autocomplete="name" required><span class="field-error"></span></div>
+          <div class="field"><label for="c-phone">WhatsApp</label><input id="c-phone" name="phone" inputmode="tel" autocomplete="tel" placeholder="07X XXX XXXX"><span class="field-error"></span></div>
+        </div>
+        <div class="field"><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" required><span class="field-error"></span></div>
+        <div class="field"><label for="c-topic">Topic</label>
+          <select id="c-topic" name="interest"><option>Designer X enrollment</option><option>Payments and bank transfer</option><option>Linux Master waitlist</option><option>Student support</option><option>Partnership or media</option><option>Something else</option></select>
+        </div>
+        <div class="field"><label for="c-msg">Message</label><textarea id="c-msg" name="message" required></textarea><span class="field-error"></span></div>
+        <button class="btn btn-primary btn-lg" type="submit">Send message <span class="arrow">→</span></button>
+        <p class="form-msg" role="status" aria-live="polite"></p>
+      </form>
+      <div class="form-success"><div class="tick">✓</div><h3>Message received.</h3><p class="muted">We will reply within one business day. For anything urgent, WhatsApp is fastest.</p></div>
+    </div>
+  </div>
+</section>
+<style>@media (max-width: 900px){ #contact-grid{ grid-template-columns:1fr !important } }</style>

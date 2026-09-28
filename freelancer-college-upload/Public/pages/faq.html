@@ -1,0 +1,38 @@
+---
+title: FAQ | Freelancer College
+description: Answers about Freelancer College programs, payments, schedules, certificates and getting paid from Sri Lanka.
+kind: Page
+---
+<section class="page-hero center" style="padding-bottom:40px">
+  <div class="mesh-bg" aria-hidden="true"></div>
+  <div class="container rel">
+    <p class="eyebrow">FAQ</p>
+    <h1 data-split>Straight answers.</h1>
+    <p class="lead">Can't find it here? <a class="link-arrow" href="https://wa.me/{{ site.contact.whatsapp }}" target="_blank" rel="noopener">Ask on WhatsApp →</a></p>
+    <div class="search-inline mt-3" style="max-width:520px;margin-inline:auto"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2"/></svg><input type="search" placeholder="Search questions" aria-label="Search questions" data-faq-search></div>
+  </div>
+</section>
+<section class="section-sm" style="padding-top:0">
+  <div class="container container-sm stack" style="gap:40px" data-faq-root>
+    <div><h2 class="h3" style="margin-bottom:16px">Programs</h2>{{> faq-home }}</div>
+    <div><h2 class="h3" style="margin-bottom:16px">Enrollment and payments</h2>
+      <div class="faq">
+{{#each faqs.payments}}        <details><summary>{{ this.q }}<span class="pm"></span></summary><div class="answer"><p>{{{ this.a }}}</p></div></details>
+{{/each}}      </div>
+    </div>
+    <div><h2 class="h3" style="margin-bottom:16px">During the program</h2>
+      <div class="faq">
+{{#each faqs.during}}        <details><summary>{{ this.q }}<span class="pm"></span></summary><div class="answer"><p>{{{ this.a }}}</p></div></details>
+{{/each}}      </div>
+    </div>
+  </div>
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const items = [...document.querySelectorAll("[data-faq-root] details")];
+  document.querySelector("[data-faq-search]").addEventListener("input", (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    items.forEach((d) => { const hit = !q || d.textContent.toLowerCase().includes(q); d.style.display = hit ? "" : "none"; d.open = !!q && hit; });
+  });
+});
+</script>

@@ -1,0 +1,5 @@
+{
+  "part": "erp",
+  "url": "/admin",
+  "about": "The ERP / admin panel and its server code (database, login, leads, enrollments, payments, content editing). build.py finds this folder by this file, so the folder can be renamed or moved anywhere inside the project."
+}

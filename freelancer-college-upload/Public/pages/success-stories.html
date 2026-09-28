@@ -1,0 +1,75 @@
+---
+title: Success Stories | Student results from Designer X | Freelancer College
+description: Real stories from Freelancer College students. From zero orders to international clients, taught in Sinhala.
+kind: Page
+---
+<section class="page-hero" style="padding-bottom:48px">
+  <div class="mesh-bg" aria-hidden="true"></div>
+  <div class="container rel">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>Success stories</span></nav>
+    <h1 data-split>Look, <span class="red-glow">don't listen.</span></h1>
+    <p class="lead">No rented cars, no fake screenshots. Just students who learned the skill, built the portfolio and did the work.</p>
+  </div>
+</section>
+
+<section class="section-sm" style="padding-top:0">
+  <div class="container">
+    <div class="stats" data-reveal>
+      <div class="stat"><div class="n"><span data-count="{{ site.stats.students }}">0</span><sup>+</sup></div><p>Students trained</p></div>
+      <div class="stat"><div class="n"><span data-count="{{ site.stats.assignments }}">0</span></div><p>Assignments per batch</p></div>
+      <div class="stat"><div class="n"><span data-count="2">0</span></div><p>Client projects each</p></div>
+      <div class="stat"><div class="n"><span data-count="{{ site.stats.years }}">0</span><sup>+</sup></div><p>Years of freelancing behind it</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-sm">
+  <div class="container">
+    <div class="filters">
+      <div class="filter-group" role="group" aria-label="Filter stories">
+        <button class="chip" aria-pressed="true" data-story="all">All stories</button>
+        <button class="chip" aria-pressed="false" data-story="first-order">First order</button>
+        <button class="chip" aria-pressed="false" data-story="full-time">Full time</button>
+        <button class="chip" aria-pressed="false" data-story="portfolio">Portfolio</button>
+      </div>
+    </div>
+    <div class="grid-3" data-stories>
+{{#each testimonials}}{{#unless this.video}}      <article class="card t-card spotlight" style="width:auto" data-tags="{{ this.filter }}">
+        <span class="pill pill-green">Designer X</span>
+        <blockquote>{{ this.quote }}</blockquote>
+        <div class="stack" style="gap:6px;font-size:14px"><div><b>Before:</b> <span class="muted">{{ this.before }}</span></div><div><b>Did:</b> <span class="muted">{{ this.did }}</span></div><div><b>Result:</b> <span class="muted">{{ this.result }}</span></div></div>
+        <div class="who"><span class="av" style="background:{{ this.color }}">{{ this.initials }}</span><div><b>{{ this.name }}</b><small>{{ this.tag }}</small></div></div>
+      </article>
+{{/unless}}{{/each}}   
+    </div>
+  </div>
+</section>
+
+<section class="section-sm">
+  <div class="container">
+    <div class="section-head"><p class="eyebrow">Video stories</p><h2 data-split>Hear it from them.</h2></div>
+    <div class="grid-3" data-stagger>
+      <div class="t-video" data-cursor style="aspect-ratio:9/14"><span class="play"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M8 5v14l11-7z"/></svg></span><span class="cap">Student video story coming soon</span></div>
+      <div class="t-video" data-cursor style="aspect-ratio:9/14"><span class="play"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M8 5v14l11-7z"/></svg></span><span class="cap">Student video story coming soon</span></div>
+      <div class="t-video" data-cursor style="aspect-ratio:9/14"><span class="play"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M8 5v14l11-7z"/></svg></span><span class="cap">Student video story coming soon</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-sm">
+  <div class="container">
+    <div class="inline-cta">
+      <div><p class="eyebrow">Are you a student?</p><h3 class="mt-1">Share your story and inspire the next batch.</h3></div>
+      <a href="https://wa.me/{{ site.contact.whatsapp }}?text=Hi!%20I%20want%20to%20share%20my%20Freelancer%20College%20story." class="btn btn-ghost" target="_blank" rel="noopener">Send us your story</a>
+    </div>
+  </div>
+</section>
+{{> final-cta }}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("[data-story]").forEach((b) => b.addEventListener("click", () => {
+    document.querySelectorAll("[data-story]").forEach((x) => x.setAttribute("aria-pressed", x === b));
+    document.querySelectorAll("[data-stories] > article").forEach((a) => (a.style.display = b.dataset.story === "all" || a.dataset.tags.includes(b.dataset.story) ? "" : "none"));
+  }));
+});
+</script>
