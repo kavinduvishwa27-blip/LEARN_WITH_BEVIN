@@ -1,5 +1,5 @@
 # Cloudflare Pages project config (used by `wrangler pages` commands; optional for Git deploys)
-name = "freelancer-college"
+name = "learn-with-bevin"
 compatibility_date = "2026-09-01"
 pages_build_output_dir = "dist"
 
