@@ -547,7 +547,9 @@ async function viewStudents(page) {
   await load();
 }
 
-const appsScript = (token) => `// Freelancer College: adds each new student from the website to this sheet.
+const appsScript = (token) => `/** @OnlyCurrentDoc */
+// Freelancer College: adds each new student from the website to this sheet.
+// @OnlyCurrentDoc above limits the script to this one spreadsheet.
 // Paste this in Extensions > Apps Script, then Deploy > New deployment > Web app.
 const TOKEN = "${token}";
 const SHEET_NAME = "Form responses 1";
