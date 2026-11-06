@@ -23,32 +23,29 @@ bodyclass: page-success
       <h2 class="h3" data-welcome-title>Welcome to Designer X!</h2>
       <p class="muted" data-welcome-text></p>
       <!-- Student details (replaced the Google Form). The group link unlocks once this is sent. -->
-      <form class="slip-profile" data-profile hidden novalidate>
-        <p class="note-box"><b>One last step:</b> tell us a little about yourself, then your batch group link appears.</p>
-        <div class="form-row">
-          <label class="field"><span class="label">Full name</span><input class="input" name="name" autocomplete="name" required></label>
-          <label class="field"><span class="label">Email address</span><input class="input" name="email" type="email" autocomplete="email" required></label>
+      <form class="details" data-profile hidden novalidate>
+        <div class="details-head">
+          <p class="eyebrow no-line">One last step</p>
+          <h3 class="h3">Tell us a little about yourself</h3>
+          <p class="muted">7 quick questions for your student record. Your batch group link appears as soon as you're done.</p>
         </div>
-        <div class="form-row">
-          <label class="field"><span class="label">Age</span><input class="input" name="age" type="number" inputmode="numeric" min="13" max="80" required></label>
-          <label class="field"><span class="label">Home town</span><input class="input" name="city" autocomplete="address-level2" required></label>
-        </div>
-        <fieldset class="field slip-choice"><legend class="label">Gender</legend>
-          <label><input type="radio" name="gender" value="Female" required> Female</label>
-          <label><input type="radio" name="gender" value="Male"> Male</label>
-          <label><input type="radio" name="gender" value="Prefer not to say"> Prefer not to say</label>
-        </fieldset>
-        <fieldset class="field slip-choice"><legend class="label">Are you currently studying at a university?</legend>
-          <label><input type="radio" name="studying" value="Yes" required> Yes</label>
-          <label><input type="radio" name="studying" value="No"> No</label>
-        </fieldset>
-        <label class="field" data-uni hidden><span class="label">Which university?</span><input class="input" name="university"></label>
-        <label class="field"><span class="label">How did you find us?</span>
-          <select class="input" name="source" required>
-            <option value="">Choose one</option>
-            <option>TikTok</option><option>Facebook</option><option>YouTube</option><option>Instagram</option><option>WhatsApp</option><option>Friend or family</option><option>Google</option><option>Other</option>
-          </select>
-        </label>
+        <ol class="qs">
+          <li class="q"><label class="q-title" for="pf-name">What's your full name?</label><input class="input" id="pf-name" name="name" autocomplete="name" required></li>
+          <li class="q"><label class="q-title" for="pf-email">What's your email address?</label><input class="input" id="pf-email" name="email" type="email" inputmode="email" autocomplete="email" required></li>
+          <li class="q"><label class="q-title" for="pf-age">How old are you?</label><input class="input q-short" id="pf-age" name="age" type="number" inputmode="numeric" min="13" max="80" placeholder="Age" required></li>
+          <li class="q"><label class="q-title" for="pf-city">Which town are you from?</label><input class="input" id="pf-city" name="city" autocomplete="address-level2" placeholder="Your home town" required></li>
+          <li class="q"><fieldset><legend class="q-title">What's your gender?</legend>
+            <div class="q-opts"><label class="q-opt"><input type="radio" name="gender" value="Female" required><span>Female</span></label><label class="q-opt"><input type="radio" name="gender" value="Male"><span>Male</span></label><label class="q-opt"><input type="radio" name="gender" value="Prefer not to say"><span>Prefer not to say</span></label></div>
+          </fieldset></li>
+          <li class="q"><fieldset><legend class="q-title">Are you currently studying at a university?</legend>
+            <div class="q-opts"><label class="q-opt"><input type="radio" name="studying" value="Yes" required><span>Yes</span></label><label class="q-opt"><input type="radio" name="studying" value="No"><span>No</span></label></div>
+          </fieldset>
+            <div class="q-follow" data-uni hidden><label class="q-sub" for="pf-uni">Which university?</label><input class="input" id="pf-uni" name="university" placeholder="For example: University of Kelaniya"></div>
+          </li>
+          <li class="q"><fieldset><legend class="q-title">How did you find us?</legend>
+            <div class="q-opts"><label class="q-opt"><input type="radio" name="source" value="TikTok" required><span>TikTok</span></label><label class="q-opt"><input type="radio" name="source" value="Facebook"><span>Facebook</span></label><label class="q-opt"><input type="radio" name="source" value="YouTube"><span>YouTube</span></label><label class="q-opt"><input type="radio" name="source" value="Instagram"><span>Instagram</span></label><label class="q-opt"><input type="radio" name="source" value="WhatsApp"><span>WhatsApp</span></label><label class="q-opt"><input type="radio" name="source" value="Friend or family"><span>Friend or family</span></label><label class="q-opt"><input type="radio" name="source" value="Google"><span>Google</span></label><label class="q-opt"><input type="radio" name="source" value="Other"><span>Other</span></label></div>
+          </fieldset></li>
+        </ol>
         <p class="slip-msg warn" data-profile-msg hidden></p>
         <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to the batch group <span class="arrow">→</span></button>
       </form>
@@ -90,12 +87,31 @@ bodyclass: page-success
       <p class="eyebrow no-line mt-4" data-upload-title>Step 2 · Upload your slip</p>
       <p class="muted mt-1">Upload a screenshot or photo of the slip (a screenshot from your banking app works best). We check it straight away and show your batch group link here.</p>
       <p class="slip-msg" data-slip-msg hidden></p>
-      <label class="slip-drop mt-2" data-drop>
-        <input type="file" accept="image/*,application/pdf" data-file class="sr-only">
-        <span class="slip-drop-icon" aria-hidden="true">↑</span>
-        <b>Upload payment slip</b>
-        <span class="small muted">Tap to choose, or drop the file here. JPG, PNG or PDF.</span>
-      </label>
+      <div class="slip-up mt-2">
+        <input type="file" id="slip-file" accept="image/*,application/pdf" data-file class="sr-only" tabindex="-1">
+        <input type="file" id="slip-cam" accept="image/*" capture="environment" data-camera class="sr-only" tabindex="-1">
+        <!-- empty: drop, choose, photograph or paste the slip -->
+        <div class="slip-drop" data-drop>
+          <span class="slip-drop-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg></span>
+          <b class="slip-drop-title" data-drop-title>Drag and drop your slip here</b>
+          <span class="small muted">A screenshot from your banking app works best. JPG, PNG or PDF.</span>
+          <div class="slip-drop-btns">
+            <label class="btn btn-primary" for="slip-file" tabindex="0" data-choose>Choose a file</label>
+            <label class="btn btn-ghost" for="slip-cam" tabindex="0" data-cam-btn hidden>Take a photo</label>
+          </div>
+          <span class="small dim" data-paste-hint>You can also paste a screenshot here with Ctrl + V</span>
+        </div>
+        <!-- chosen: preview, then the student confirms -->
+        <div class="slip-picked" data-picked hidden>
+          <div class="slip-thumb"><img data-preview alt="Your payment slip"><span class="slip-pdf" data-pdf hidden>PDF</span></div>
+          <div class="slip-file-meta">
+            <b data-fname></b>
+            <span class="small muted" data-fsize></span>
+            <button type="button" class="link-btn" data-change>Choose a different file</button>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" type="button" data-send hidden>Upload &amp; confirm payment <span class="arrow">→</span></button>
+      </div>
       <p class="small muted mt-2">Having trouble? <a class="link-arrow" data-wa-slip target="_blank" rel="noopener" href="https://wa.me/{{ site.contact.whatsapp }}">Send the slip on WhatsApp instead</a></p>
     </div>
 
@@ -272,6 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (s.result === "confirmed") document.querySelectorAll("[data-steps] li").forEach((li) => { li.classList.remove("on"); li.classList.add("done"); });
       await new Promise((r) => setTimeout(r, s.result === "confirmed" ? 700 : 0));
       els.head.hidden = false;
+      unpick();
       render(s);
       if (s.result === "retry") window.scrollTo({ top: els.bank.offsetTop - 100, behavior: "smooth" });
     } catch (e) {
@@ -282,18 +299,73 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  const input = $("[data-file]"), drop = $("[data-drop]");
-  input.addEventListener("change", () => { upload(input.files[0]); input.value = ""; });
-  drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("over"); });
-  drop.addEventListener("dragleave", () => drop.classList.remove("over"));
-  drop.addEventListener("drop", (e) => { e.preventDefault(); drop.classList.remove("over"); upload(e.dataTransfer.files[0]); });
+  // Choosing the slip: drop it, choose it, photograph it (phones) or paste it (computers).
+  // It is shown first; nothing is sent until the student presses "Upload and confirm".
+  const drop = $("[data-drop]"), pickedBox = $("[data-picked]"), sendBtn = $("[data-send]"), preview = $("[data-preview]");
+  const touch = matchMedia("(pointer: coarse)").matches;
+  $("[data-cam-btn]").hidden = !touch;
+  $("[data-paste-hint]").hidden = touch;
+  if (touch) $("[data-drop-title]").textContent = "Add your payment slip";
+  let picked = null, previewUrl = "";
+  const kb = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)} MB` : `${Math.max(1, Math.round(n / 1000))} KB`);
+  function pick(file) {
+    if (!file) return;
+    if (!/^image\//.test(file.type) && file.type !== "application/pdf") { say(els.msg, "Please choose a photo, screenshot or PDF of your slip.", "warn"); return; }
+    picked = file;
+    say(els.msg, "");
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    const isPdf = file.type === "application/pdf";
+    previewUrl = isPdf ? "" : URL.createObjectURL(file);
+    preview.hidden = isPdf;
+    if (!isPdf) preview.src = previewUrl;
+    $("[data-pdf]").hidden = !isPdf;
+    $("[data-fname]").textContent = file.name || "Pasted screenshot";
+    $("[data-fsize]").textContent = kb(file.size) + " · ready to upload";
+    drop.hidden = true;
+    pickedBox.hidden = false;
+    sendBtn.hidden = false;
+    sendBtn.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+  function unpick() {
+    picked = null;
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    previewUrl = "";
+    drop.hidden = false;
+    pickedBox.hidden = true;
+    sendBtn.hidden = true;
+  }
+  preview.addEventListener("error", () => { preview.hidden = true; $("[data-pdf]").hidden = false; $("[data-pdf]").textContent = "IMG"; });
+  for (const inp of [$("[data-file]"), $("[data-camera]")]) inp.addEventListener("change", () => { pick(inp.files[0]); inp.value = ""; });
+  // the whole drop area opens the file chooser too
+  drop.addEventListener("click", (e) => { if (!e.target.closest("label, button")) $("[data-file]").click(); });
+  document.querySelectorAll("[data-choose], [data-cam-btn]").forEach((l) => l.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); l.click(); } }));
+  ["dragenter", "dragover"].forEach((t) => drop.addEventListener(t, (e) => { e.preventDefault(); drop.classList.add("over"); }));
+  ["dragleave", "dragend"].forEach((t) => drop.addEventListener(t, () => drop.classList.remove("over")));
+  drop.addEventListener("drop", (e) => { e.preventDefault(); drop.classList.remove("over"); pick(e.dataTransfer.files[0]); });
+  document.addEventListener("paste", (e) => {
+    if (els.bank.hidden) return;
+    const file = [...(e.clipboardData?.files || [])].find((f) => /^image\//.test(f.type));
+    if (file) { e.preventDefault(); pick(file); }
+  });
+  $("[data-change]").addEventListener("click", () => { unpick(); $("[data-file]").click(); });
+  sendBtn.addEventListener("click", () => upload(picked));
 
   const pf = $("[data-profile]");
-  pf.addEventListener("change", () => { const uni = pf.elements.studying.value === "Yes"; $("[data-uni]").hidden = !uni; pf.elements.university.required = uni; });
+  pf.addEventListener("input", (e) => e.target.closest(".q")?.classList.remove("err"));
+  pf.addEventListener("change", (e) => { e.target.closest(".q")?.classList.remove("err"); const uni = pf.elements.studying.value === "Yes"; $("[data-uni]").hidden = !uni; pf.elements.university.required = uni; });
   pf.addEventListener("submit", async (e) => {
     e.preventDefault();
     const msg = $("[data-profile-msg]");
-    if (!pf.checkValidity()) { say(msg, "Please answer every question.", "warn"); pf.reportValidity(); return; }
+    pf.querySelectorAll(".q.err").forEach((q) => q.classList.remove("err"));
+    if (!pf.checkValidity()) {
+      const bad = pf.querySelector(":invalid");
+      const q = bad?.closest(".q");
+      q?.classList.add("err");
+      say(msg, "Please answer the highlighted question.", "warn");
+      q?.scrollIntoView({ behavior: "smooth", block: "center" });
+      setTimeout(() => bad?.focus({ preventScroll: true }), 350);
+      return;
+    }
     const btn = pf.querySelector("button[type=submit]");
     btn.disabled = true;
     const profile = Object.fromEntries(["name", "email", "age", "city", "gender", "studying", "university", "source"].map((k) => [k, pf.elements[k].value]));
