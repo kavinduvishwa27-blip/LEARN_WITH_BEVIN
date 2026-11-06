@@ -42,6 +42,7 @@ Run:  python build.py          -> builds into dist/
       python build.py serve    -> builds, serves http://localhost:8788 and rebuilds on save
 """
 import copy
+import hashlib
 import html
 import json
 import math
@@ -397,9 +398,25 @@ def write(path, text):
         f.write(text)
 
 
+ASSET_VERSION = ""
+ASSET_REF = re.compile(r"(/assets/(?:css|js)/[\w.-]+\.(?:css|js))(?=[\"'])")
+
+
+def asset_version():
+    """Short fingerprint of Public/assets. Browsers keep /assets/ files for a week, so every
+    page asks for main.css?v=<fingerprint>: a changed file gets a new address and is fetched fresh."""
+    h = hashlib.sha1()
+    for f in sorted((PUBLIC / "assets").rglob("*")):
+        if f.is_file():
+            h.update(f.relative_to(PUBLIC).as_posix().encode())
+            h.update(f.read_bytes())
+    return h.hexdigest()[:10]
+
+
 def make_template(shell, body, meta):
     """Layout + partials + page values. Site and collection tokens stay for later."""
     full = expand_partials(shell).replace("{{ content }}", expand_partials(body))
+    full = ASSET_REF.sub(lambda m: f"{m.group(1)}?v={ASSET_VERSION}", full)
     return render(full, {"page": meta}, lenient=True)
 
 
@@ -409,6 +426,8 @@ def build(dev=False):
     content = json.loads(read(PUBLIC / "data" / "content.json"))
     defaults = {"site": site, **content}
     data = normalize(defaults)
+    global ASSET_VERSION
+    ASSET_VERSION = asset_version()
     clean(DIST)
 
     shell = read(PUBLIC / "layouts" / "base.html")
