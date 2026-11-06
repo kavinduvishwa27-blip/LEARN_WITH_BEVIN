@@ -136,7 +136,7 @@ async function readSlip(env, f) {
     method: "POST",
     signal: AbortSignal.timeout(120_000),
     headers: {
-      "x-api-key": env.ANTHROPIC_API_KEY,
+      "x-api-key": String(env.ANTHROPIC_API_KEY).trim(), // a pasted key may carry a stray space or line break
       "anthropic-version": "2026-10-21",
       // if a request is declined, the API retries it on a fallback model within the same call
       "anthropic-beta": "server-side-fallback-2026-07-01",

@@ -37,7 +37,7 @@ export async function onRequestPost({ request, env }) {
   const res = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
     headers: {
-      "x-api-key": env.ANTHROPIC_API_KEY,
+      "x-api-key": String(env.ANTHROPIC_API_KEY).trim(), // a pasted key may carry a stray space or line break
       "anthropic-version": "2023-06-01",
       // Server-side fallback: if a request is declined, the API retries on a fallback model in the same call
       "anthropic-beta": "server-side-fallback-2026-07-01",
