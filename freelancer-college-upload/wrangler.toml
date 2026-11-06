@@ -3,13 +3,13 @@ name = "freelancer-college"
 compatibility_date = "2026-09-01"
 pages_build_output_dir = "dist"
 
-# Database for the admin panel (Cloudflare D1). Create it in the dashboard
-# (Storage & Databases > D1 > Create), then bind it to this Pages project as "DB"
-# (Settings > Bindings > Add > D1 database). Or uncomment and paste the id here:
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "freelancer-college"
-# database_id = "<your-database-id>"
+# Database for the admin panel (Cloudflare D1, Storage & Databases > D1).
+# Because this file exists, Cloudflare takes the bindings from here, not from the dashboard.
+# Secrets such as ADMIN_PASSWORD are still added in the dashboard (Settings > Variables and Secrets).
+[[d1_databases]]
+binding = "DB"
+database_name = "freelancer-college"
+database_id = "6303080d-66b1-420e-9a2a-b00dd40967a7"
 
 # Optional: KV namespace for lead backup + rate limiting.
 # Create it in the dashboard (Workers & Pages > KV), then uncomment and paste the id.
