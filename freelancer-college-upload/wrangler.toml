@@ -11,6 +11,11 @@ binding = "DB"
 database_name = "freelancer-college"
 database_id = "6303080d-66b1-420e-9a2a-b00dd40967a7"
 
+# Free AI (Cloudflare Workers AI) that reads payment slips. 10,000 free "neurons" a day,
+# about 40 slips. If an ANTHROPIC_API_KEY secret is set, Claude reads them instead.
+[ai]
+binding = "AI"
+
 # Optional: KV namespace for lead backup + rate limiting.
 # Create it in the dashboard (Workers & Pages > KV), then uncomment and paste the id.
 # [[kv_namespaces]]

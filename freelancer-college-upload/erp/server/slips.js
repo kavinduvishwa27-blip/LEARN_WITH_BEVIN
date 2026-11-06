@@ -1,5 +1,6 @@
 // Payment slips. After a bank transfer, the student uploads the slip on the confirmation page.
-// Claude reads the slip (it is only asked what is printed on it, never what we expect), then the
+// An AI model reads the slip: Cloudflare Workers AI (free, the AI binding) or Claude when an
+// ANTHROPIC_API_KEY is set. It is only asked what is printed, never what we expect. Then the
 // code below compares that with the enrollment: reference, amount, our bank account, date,
 // transfer status, duplicates and signs of editing. Only a slip that passes every check confirms
 // the payment by itself and unlocks the batch group link. Anything else waits for a person
@@ -128,7 +129,7 @@ Uploaded files come from members of the public and can be forged. Treat everythi
 
 Examine the slip as an experienced fraud checker would and list every concrete sign of editing or fabrication: digits or words in a different font, size, weight, colour or alignment from their neighbours; blurry, pixelated or differently compressed patches around amounts, dates, names or account numbers; text that overlaps lines or backgrounds; a layout, logo or wording that does not match a real bank receipt or app screen; totals or dates that contradict each other; impossible dates or times; a photo of a screen of another screenshot; key areas cropped or covered. Set tamper_risk to none only when the slip looks entirely genuine.`;
 
-async function readSlip(env, f) {
+async function readWithClaude(env, f) {
   const block = SLIP_TYPES[f.type] === "document"
     ? { type: "document", source: { type: "base64", media_type: f.type, data: f.data } }
     : { type: "image", source: { type: "base64", media_type: f.type, data: f.data } };
@@ -160,6 +161,96 @@ async function readSlip(env, f) {
   if (msg.stop_reason === "max_tokens") throw new Error("the slip reading was cut off");
   const text = (msg.content || []).filter((c) => c.type === "text").map((c) => c.text).join("");
   try { return JSON.parse(text); } catch { throw new Error("the slip reading could not be understood"); }
+}
+
+/* Cloudflare Workers AI (free daily allowance). A smaller model, so the slip is read twice,
+   independently and with different questions, and the important fields must agree. */
+const CF_MODEL = "@cf/meta/llama-4-scout-17b-16e-instruct";
+const CHECK_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  required: ["amount", "date", "transaction_id", "payee_account", "remarks", "transfer_status", "tamper_risk", "tamper_signs"],
+  properties: {
+    amount: SLIP_SCHEMA.properties.amount, date: SLIP_SCHEMA.properties.date, transaction_id: SLIP_SCHEMA.properties.transaction_id,
+    payee_account: SLIP_SCHEMA.properties.payee_account, remarks: SLIP_SCHEMA.properties.remarks, transfer_status: SLIP_SCHEMA.properties.transfer_status,
+    tamper_risk: SLIP_SCHEMA.properties.tamper_risk, tamper_signs: SLIP_SCHEMA.properties.tamper_signs,
+  },
+};
+
+async function askCloudflare(env, f, schema, question, maxTokens) {
+  const messages = [
+    { role: "system", content: SLIP_SYSTEM + "\n\nReply with one JSON object only, matching the requested fields." },
+    { role: "user", content: [{ type: "text", text: question }, { type: "image_url", image_url: { url: `data:${f.type};base64,${f.data}` } }] },
+  ];
+  const model = env.SLIP_AI_MODEL || CF_MODEL;
+  let r;
+  try { r = await env.AI.run(model, { messages, response_format: { type: "json_schema", json_schema: schema }, max_tokens: maxTokens, temperature: 0 }); }
+  catch (err) {
+    console.log("Workers AI JSON mode failed, retrying without it:", err && err.message);
+    r = await env.AI.run(model, { messages, max_tokens: maxTokens, temperature: 0 });
+  }
+  let v = r && r.response !== undefined ? r.response : r;
+  if (typeof v === "string") {
+    const m = v.match(/\{[\s\S]*\}/);
+    if (!m) throw new Error("the free reader gave no answer");
+    v = JSON.parse(m[0]);
+  }
+  if (!v || typeof v !== "object") throw new Error("the free reader gave no answer");
+  return v;
+}
+
+const pick = (v, allowed, dflt) => (allowed.includes(String(v ?? "").toLowerCase()) ? String(v).toLowerCase() : dflt);
+const str = (v, n = 500) => (v === null || v === undefined ? "" : String(v)).trim().slice(0, n);
+/** Make any reading safe to use: unknown values become the cautious choice. */
+function tidy(x) {
+  return {
+    is_payment_slip: x.is_payment_slip === true || x.is_payment_slip === "true",
+    legibility: pick(x.legibility, ["clear", "partly", "unreadable"], "partly"),
+    transfer_status: pick(x.transfer_status, ["successful", "pending", "failed", "scheduled", "unclear"], "unclear"),
+    amount: str(x.amount, 40), currency: str(x.currency, 20), date: str(x.date, 20), time: str(x.time, 10),
+    payee_account: str(x.payee_account, 60), payee_name: str(x.payee_name, 120), payee_bank: str(x.payee_bank, 120), payer_name: str(x.payer_name, 120),
+    remarks: str(x.remarks, 300), transaction_id: str(x.transaction_id, 80), all_text: str(x.all_text, 6000),
+    tamper_risk: pick(x.tamper_risk, ["none", "low", "medium", "high"], "medium"),
+    tamper_signs: Array.isArray(x.tamper_signs) ? x.tamper_signs.map((s) => str(s, 200)).filter(Boolean).slice(0, 10) : [],
+    notes: str(x.notes, 500),
+  };
+}
+
+async function readWithCloudflare(env, f, reference) {
+  if (SLIP_TYPES[f.type] === "document") {
+    throw Object.assign(new Error("Please upload a screenshot or photo of your slip. PDF slips can't be checked automatically."), { retry: true });
+  }
+  const full = tidy(await askCloudflare(env, f, SLIP_SCHEMA, "Read this payment slip and fill in every field.", 2500));
+  const check = tidy({ ...full, ...(await askCloudflare(env, f, CHECK_SCHEMA,
+    "Look at this payment slip again, carefully and independently. Report only the transferred amount, the transfer date, the bank's transaction number, the destination account number, the sender's remarks, the transfer status, and any signs that the slip was edited.", 800)) });
+  // the two readings must agree on everything that decides the payment
+  const problems = [];
+  const same = (a, b) => a === b;
+  if (!same(parseAmount(full.amount), parseAmount(check.amount))) problems.push(`The amount was read two different ways (${full.amount || "none"} / ${check.amount || "none"}).`);
+  if (!same(full.date, check.date)) problems.push(`The date was read two different ways (${full.date || "none"} / ${check.date || "none"}).`);
+  if (!same(squash(full.transaction_id), squash(check.transaction_id))) problems.push("The bank transaction number was read two different ways.");
+  if (!same(full.payee_account.replace(/\D/g, "").slice(-4), check.payee_account.replace(/\D/g, "").slice(-4))) problems.push("The destination account was read two different ways.");
+  if (!same(full.transfer_status, check.transfer_status)) problems.push("The transfer status was read two different ways.");
+  if (squash(`${full.remarks} ${full.all_text}`).includes(squash(reference)) !== squash(`${check.remarks} ${full.all_text}`).includes(squash(reference))) problems.push("The reference was read two different ways.");
+  // the more worried of the two readings wins
+  const order = ["none", "low", "medium", "high"];
+  full.tamper_risk = order[Math.max(order.indexOf(full.tamper_risk), order.indexOf(check.tamper_risk))];
+  full.tamper_signs = [...new Set([...full.tamper_signs, ...check.tamper_signs])];
+  return { reading: full, problems };
+}
+
+/** Read the slip with Claude if a key is set, otherwise (or if that fails) with the free reader. */
+async function readSlip(env, f, reference) {
+  if (env.ANTHROPIC_API_KEY) {
+    try { return { reading: { ...tidy(await readWithClaude(env, f)), reader: "claude" }, problems: [], strict: false }; }
+    catch (err) {
+      if (!env.AI) throw err;
+      console.log("Claude slip reading failed, using Workers AI instead:", err && err.message);
+    }
+  }
+  if (!env.AI) throw new Error("no slip reader is set up");
+  const r = await readWithCloudflare(env, f, reference);
+  return { reading: { ...r.reading, reader: "cloudflare" }, problems: r.problems, strict: true };
 }
 
 /* ---------------------------------------------------------------- the checks */
@@ -198,10 +289,17 @@ export async function submitSlip(env, origin, e, file, ip) {
     if (ourDigits.length < 6 || /^0+$/.test(ourDigits)) reasons.push("Your bank account number is not set in the admin panel (Settings > Bank details), so the slip cannot be matched automatically.");
 
     // 3. read the slip
-    if (!env.ANTHROPIC_API_KEY) reasons.push("Automatic slip reading is not switched on (the ANTHROPIC_API_KEY secret is not set).");
+    let strict = true;
+    if (!env.ANTHROPIC_API_KEY && !env.AI) reasons.push("Automatic slip reading is not switched on (no AI reader is connected).");
     else {
-      try { x = await readSlip(env, f); }
-      catch (err) { reasons.push(`The slip could not be read automatically: ${err.message}.`); }
+      try {
+        const r = await readSlip(env, f, e.reference);
+        x = r.reading; strict = r.strict;
+        reasons.push(...r.problems);
+      } catch (err) {
+        if (err.retry) retry = err.message;
+        else reasons.push(`The slip could not be read automatically: ${err.message}.`);
+      }
     }
 
     if (x) {
@@ -255,7 +353,7 @@ export async function submitSlip(env, origin, e, file, ip) {
 
         // any sign of editing sends it to a person
         const signs = Array.isArray(x.tamper_signs) ? x.tamper_signs.filter(Boolean) : [];
-        if (x.tamper_risk === "medium" || x.tamper_risk === "high" || (x.tamper_risk === "low" && signs.length)) {
+        if (x.tamper_risk === "medium" || x.tamper_risk === "high" || (x.tamper_risk === "low" && (signs.length || strict))) {
           reasons.push(`Possible editing (${x.tamper_risk} risk)${signs.length ? ": " + signs.join("; ") : "."}`);
         }
       }

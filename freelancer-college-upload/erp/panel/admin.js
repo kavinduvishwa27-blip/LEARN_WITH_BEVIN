@@ -559,7 +559,7 @@ async function openSlip(id, reload) {
       ${x ? `<details class="item" open><summary style="padding:10px 12px;font-weight:600">What the slip says</summary><dl class="kv" style="padding:4px 14px 14px">
         ${row("Amount", x.amount ? `${x.currency || ""} ${x.amount}` : "")}${row("Date", [x.date, x.time].filter(Boolean).join(" "))}${row("Status", x.transfer_status)}
         ${row("To account", x.payee_account)}${row("To name", x.payee_name)}${row("To bank", x.payee_bank)}${row("From", x.payer_name)}
-        ${row("Remarks", x.remarks)}${row("Bank transaction no.", x.transaction_id)}${row("Editing risk", x.tamper_risk)}${row("Readability", x.legibility)}${row("Notes", x.notes)}
+        ${row("Read by", x.reader === "cloudflare" ? "Cloudflare AI (free, read twice)" : x.reader === "claude" ? "Claude" : "")}${row("Remarks", x.remarks)}${row("Bank transaction no.", x.transaction_id)}${row("Editing risk", x.tamper_risk)}${row("Readability", x.legibility)}${row("Notes", x.notes)}
       </dl></details>` : ""}
       ${s.student_note && s.status !== "approved" ? `<div class="notice warn">Shown to the student: ${esc(s.student_note)}</div>` : ""}
       ${open ? `<div class="card pad grid">
