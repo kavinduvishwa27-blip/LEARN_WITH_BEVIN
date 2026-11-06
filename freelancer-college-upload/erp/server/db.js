@@ -38,6 +38,13 @@ const SCHEMA = [
      reference TEXT, provider TEXT, amount INTEGER, currency TEXT, status TEXT, raw TEXT,
      created_at TEXT NOT NULL
    )`,
+  `CREATE TABLE IF NOT EXISTS media (
+     id TEXT PRIMARY KEY,
+     name TEXT, type TEXT NOT NULL, size INTEGER, width INTEGER, height INTEGER,
+     data TEXT NOT NULL,
+     created_at TEXT NOT NULL,
+     created_by TEXT
+   )`,
   `CREATE TABLE IF NOT EXISTS audit (
      id INTEGER PRIMARY KEY AUTOINCREMENT,
      at TEXT NOT NULL, who TEXT, action TEXT, detail TEXT

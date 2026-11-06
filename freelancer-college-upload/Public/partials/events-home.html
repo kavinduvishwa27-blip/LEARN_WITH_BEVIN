@@ -1,0 +1,17 @@
+<!-- Upcoming events (edited in the admin panel under Events). Hidden when there is nothing coming up. -->
+{{#if events_home}}
+<section class="section-sm events-home" id="events" aria-labelledby="events-title" data-events-section>
+  <div class="container">
+    <div class="section-head split">
+      <div class="stack">
+        <p class="eyebrow">Coming up</p>
+        <h2 id="events-title" data-reveal>Upcoming <span class="red-glow">events.</span></h2>
+      </div>
+      <a class="link-arrow" href="/events">See all events <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="event-grid" data-stagger>
+      {{#each events_home}}{{> _event-card }}{{/each}}
+    </div>
+  </div>
+</section>
+{{/if}}

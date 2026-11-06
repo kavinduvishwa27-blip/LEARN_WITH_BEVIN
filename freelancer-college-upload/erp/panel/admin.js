@@ -47,6 +47,10 @@ const ICONS = {
   file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/>',
   clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
   gear: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
+  star: '<path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>',
+  megaphone: '<path d="M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1zM16 8a5 5 0 0 1 0 8M19 5a9 9 0 0 1 0 14"/>',
+  image: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>',
+  upload: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>',
   up: '<path d="M18 15l-6-6-6 6"/>', down: '<path d="M6 9l6 6 6-6"/>', copy: '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
   trash: '<path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>',
   chev: '<path d="M9 18l6-6-6-6"/>', x: '<path d="M18 6L6 18M6 6l12 12"/>', menu: '<path d="M3 6h18M3 12h18M3 18h18"/>',
@@ -166,6 +170,7 @@ function renderShell() {
         <a class="nav-a" href="#/dashboard" data-nav="dashboard">${icon("dashboard")}Dashboard</a>
         <a class="nav-a" href="#/leads" data-nav="leads">${icon("leads")}Leads<span class="badge" data-badge="leads" hidden></span></a>
         <a class="nav-a" href="#/enrollments" data-nav="enrollments">${icon("enroll")}Enrollments<span class="badge" data-badge="enrollments" hidden></span></a>
+        <a class="nav-a" href="#/media" data-nav="media">${icon("image")}Images</a>
         ${Object.entries(groups).map(([g, list]) => `<div class="nav-group">${esc(g)}</div>${list.map((s) => `<a class="nav-a" href="#/content/${s.id}" data-nav="content/${s.id}">${icon(s.icon)}${esc(s.title)}</a>`).join("")}`).join("")}
         <div class="nav-group">System</div>
         <a class="nav-a" href="#/activity" data-nav="activity">${icon("clock")}Activity log</a>
@@ -213,6 +218,7 @@ async function route() {
     else if (h === "leads") await viewLeads(page);
     else if (h === "enrollments") await viewEnrollments(page);
     else if (h === "activity") await viewActivity(page);
+    else if (h === "media") await viewMedia(page);
     else if (h === "setup") await viewSetup(page);
     else if (h.startsWith("content/")) viewContent(page, SECTIONS.find((s) => s.id === h.slice(8)));
     else page.innerHTML = `<div class="empty">Page not found.</div>`;
@@ -253,6 +259,8 @@ async function viewDashboard(page) {
         <div class="section-title"><h2>Quick edits</h2></div>
         <div class="list-rows">
           <a href="#/content/cohort"><span>Batch dates, prices & seats</span><span class="muted">→</span></a>
+          <a href="#/content/events"><span>Add or edit an event</span><span class="muted">→</span></a>
+          <a href="#/content/popup"><span>Pop-up announcement</span><span class="muted">→</span></a>
           <a href="#/content/webinar"><span>Next webinar</span><span class="muted">→</span></a>
           <a href="#/content/posts"><span>Write a blog post</span><span class="muted">→</span></a>
           <a href="#/content/faqs"><span>FAQs</span><span class="muted">→</span></a>
@@ -456,7 +464,7 @@ async function reloadContent() { try { state.content = await api("content"); } c
 async function viewActivity(page) {
   setTitle("Activity log");
   const r = await api("audit?limit=200");
-  const NAMES = { "content.save": "Updated website content", "content.reset": "Reset content to default", "lead.update": "Updated a lead", "lead.delete": "Deleted a lead", "enrollment.create": "New enrollment", "enrollment.update": "Updated an enrollment", "enrollment.delete": "Deleted an enrollment" };
+  const NAMES = { "content.save": "Updated website content", "content.reset": "Reset content to default", "lead.update": "Updated a lead", "lead.delete": "Deleted a lead", "enrollment.create": "New enrollment", "enrollment.update": "Updated an enrollment", "enrollment.delete": "Deleted an enrollment", "media.upload": "Uploaded an image", "media.delete": "Deleted an image" };
   page.innerHTML = `<div class="card"><div class="table-wrap"><table><thead><tr><th>When</th><th>Who</th><th>What</th><th>Details</th></tr></thead><tbody>${r.rows.map((a) => {
     let det = a.detail;
     try { const o = JSON.parse(a.detail); det = typeof o === "object" ? Object.entries(o).map(([k, v]) => `${k}: ${v}`).join(", ") : o; } catch {}
@@ -485,6 +493,120 @@ async function viewSetup(page) {
       </div>
     </div>`;
   $("[data-backup]").addEventListener("click", () => download("backup", "backup.json"));
+}
+
+/* ============================================================ images */
+// Images are made smaller in the browser before upload: at most 1600px wide and about 900 KB.
+const MAX_BYTES = 900_000;
+async function shrinkImage(file) {
+  if (!/^image\//.test(file.type)) throw new Error("Please choose an image file (JPG, PNG, WebP or GIF).");
+  // keep small GIFs as they are, so animations still play
+  if (file.type === "image/gif" && file.size <= MAX_BYTES) return { blob: file, width: 0, height: 0 };
+  let src;
+  try { src = await createImageBitmap(file); }
+  catch {
+    src = await new Promise((resolve, reject) => {
+      const im = new Image();
+      im.onload = () => resolve(im);
+      im.onerror = () => reject(new Error("This image could not be opened. Try saving it as JPG or PNG first."));
+      im.src = URL.createObjectURL(file);
+    });
+  }
+  const w0 = src.width || src.naturalWidth, h0 = src.height || src.naturalHeight;
+  let max = 1600, q = 0.86, out = null, w = w0, h = h0;
+  for (let i = 0; i < 7; i++) {
+    const s = Math.min(1, max / Math.max(w0, h0));
+    w = Math.max(1, Math.round(w0 * s)); h = Math.max(1, Math.round(h0 * s));
+    const c = Object.assign(document.createElement("canvas"), { width: w, height: h });
+    const g = c.getContext("2d");
+    const toBlob = (type) => new Promise((r) => c.toBlob(r, type, q));
+    g.drawImage(src, 0, 0, w, h);
+    out = await toBlob("image/webp");
+    if (!out || out.type !== "image/webp") { // older Safari cannot make WebP
+      g.globalCompositeOperation = "destination-over"; g.fillStyle = "#fff"; g.fillRect(0, 0, w, h);
+      out = await toBlob("image/jpeg");
+    }
+    if (out && out.size <= MAX_BYTES) break;
+    q = Math.max(0.5, q - 0.08); max = Math.round(max * 0.85);
+  }
+  if (!out || out.size > MAX_BYTES * 1.5) throw new Error("This image is too large even after shrinking. Try a smaller one.");
+  return { blob: out, width: w, height: h };
+}
+const blobToBase64 = (blob) => new Promise((resolve, reject) => {
+  const r = new FileReader();
+  r.onload = () => resolve(String(r.result).replace(/^data:[^,]*,/, ""));
+  r.onerror = () => reject(new Error("The image could not be read."));
+  r.readAsDataURL(blob);
+});
+async function uploadImage(file) {
+  const { blob, width, height } = await shrinkImage(file);
+  const name = file.name.replace(/\.[a-z0-9]+$/i, "") || "image";
+  return api("media", { method: "POST", body: { name, type: blob.type, data: await blobToBase64(blob), width, height } });
+}
+// Local preview: /media/... only exists on Cloudflare, so previews load through the in-browser API
+const previewUrls = new Map();
+async function setImgSrc(img, url) {
+  if (!(state.demo && /^\/media\//.test(url))) { img.src = url; return; }
+  if (!previewUrls.has(url)) {
+    try { previewUrls.set(url, URL.createObjectURL(await (await api(`media/${url.slice(7)}/file`, { raw: true })).blob())); }
+    catch { return; }
+  }
+  img.src = previewUrls.get(url);
+}
+const kb = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)} MB` : `${Math.max(1, Math.round(n / 1000))} KB`);
+const inUse = (url) => JSON.stringify(state.content?.data || {}).includes(url);
+
+function mediaGrid(rows, { pickable } = {}) {
+  return rows.length ? `<div class="media-grid">${rows.map((m) => `
+    <figure class="media-item${pickable ? " pickable" : ""}" data-id="${esc(m.id)}" ${pickable ? 'tabindex="0" role="button"' : ""}>
+      <div class="media-thumb"><img alt="" data-src="/media/${esc(m.id)}" loading="lazy"></div>
+      <figcaption><b title="${esc(m.name)}">${esc(m.name || m.id)}</b><span class="small muted">${m.width ? `${m.width}×${m.height} · ` : ""}${kb(m.size)} · ${fmtDay(m.created_at)}</span>
+      ${pickable ? "" : `<span class="row">${inUse(`/media/${m.id}`) ? `<span class="badge s-paid">In use</span>` : ""}<button class="btn btn-line btn-sm" data-copy="/media/${esc(m.id)}">Copy link</button><button class="btn btn-danger btn-sm" data-del="${esc(m.id)}">Delete</button></span>`}</figcaption>
+    </figure>`).join("")}</div>` : `<div class="empty">No images yet. Upload one here, or with any image field (Events, Pop-up announcement).</div>`;
+}
+const loadThumbs = (root) => $$("img[data-src]", root).forEach((img) => setImgSrc(img, img.dataset.src));
+
+async function viewMedia(page) {
+  setTitle("Images");
+  $("#top-actions").innerHTML = `<label class="btn btn-dark btn-sm">${icon("upload")}Upload images<input type="file" accept="image/*" multiple hidden data-up></label>`;
+  const draw = async () => {
+    const { rows } = await api("media");
+    page.innerHTML = `<p class="muted" style="margin-bottom:16px">Every image you upload is stored here. Use them in Events and the Pop-up announcement, or copy a link to use anywhere on the site.</p><div class="card pad" data-drop-all>${mediaGrid(rows)}</div>`;
+    loadThumbs(page);
+    $$("[data-copy]", page).forEach((b) => b.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(location.origin + b.dataset.copy); toast("Link copied"); } catch { prompt("Copy this link:", location.origin + b.dataset.copy); }
+    }));
+    $$("[data-del]", page).forEach((b) => b.addEventListener("click", async () => {
+      const used = inUse(`/media/${b.dataset.del}`);
+      if (!confirm(used ? "This image is used on the website. Delete it anyway? It will disappear from those places." : "Delete this image?")) return;
+      try { await api(`media/${b.dataset.del}`, { method: "DELETE" }); toast("Deleted"); draw(); } catch (e) { toast(e.message, true); }
+    }));
+  };
+  const upAll = async (files) => {
+    for (const f of files) {
+      try { await uploadImage(f); toast(`Uploaded ${f.name}`); } catch (e) { toast(`${f.name}: ${e.message}`, true); }
+    }
+    draw();
+  };
+  $("[data-up]").addEventListener("change", (e) => { upAll([...e.target.files]); e.target.value = ""; });
+  page.addEventListener("dragover", (e) => e.preventDefault());
+  page.addEventListener("drop", (e) => { e.preventDefault(); upAll([...e.dataTransfer.files]); });
+  await draw();
+}
+
+async function pickFromLibrary(onPick) {
+  const d = drawer("Choose an image", `<div class="spinner"></div>`, `<span class="small muted">Click an image to use it.</span>`);
+  try {
+    const { rows } = await api("media");
+    const body = $(".drawer-body", d.el);
+    body.innerHTML = mediaGrid(rows, { pickable: true });
+    loadThumbs(body);
+    $$(".media-item", body).forEach((el) => {
+      const go = () => { onPick(`/media/${el.dataset.id}`); d.close(); };
+      el.addEventListener("click", go);
+      el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+    });
+  } catch (e) { $(".drawer-body", d.el).innerHTML = `<div class="notice red">${esc(e.message)}</div>`; }
 }
 
 /* ============================================================ content editor */
@@ -543,6 +665,13 @@ function viewContent(page, section) {
 }
 
 function validate(section, v) {
+  if (section.id === "events") {
+    for (const e of v) {
+      if (!e.title) return "Every event needs a name.";
+      if (!e.starts_at) return `"${e.title}": please set when it starts.`;
+      if (e.ends_at && e.ends_at < e.starts_at) return `"${e.title}": it ends before it starts.`;
+    }
+  }
   if (section.id === "posts") {
     const seen = new Set();
     for (const p of v) {
@@ -654,6 +783,47 @@ function fieldEl(f, obj, fctx, ctx) {
           if (e.key === "Backspace" && !inp.value && obj[f.k].length) { obj[f.k].pop(); draw(); fctx.onChange(f.k); $("input", box).focus(); }
         });
       };
+      draw();
+      return wrap;
+    }
+    case "image": {
+      wrap.innerHTML = `${label}<div class="img-field">
+          <div class="img-prev" data-drop tabindex="-1"><img alt="" hidden><span class="img-empty">${icon("image")}<span>Drop an image here, or upload one</span></span><span class="img-busy" hidden><span class="spinner sm"></span>Uploading...</span></div>
+          <div class="img-side">
+            <div class="row">
+              <label class="btn btn-dark btn-sm">${icon("upload")}Upload image<input type="file" accept="image/*" hidden></label>
+              <button type="button" class="btn btn-line btn-sm" data-lib>${icon("image")}Choose from library</button>
+              <button type="button" class="btn btn-line btn-sm" data-rm>Remove</button>
+            </div>
+            <input class="input" type="text" id="${id}" data-url placeholder="Or paste an image link: https://...">
+            ${hint}
+          </div>
+        </div>`;
+      const img = $(".img-prev img", wrap), empty = $(".img-empty", wrap), busy = $(".img-busy", wrap), urlIn = $("[data-url]", wrap), rm = $("[data-rm]", wrap);
+      const draw = () => {
+        const v = obj[f.k] || "";
+        urlIn.value = v;
+        rm.hidden = !v;
+        empty.hidden = !!v;
+        img.hidden = !v;
+        if (v) setImgSrc(img, v); else img.removeAttribute("src");
+      };
+      const pick = (url) => { set(url); draw(); };
+      const upload = async (file) => {
+        if (!file) return;
+        busy.hidden = false;
+        try { const r = await uploadImage(file); pick(r.url); toast("Image uploaded. Click Save & publish to put it on the website."); }
+        catch (e) { toast(e.message, true); }
+        busy.hidden = true;
+      };
+      $("input[type=file]", wrap).addEventListener("change", (e) => { upload(e.target.files[0]); e.target.value = ""; });
+      $("[data-lib]", wrap).addEventListener("click", () => pickFromLibrary(pick));
+      rm.addEventListener("click", () => pick(""));
+      urlIn.addEventListener("change", () => pick(urlIn.value.trim()));
+      const drop = $("[data-drop]", wrap);
+      drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("over"); });
+      drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+      drop.addEventListener("drop", (e) => { e.preventDefault(); drop.classList.remove("over"); upload(e.dataTransfer.files[0]); });
       draw();
       return wrap;
     }

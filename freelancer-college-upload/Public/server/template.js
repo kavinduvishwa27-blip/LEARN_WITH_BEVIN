@@ -143,7 +143,62 @@ export function dateHuman(iso) {
   return `${+m[3]} ${MONTHS[+m[2] - 1]} ${m[1]}`;
 }
 
-export function normalize(data) {
+const FULL_MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const WHEN = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2})(?::\d{2}(?:\.\d+)?)?)?(Z|[+-]\d{2}:\d{2})?$/;
+
+/** "2026-11-20T19:30:00+05:30" or "2026-11-20" (Sri Lanka time when no zone is given). Same as parse_when() in build.py.
+ *  The date parts returned are always in Sri Lanka time, whatever zone was written. */
+export function parseWhen(s) {
+  const m = WHEN.exec(String(s ?? "").trim());
+  if (!m) return null;
+  const y = +m[1], mo = +m[2], d = +m[3];
+  if (mo < 1 || mo > 12 || d < 1) return null;
+  const day = new Date(Date.UTC(y, mo - 1, d));
+  if (day.getUTCMonth() !== mo - 1 || day.getUTCFullYear() !== y) return null;
+  const timed = m[4] !== undefined;
+  const h = timed ? +m[4] : 0, mi = timed ? +m[5] : 0;
+  const tz = m[6] || "+05:30";
+  const off = tz === "Z" ? 0 : (tz[0] === "+" ? 1 : -1) * (+tz.slice(1, 3) * 60 + +tz.slice(4, 6));
+  const ms = day.getTime() + (h * 3600 + mi * 60 - off * 60) * 1000;
+  const sl = new Date(ms + 19800000); // Sri Lanka wall clock
+  return { ms, y: sl.getUTCFullYear(), mo: sl.getUTCMonth() + 1, d: sl.getUTCDate(), h: sl.getUTCHours(), mi: sl.getUTCMinutes(), timed, wd: (sl.getUTCDay() + 6) % 7 };
+}
+
+const slugify = (s) => String(s ?? "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60);
+
+/** Published events with display dates, split into upcoming (soonest first) and past (latest first). */
+export function normalizeEvents(items, nowMs) {
+  const upcoming = [], past = [], used = new Set();
+  (Array.isArray(items) ? items : []).forEach((e0, i) => {
+    if (!e0 || typeof e0 !== "object" || Array.isArray(e0) || !truthy(e0.published === undefined ? true : e0.published)) return;
+    const start = parseWhen(e0.starts_at);
+    if (!start) return;
+    const end = parseWhen(e0.ends_at);
+    const endMs = end && end.ms > start.ms ? end.ms : start.ms + (start.timed ? 3 * 3600000 : 86400000);
+    let slug = slugify(e0.title) || `event-${i + 1}`;
+    while (used.has(slug)) slug += "-2";
+    used.add(slug);
+    const e = { ...e0 };
+    for (const k of ["type", "place", "image", "summary", "notes", "button", "link"]) if (e[k] == null) e[k] = "";
+    e.slug = slug;
+    e.date_human = `${WEEKDAYS[start.wd]}, ${start.d} ${FULL_MONTHS[start.mo - 1]} ${start.y}`;
+    e.time_human = start.timed ? `${start.h % 12 || 12}.${String(start.mi).padStart(2, "0")} ${start.h < 12 ? "am" : "pm"}` : "";
+    e.day = String(start.d);
+    e.month = MONTHS[start.mo - 1];
+    e.start_ms = String(start.ms);
+    e.ends_ms = String(endMs);
+    e.past = endMs <= nowMs;
+    e.live = start.ms <= nowMs && nowMs < endMs;
+    (e.past ? past : upcoming).push(e);
+  });
+  const byStart = (a, b) => +a.start_ms - +b.start_ms;
+  upcoming.sort(byStart); // stable, like Python's sort
+  past.sort((a, b) => byStart(b, a));
+  return { upcoming, past };
+}
+
+export function normalize(data, nowMs = Date.now()) {
   const d = structuredClone(data);
   const posts = [];
   for (const p0 of d.posts || []) {
@@ -157,6 +212,10 @@ export function normalize(data) {
   }
   // stable sort, newest first (same as Python's sorted(..., reverse=True) on equal dates keeps order)
   d.posts = posts.map((p, i) => [p, i]).sort((a, b) => (a[0].date || "") < (b[0].date || "") ? 1 : (a[0].date || "") > (b[0].date || "") ? -1 : a[1] - b[1]).map((x) => x[0]);
+  const { upcoming, past } = normalizeEvents(d.events, nowMs);
+  d.events = upcoming;
+  d.events_past = past.slice(0, 12);
+  d.events_home = upcoming.filter((e) => truthy(e.featured === undefined ? true : e.featured)).slice(0, 3);
   return d;
 }
 

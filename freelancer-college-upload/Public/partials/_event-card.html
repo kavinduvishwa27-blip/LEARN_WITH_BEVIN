@@ -1,0 +1,14 @@
+<article class="card event-card card-hover{{#if this.past}} is-past{{/if}}"{{#unless this.past}} data-event-ends="{{ this.ends_ms }}"{{/unless}}>
+  <a class="ev-media" href="/events/#{{ this.slug }}" tabindex="-1" aria-hidden="true">
+    {{#if this.image}}<img src="{{ this.image }}" alt="" loading="lazy" decoding="async">{{else}}<span class="ev-cover"><span>{{ this.title }}</span></span>{{/if}}
+    <span class="ev-date"><b>{{ this.day }}</b><small>{{ this.month }}</small></span>
+    {{#if this.live}}<span class="pill pill-live ev-live"><i></i> Happening now</span>{{/if}}
+  </a>
+  <div class="ev-body">
+    {{#if this.type}}<p class="eyebrow no-line red-text">{{ this.type }}</p>{{/if}}
+    <h3><a href="/events/#{{ this.slug }}">{{ this.title }}</a></h3>
+    <p class="ev-meta"><span>{{ this.date_human }}</span>{{#if this.time_human}}<span>{{ this.time_human }}</span>{{/if}}{{#if this.place}}<span>{{ this.place }}</span>{{/if}}</p>
+    {{#if this.summary}}<p class="ev-summary">{{ this.summary }}</p>{{/if}}
+    {{#unless this.past}}{{#if this.button}}<div class="ev-foot"><a class="btn btn-primary btn-sm" href="{{ this.link }}" data-track="event_click">{{ this.button }} <span class="arrow">→</span></a></div>{{/if}}{{/unless}}
+  </div>
+</article>

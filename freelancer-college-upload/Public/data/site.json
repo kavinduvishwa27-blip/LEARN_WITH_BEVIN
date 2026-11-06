@@ -106,5 +106,22 @@
     "open": false,
     "lessons": "85",
     "hours": "4h+"
+  },
+  "popup": {
+    "enabled": true,
+    "version": "1",
+    "eyebrow": "Enrollment open",
+    "title": "The next Designer X batch is enrolling",
+    "message": "Learn UI/UX design in Sinhala and get ready for your first international client. Seats are limited, so book yours early.",
+    "image": "",
+    "image_alt": "",
+    "button": "Book your seat",
+    "link": "#book-seat",
+    "dismiss": "Maybe later",
+    "show_on": "Every page",
+    "delay_seconds": "6",
+    "repeat_days": "3",
+    "starts_at": "",
+    "ends_at": ""
   }
 }

@@ -1,0 +1,21 @@
+<!-- Announcement pop-up (admin panel > Pop-up announcement). main.js decides when to show it. -->
+{{#if site.popup.enabled}}
+<div class="promo" data-promo hidden role="dialog" aria-modal="true" aria-labelledby="promo-title"
+  data-version="{{ site.popup.version }}" data-delay="{{ site.popup.delay_seconds }}" data-repeat="{{ site.popup.repeat_days }}"
+  data-where="{{ site.popup.show_on }}" data-from="{{ site.popup.starts_at }}" data-until="{{ site.popup.ends_at }}">
+  <div class="promo-back" data-promo-close></div>
+  <div class="promo-card{{#if site.popup.image}} has-img{{/if}}">
+    <button class="promo-x" type="button" data-promo-close aria-label="Close">×</button>
+    {{#if site.popup.image}}<div class="promo-img"><img src="{{ site.popup.image }}" alt="{{ site.popup.image_alt }}" decoding="async"></div>{{/if}}
+    <div class="promo-body">
+      {{#if site.popup.eyebrow}}<p class="pill pill-live"><i></i> {{ site.popup.eyebrow }}</p>{{/if}}
+      <h2 class="h3" id="promo-title">{{ site.popup.title }}</h2>
+      {{#if site.popup.message}}<p class="promo-msg">{{ site.popup.message }}</p>{{/if}}
+      <div class="promo-acts">
+        {{#if site.popup.button}}<a class="btn btn-primary" href="{{ site.popup.link }}" data-promo-go>{{ site.popup.button }} <span class="arrow">→</span></a>{{/if}}
+        <button class="link-btn" type="button" data-promo-close>{{#if site.popup.dismiss}}{{ site.popup.dismiss }}{{else}}Close{{/if}}</button>
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}

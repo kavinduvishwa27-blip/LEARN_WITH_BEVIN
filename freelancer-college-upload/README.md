@@ -33,6 +33,13 @@ The site rebuilds automatically whenever you save a file. On macOS or Linux, use
 - **Enrollments:** every checkout creates one. Record payments as they arrive. The status
   (awaiting payment, deposit paid, paid in full) and the **seats left** on the website update
   automatically. Card payments through PayHere are recorded automatically.
+- **Events:** add webinars, workshops and meetups with an image or poster, notes, a date and a
+  button. Upcoming ones show on the home page and at `/events`, and drop off by themselves once they end.
+- **Pop-up announcement:** a window that appears a few seconds after someone opens the site, with
+  your message, an optional image and a button (`#book-seat` opens seat booking). Each visitor sees a
+  new message once, then again after the number of days you choose. Preview it at `/?popup=preview`.
+- **Images:** upload from any image field or the Images page. Photos are shrunk in the browser,
+  stored in the database and served at `/media/...`, so there is nothing extra to set up.
 - **Activity log** of every change, and a **one-click backup** of everything.
 
 How it's built: every page is also saved as a template (`dist/_tpl/`). On each request,

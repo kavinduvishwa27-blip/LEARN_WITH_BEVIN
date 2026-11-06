@@ -48,7 +48,8 @@ import math
 import re
 import shutil
 import sys
-from datetime import datetime
+import time
+from datetime import date, datetime
 from pathlib import Path
 from urllib.parse import quote
 
@@ -243,7 +244,72 @@ def date_human(iso):
     return f"{int(m.group(3))} {MONTHS[int(m.group(2)) - 1]} {m.group(1)}"
 
 
-def normalize(data):
+FULL_MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+WHEN = re.compile(r"(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2})(?::\d{2}(?:\.\d+)?)?)?(Z|[+-]\d{2}:\d{2})?")
+
+
+def parse_when(s):
+    """'2026-11-20T19:30:00+05:30' or '2026-11-20' (Sri Lanka time when no zone is given).
+    The date parts returned are always in Sri Lanka time, whatever zone was written."""
+    m = WHEN.fullmatch(str(s or "").strip())
+    if not m:
+        return None
+    y, mo, d = int(m.group(1)), int(m.group(2)), int(m.group(3))
+    try:
+        day = date(y, mo, d)
+    except ValueError:
+        return None
+    timed = m.group(4) is not None
+    h, mi = (int(m.group(4)), int(m.group(5))) if timed else (0, 0)
+    tz = m.group(6) or "+05:30"
+    off = 0 if tz == "Z" else (1 if tz[0] == "+" else -1) * (int(tz[1:3]) * 60 + int(tz[4:6]))
+    ms = ((day.toordinal() - 719163) * 86400 + h * 3600 + mi * 60 - off * 60) * 1000
+    sl = ms // 1000 + 19800  # seconds, Sri Lanka wall clock
+    local = date.fromordinal(sl // 86400 + 719163)
+    secs = sl % 86400
+    return {"ms": ms, "y": local.year, "mo": local.month, "d": local.day, "h": secs // 3600, "mi": secs % 3600 // 60, "timed": timed, "wd": local.weekday()}
+
+
+def slugify(s):
+    return re.sub(r"[^a-z0-9]+", "-", str(s or "").lower()).strip("-")[:60]
+
+
+def normalize_events(items, now_ms):
+    """Published events with display dates, split into upcoming (soonest first) and past (latest first)."""
+    upcoming, past, used = [], [], set()
+    for i, e in enumerate(items or []):
+        if not isinstance(e, dict) or not truthy(e.get("published", True)):
+            continue
+        start = parse_when(e.get("starts_at"))
+        if not start:
+            continue
+        end = parse_when(e.get("ends_at"))
+        end_ms = end["ms"] if end and end["ms"] > start["ms"] else start["ms"] + (3 * 3600000 if start["timed"] else 86400000)
+        slug = slugify(e.get("title")) or f"event-{i + 1}"
+        while slug in used:
+            slug += "-2"
+        used.add(slug)
+        e = dict(e)
+        for k in ("type", "place", "image", "summary", "notes", "button", "link"):
+            if e.get(k) is None:
+                e[k] = ""
+        e["slug"] = slug
+        e["date_human"] = f"{WEEKDAYS[start['wd']]}, {start['d']} {FULL_MONTHS[start['mo'] - 1]} {start['y']}"
+        e["time_human"] = f"{start['h'] % 12 or 12}.{start['mi']:02d} {'am' if start['h'] < 12 else 'pm'}" if start["timed"] else ""
+        e["day"] = str(start["d"])
+        e["month"] = MONTHS[start["mo"] - 1]
+        e["start_ms"] = str(start["ms"])
+        e["ends_ms"] = str(end_ms)
+        e["past"] = end_ms <= now_ms
+        e["live"] = start["ms"] <= now_ms < end_ms
+        (past if e["past"] else upcoming).append(e)
+    upcoming.sort(key=lambda e: int(e["start_ms"]))
+    past.sort(key=lambda e: int(e["start_ms"]), reverse=True)
+    return upcoming, past
+
+
+def normalize(data, now_ms=None):
     """Derived fields the templates need. Keep in sync with normalize() in template.js."""
     d = copy.deepcopy(data)
     posts = []
@@ -258,6 +324,10 @@ def normalize(data):
         posts.append(p)
     posts.sort(key=lambda p: p.get("date", ""), reverse=True)
     d["posts"] = posts
+    upcoming, past = normalize_events(d.get("events"), int(time.time() * 1000) if now_ms is None else now_ms)
+    d["events"] = upcoming
+    d["events_past"] = past[:12]
+    d["events_home"] = [e for e in upcoming if truthy(e.get("featured", True))][:3]
     return d
 
 

@@ -1,0 +1,61 @@
+---
+title: Events | Webinars, workshops and meetups | Freelancer College
+description: Upcoming live webinars, workshops and meetups by Freelancer College. Sessions in Sinhala on UI/UX design, Figma and freelancing for international clients.
+bodyclass: page-events
+kind: Page
+---
+<section class="page-hero" style="padding-bottom:40px">
+  <div class="mesh-bg" aria-hidden="true"></div>
+  <div class="container rel">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span>Events</span></nav>
+    <h1 data-split>What's <span class="red-glow">coming up.</span></h1>
+    <p class="lead">Live webinars, workshops and meetups. Join us, ask questions and meet other freelancers on the same path.</p>
+  </div>
+</section>
+
+<section class="section-sm" style="padding-top:0">
+  <div class="container">
+    <div class="event-list" data-events-list>
+      {{#each events}}
+      <article class="card event-row" id="{{ this.slug }}" data-event-ends="{{ this.ends_ms }}" data-reveal>
+        <div class="ev-media">
+          {{#if this.image}}<img src="{{ this.image }}" alt="{{ this.title }}" loading="lazy" decoding="async">{{else}}<span class="ev-cover"><span>{{ this.title }}</span></span>{{/if}}
+          <span class="ev-date"><b>{{ this.day }}</b><small>{{ this.month }}</small></span>
+        </div>
+        <div class="ev-body">
+          <div class="row">{{#if this.live}}<span class="pill pill-live"><i></i> Happening now</span>{{/if}}{{#if this.type}}<span class="tag">{{ this.type }}</span>{{/if}}</div>
+          <h2 class="h3">{{ this.title }}</h2>
+          <p class="ev-meta"><span>{{ this.date_human }}</span>{{#if this.time_human}}<span>{{ this.time_human }} (Sri Lanka time)</span>{{/if}}{{#if this.place}}<span>{{ this.place }}</span>{{/if}}</p>
+          {{#if this.summary}}<p class="ev-summary">{{ this.summary }}</p>{{/if}}
+          {{#if this.notes}}<div class="prose ev-notes">{{{ this.notes }}}</div>{{/if}}
+          {{#if this.button}}<div class="ev-foot"><a class="btn btn-primary" href="{{ this.link }}" data-track="event_click">{{ this.button }} <span class="arrow">→</span></a></div>{{/if}}
+        </div>
+      </article>
+      {{/each}}
+    </div>
+    <div class="card ev-empty" data-events-empty{{#if events}} hidden{{/if}}>
+      <h2 class="h3">No events scheduled right now</h2>
+      <p class="muted">New webinars and workshops are announced here first. Join the free webinar or follow us on WhatsApp so you never miss one.</p>
+      <div class="row"><a class="btn btn-primary" href="/webinar">Free webinar <span class="arrow">→</span></a><a class="btn btn-ghost" href="https://wa.me/{{ site.contact.whatsapp }}?text={{url site.contact.whatsapp_text}}" target="_blank" rel="noopener">Message us on WhatsApp</a></div>
+    </div>
+  </div>
+</section>
+
+{{#if events_past}}
+<section class="section-sm" style="padding-top:0" aria-labelledby="past-title">
+  <div class="container">
+    <p class="eyebrow" id="past-title">Past events</p>
+    <div class="event-grid past mt-3">
+      {{#each events_past}}{{> _event-card }}{{/each}}
+    </div>
+  </div>
+</section>
+{{/if}}
+
+{{> final-cta }}
+
+{{#if events}}
+<script type="application/ld+json">
+[{{#each events}}{"@context":"https://schema.org","@type":"Event","name":{{json this.title}},"startDate":{{json this.starts_at}},"eventAttendanceMode":"https://schema.org/MixedEventAttendanceMode","location":{"@type":"Place","name":{{json this.place}},"address":"Sri Lanka"},"organizer":{"@type":"Organization","name":{{json site.brand.name}},"url":{{json site.url}}},"description":{{json this.summary}}{{#if this.image}},"image":{{json this.image}}{{/if}}}{{#unless @last}},{{/unless}}{{/each}}]
+</script>
+{{/if}}

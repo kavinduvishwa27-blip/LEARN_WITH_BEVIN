@@ -410,6 +410,7 @@
       const units = { d: 86400000, h: 3600000, m: 60000, s: 1000 };
       const labels = el.hasAttribute("data-long") ? { d: "Days", h: "Hours", m: "Minutes", s: "Seconds" } : { d: "Days", h: "Hours", m: "Mins", s: "Secs" };
       el.innerHTML = Object.keys(units).map((k) => `<div class="cd-unit"><b data-u="${k}">00</b><span>${labels[k]}</span></div>`).join("");
+      let iv = 0; // declared first: tick() may stop the timer on its very first run (date already passed)
       const tick = () => {
         let diff = Math.max(0, end - Date.now());
         Object.entries(units).forEach(([k, ms]) => {
@@ -421,8 +422,8 @@
           if (el.dataset.expired) el.outerHTML = `<p class="muted">${el.dataset.expired}</p>`;
         }
       };
+      iv = setInterval(tick, 1000);
       tick();
-      const iv = setInterval(tick, 1000);
     });
     $$("[data-localtime]").forEach((el) => {
       try {
@@ -640,7 +641,7 @@
       lastFocus?.focus?.();
     };
 
-    document.addEventListener("click", (e) => { if (e.target.closest("[data-book-seat]")) { e.preventDefault(); open(); } });
+    document.addEventListener("click", (e) => { if (e.target.closest('[data-book-seat], a[href="#book-seat"]')) { e.preventDefault(); open(); } });
     $$("[data-seat-close]", modal).forEach((b) => b.addEventListener("click", close));
     modal.addEventListener("keydown", (e) => {
       if (e.key === "Escape") close();
@@ -677,6 +678,73 @@
     form.addEventListener("fc:submitted", () => { bar.style.width = "100%"; label.textContent = "Booked"; });
   }
 
+  // Events: remove the ones that ended since the page was made (the live site also filters them)
+  function initEvents() {
+    const t = Date.now();
+    $$("[data-event-ends]").forEach((el) => { if (+el.dataset.eventEnds && +el.dataset.eventEnds <= t) el.remove(); });
+    $$("[data-events-section]").forEach((s) => { if (!$("[data-event-ends]", s)) s.remove(); });
+    const list = $("[data-events-list]"), empty = $("[data-events-empty]");
+    if (list && empty && !$("[data-event-ends]", list)) empty.hidden = false;
+  }
+
+  // Announcement pop-up. Shown once per version, again after "repeat" days (0 = once per visit).
+  // Add ?popup=preview to any page to see it right away.
+  function initPromo() {
+    const box = $("[data-promo]");
+    if (!box) return;
+    const d = box.dataset;
+    const preview = new URLSearchParams(location.search).get("popup") === "preview";
+    const path = location.pathname;
+    const t = Date.now();
+    const KEY = "fc_promo";
+    if (!preview) {
+      if (/^\/(checkout|admin)(\/|$)/.test(path) || /thank-you/.test(path)) return;
+      if (/home/i.test(d.where || "") && path !== "/") return;
+      if (d.from && Date.parse(d.from) > t) return;
+      if (d.until && Date.parse(d.until) < t) return;
+      const repeat = d.repeat === "" || isNaN(+d.repeat) ? 3 : Math.max(0, +d.repeat);
+      try {
+        if (repeat === 0 && sessionStorage.getItem(KEY) === d.version) return;
+        const seen = JSON.parse(localStorage.getItem(KEY) || "null");
+        if (repeat > 0 && seen && seen.v === d.version && t - seen.at < repeat * 864e5) return;
+      } catch {}
+    }
+    let lastFocus = null;
+    const remember = () => {
+      try { localStorage.setItem(KEY, JSON.stringify({ v: d.version, at: Date.now() })); sessionStorage.setItem(KEY, d.version); } catch {}
+    };
+    const show = () => {
+      // wait while another window (seat booking, search) is open
+      if (document.body.classList.contains("seat-open") || $("[data-palette]:not([hidden])")) return setTimeout(show, 4000);
+      lastFocus = document.activeElement;
+      box.hidden = false;
+      document.body.classList.add("promo-open");
+      window.__lenis?.stop();
+      setTimeout(() => $(".promo-x", box)?.focus({ preventScroll: true }), 50);
+      if (!preview) remember();
+      track("promo_view", { page: path, version: d.version });
+    };
+    const close = () => {
+      box.hidden = true;
+      document.body.classList.remove("promo-open");
+      window.__lenis?.start();
+      lastFocus?.focus?.({ preventScroll: true });
+    };
+    $$("[data-promo-close]", box).forEach((b) => b.addEventListener("click", close));
+    $("[data-promo-go]", box)?.addEventListener("click", () => { track("promo_click", { page: path, version: d.version }); close(); });
+    box.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") close();
+      if (e.key === "Tab") {
+        const f = $$("button, a[href]", box).filter((x) => x.offsetParent !== null);
+        if (!f.length) return;
+        if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+        else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+      }
+    });
+    const delay = preview ? 400 : Math.min(120, Math.max(0, d.delay === "" || isNaN(+d.delay) ? 6 : +d.delay)) * 1000;
+    setTimeout(show, delay);
+  }
+
   function initMisc() {
     $$("[data-copy]").forEach((b) => b.addEventListener("click", async () => {
       try { await navigator.clipboard.writeText(b.dataset.copy); toast("Copied to clipboard"); } catch {}
@@ -708,6 +776,8 @@
     initCookies();
     initMisc();
     initSeatBooking();
+    initEvents();
+    initPromo();
     initReveals();
     // Split hero headlines only after web fonts load, so line breaks are measured correctly
     const fontsReady = document.fonts?.ready || Promise.resolve();

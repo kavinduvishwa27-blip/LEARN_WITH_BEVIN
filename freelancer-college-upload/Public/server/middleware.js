@@ -5,7 +5,7 @@
 import { render, stripTags } from "./template.js";
 import { getContent } from "./content.js";
 
-const BYPASS = /^\/(api|admin|assets)(\/|$)/;
+const BYPASS = /^\/(api|admin|assets|media)(\/|$)/;
 
 function templateFor(path, status) {
   if (status === 404) return "/_tpl/404.tpl";

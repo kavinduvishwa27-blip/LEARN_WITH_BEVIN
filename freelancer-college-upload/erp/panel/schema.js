@@ -1,7 +1,8 @@
 // Every editable part of the website, and how the admin panel shows it.
 // key: where it is stored ("site.cohort" = settings group, "faqs" = collection)
 // Field types: text, textarea, html (rich text), number, date, datetime (Sri Lanka time),
-//   url, email, color, bool, select, tags (list of words), list (repeatable items), group.
+//   url, email, color, bool, select, tags (list of words), list (repeatable items), group,
+//   image (upload or pick from the image library; stores a /media/... link).
 
 const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -21,6 +22,11 @@ export const humanTime = (iso) => {
   if (!p || p.h === null) return "";
   const h12 = p.h % 12 || 12;
   return `${h12}.${String(p.mi).padStart(2, "0")} ${p.h < 12 ? "am" : "pm"}`;
+};
+const eventWhen = (iso) => (iso ? `${humanDate(iso)}${humanTime(iso) ? ", " + humanTime(iso) : ""}` : "No date yet");
+const isPast = (x) => {
+  const end = Date.parse(x.ends_at || "") || (Date.parse(x.starts_at || "") + 3 * 36e5);
+  return !!end && end < Date.now();
 };
 const digits = (v) => String(v || "").replace(/[^\d]/g, "");
 const money = (v) => { const n = digits(v); return n ? Number(n).toLocaleString("en-US") : ""; };
@@ -119,6 +125,52 @@ export const SECTIONS = [
     ],
   },
   // ---------------------------------------------------------------- Marketing
+  {
+    id: "events", group: "Marketing", key: "events", title: "Events", icon: "star", view: "/events",
+    help: "Webinars, workshops, meetups and announcements. Upcoming events appear on the Events page, and the ones marked \"Show on home page\" also appear on the home page. Events disappear from the upcoming list by themselves once they end.",
+    type: "list", addLabel: "event",
+    itemTitle: (x) => x.title || "New event",
+    itemSub: (x) => [eventWhen(x.starts_at), x.published === false ? "Draft" : isPast(x) ? "Ended" : x.featured === false ? "Events page only" : "Home page + Events page"].filter(Boolean).join(" · "),
+    newItem: () => ({ title: "", type: "Live webinar", starts_at: "", ends_at: "", place: "Online on Zoom", image: "", summary: "", notes: "<p></p>", button: "Register now", link: "/webinar", featured: true, published: true }),
+    fields: [
+      { k: "title", label: "Event name", type: "text", placeholder: "Figma for beginners: live workshop" },
+      { k: "type", label: "Type", type: "select", half: true, options: ["Live webinar", "Workshop", "Masterclass", "Meetup", "Batch start", "Announcement"] },
+      { k: "place", label: "Where", type: "text", half: true, placeholder: "Online on Zoom, or an address" },
+      { k: "starts_at", label: "Starts", type: "datetime", half: true },
+      { k: "ends_at", label: "Ends (optional)", type: "datetime", half: true, hint: "Sri Lanka time. Leave empty and it counts as 3 hours long." },
+      { k: "image", label: "Image or poster", type: "image", hint: "A wide image works best (16:9). Large photos are made smaller automatically." },
+      { k: "summary", label: "Short description", type: "textarea", rows: 2, hint: "One or two sentences for the event card." },
+      { k: "notes", label: "Full notes", type: "html", hint: "Shown on the Events page: agenda, who it is for, what to bring..." },
+      { k: "button", label: "Button text", type: "text", half: true, placeholder: "Register now" },
+      { k: "link", label: "Button link", type: "text", half: true, placeholder: "/webinar", hint: "A page (/webinar), any https:// link, or #book-seat to open seat booking." },
+      { k: "featured", label: "Show on home page", type: "bool", half: true },
+      { k: "published", label: "Published", type: "bool", half: true },
+    ],
+  },
+  {
+    id: "popup", group: "Marketing", key: "site.popup", title: "Pop-up announcement", icon: "megaphone", view: "/?popup=preview",
+    help: "A window that appears a few seconds after someone opens the website, for a new event, a new batch or any message. Each visitor sees it once, then again after the number of days you choose. When you change the text or image, everyone sees the new version. \"View on website\" shows it straight away.",
+    fields: [
+      { k: "enabled", label: "Show the pop-up", type: "bool" },
+      { k: "eyebrow", label: "Small label", type: "text", half: true, placeholder: "New event" },
+      { k: "title", label: "Headline", type: "text", half: true },
+      { k: "message", label: "Message", type: "textarea", rows: 4 },
+      { k: "image", label: "Image (optional)", type: "image", hint: "Shown beside the message, or above it on phones." },
+      { k: "image_alt", label: "Image description (for screen readers)", type: "text" },
+      { k: "button", label: "Button text", type: "text", half: true },
+      { k: "link", label: "Button link", type: "text", half: true, hint: "/events, /webinar, https://... or #book-seat to open seat booking." },
+      { k: "dismiss", label: "Close text", type: "text", half: true, placeholder: "Maybe later" },
+      { k: "show_on", label: "Show on", type: "select", half: true, options: ["Every page", "Home page only"] },
+      { k: "delay_seconds", label: "Appear after (seconds)", type: "number", half: true },
+      { k: "repeat_days", label: "Show again after (days)", type: "number", half: true, hint: "0 = once per visit." },
+      { k: "starts_at", label: "Start showing (optional)", type: "datetime", half: true },
+      { k: "ends_at", label: "Stop showing (optional)", type: "datetime", half: true, hint: "Sri Lanka time. Empty = no limit." },
+    ],
+    // a new message counts as a new pop-up, so visitors who closed the old one see it
+    derive(v, changed) {
+      if (["eyebrow", "title", "message", "image", "button", "link", "enabled"].includes(changed)) v.version = String(Date.now());
+    },
+  },
   {
     id: "webinar", group: "Marketing", key: "site.webinar", title: "Free webinar", icon: "video", view: "/webinar",
     help: "The next webinar. The countdowns on the site use the date and time.",

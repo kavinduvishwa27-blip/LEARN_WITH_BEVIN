@@ -1,0 +1,16 @@
+# Copy to .dev.vars for local `wrangler pages dev`. In production set these in
+# Cloudflare dashboard > your Pages project > Settings > Variables and Secrets.
+N8N_WEBHOOK_URL=
+N8N_WEBHOOK_SECRET=
+RESEND_API_KEY=
+NOTIFY_EMAIL=hello@freelancercollege.lk
+FROM_EMAIL=Freelancer College <hello@freelancercollege.lk>
+SUPABASE_URL=
+SUPABASE_SERVICE_KEY=
+TURNSTILE_SECRET=
+ANTHROPIC_API_KEY=
+ANTHROPIC_MODEL=claude-opus-5-5
+PAYHERE_MERCHANT_ID=
+PAYHERE_SECRET=
+PAYHERE_SANDBOX=true
+SITE_URL=https://freelancercollege.lk

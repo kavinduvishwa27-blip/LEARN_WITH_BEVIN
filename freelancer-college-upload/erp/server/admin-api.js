@@ -3,6 +3,7 @@
 import { verifyAdmin, authMethods } from "./auth.js";
 import { ensureSchema, all, first, run, now, audit } from "./db.js";
 import { getRawContent, isEditableKey, saveContent, resetContent } from "./content.js";
+import { listMedia, saveMedia, getMedia, deleteMedia, mediaResponse, MEDIA_ID } from "./media.js";
 import {
   listLeads, listEnrollments, createEnrollment, updateEnrollment, stats, toCsv,
   LEAD_STATUSES, ENROLL_STATUSES,
@@ -122,6 +123,21 @@ export async function handleAdmin(request, env, origin) {
     }
     if (path === "payments") return json({ rows: await all(env.DB, "SELECT * FROM payments ORDER BY created_at DESC LIMIT ? OFFSET ?", limit, offset) });
 
+    // ---------- Images ----------
+    if (path === "media" && method === "GET") return json({ rows: await listMedia(env) });
+    if (path === "media" && method === "POST") {
+      try { return json({ ok: true, ...(await saveMedia(env, await body(request), who)) }); }
+      catch (e) { return json({ error: e.message }, 400); }
+    }
+    m = /^media\/([\w.]+?)(\/file)?$/.exec(path);
+    if (m && MEDIA_ID.test(m[1])) {
+      if (method === "GET" && m[2]) { // the image itself, for the local preview
+        const row = await getMedia(env, m[1]);
+        return row ? mediaResponse(row, { cache: false }) : json({ error: "Not found" }, 404);
+      }
+      if (method === "DELETE") return (await deleteMedia(env, m[1], who)) ? json({ ok: true }) : json({ error: "Not found" }, 404);
+    }
+
     // ---------- Activity & backup ----------
     if (path === "audit") return json({ rows: await all(env.DB, "SELECT * FROM audit ORDER BY id DESC LIMIT ? OFFSET ?", limit, offset) });
     if (path === "backup") {
@@ -131,6 +147,7 @@ export async function handleAdmin(request, env, origin) {
         leads: await all(env.DB, "SELECT * FROM leads"),
         enrollments: await all(env.DB, "SELECT * FROM enrollments"),
         payments: await all(env.DB, "SELECT * FROM payments"),
+        media: await all(env.DB, "SELECT * FROM media"),
       };
       return new Response(JSON.stringify(payload, null, 1), { headers: { "Content-Type": "application/json", "Content-Disposition": `attachment; filename="freelancer-college-backup-${now().slice(0, 10)}.json"` } });
     }
