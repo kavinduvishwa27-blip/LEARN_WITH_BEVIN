@@ -3,6 +3,7 @@
 import { verifyAdmin, authMethods } from "./auth.js";
 import { ensureSchema, all, first, run, now, audit } from "./db.js";
 import { getRawContent, isEditableKey, saveContent, resetContent } from "./content.js";
+import { listSlips, getSlip, getSlipFile, approveSlip, rejectSlip, SlipError } from "./slips.js";
 import { listMedia, saveMedia, getMedia, deleteMedia, mediaResponse, MEDIA_ID } from "./media.js";
 import {
   listLeads, listEnrollments, createEnrollment, updateEnrollment, stats, toCsv,
@@ -123,6 +124,25 @@ export async function handleAdmin(request, env, origin) {
     }
     if (path === "payments") return json({ rows: await all(env.DB, "SELECT * FROM payments ORDER BY created_at DESC LIMIT ? OFFSET ?", limit, offset) });
 
+    // ---------- Payment slips ----------
+    if (path === "slips" && method === "GET") return json(await listSlips(env, { status: q.status, limit, offset }));
+    m = /^slips\/(\d+)(\/file|\/approve|\/reject)?$/.exec(path);
+    if (m) {
+      const id = +m[1];
+      try {
+        if (!m[2] && method === "GET") return json((await getSlip(env, id)) || { error: "Not found" });
+        if (m[2] === "/file" && method === "GET") {
+          const row = await getSlipFile(env, id);
+          return row ? mediaResponse(row, { cache: false }) : json({ error: "Not found" }, 404);
+        }
+        if (m[2] === "/approve" && method === "POST") return json(await approveSlip(env, origin, id, (await body(request)).amount, who));
+        if (m[2] === "/reject" && method === "POST") return json(await rejectSlip(env, id, (await body(request)).note, who));
+      } catch (e) {
+        if (e instanceof SlipError) return json({ error: e.message }, e.status);
+        throw e;
+      }
+    }
+
     // ---------- Images ----------
     if (path === "media" && method === "GET") return json({ rows: await listMedia(env) });
     if (path === "media" && method === "POST") {
@@ -148,6 +168,7 @@ export async function handleAdmin(request, env, origin) {
         enrollments: await all(env.DB, "SELECT * FROM enrollments"),
         payments: await all(env.DB, "SELECT * FROM payments"),
         media: await all(env.DB, "SELECT * FROM media"),
+        slips: await all(env.DB, "SELECT * FROM slips"),
       };
       return new Response(JSON.stringify(payload, null, 1), { headers: { "Content-Type": "application/json", "Content-Disposition": `attachment; filename="freelancer-college-backup-${now().slice(0, 10)}.json"` } });
     }

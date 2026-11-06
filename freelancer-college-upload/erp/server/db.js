@@ -45,6 +45,25 @@ const SCHEMA = [
      created_at TEXT NOT NULL,
      created_by TEXT
    )`,
+  `CREATE TABLE IF NOT EXISTS slips (
+     id INTEGER PRIMARY KEY AUTOINCREMENT,
+     enrollment_id INTEGER NOT NULL,
+     reference TEXT,
+     file_type TEXT, file_name TEXT, size INTEGER,
+     hash TEXT, data TEXT NOT NULL,
+     status TEXT NOT NULL DEFAULT 'checking',
+     reasons TEXT, extracted TEXT,
+     amount INTEGER, txn_id TEXT, slip_date TEXT, fingerprint TEXT,
+     student_note TEXT,
+     decided_by TEXT, decided_at TEXT,
+     ip TEXT,
+     created_at TEXT NOT NULL,
+     updated_at TEXT NOT NULL
+   )`,
+  `CREATE INDEX IF NOT EXISTS slips_enrollment ON slips(enrollment_id)`,
+  `CREATE INDEX IF NOT EXISTS slips_hash ON slips(hash)`,
+  `CREATE INDEX IF NOT EXISTS slips_txn ON slips(txn_id)`,
+  `CREATE INDEX IF NOT EXISTS slips_status ON slips(status)`,
   `CREATE TABLE IF NOT EXISTS audit (
      id INTEGER PRIMARY KEY AUTOINCREMENT,
      at TEXT NOT NULL, who TEXT, action TEXT, detail TEXT

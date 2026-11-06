@@ -97,6 +97,15 @@ export const SECTIONS = [
     ],
   },
   {
+    id: "students", group: "Courses", key: "students", title: "Student group", icon: "leads",
+    help: "Shown only to students whose payment is confirmed, on their checkout page, right after their slip is checked (or their card payment goes through). It never appears on the public website.",
+    fields: [
+      { k: "group_link", label: "Batch group link", type: "url", placeholder: "https://chat.whatsapp.com/...", hint: "The WhatsApp (or Telegram) invite link for the current batch. Change it for each new batch." },
+      { k: "welcome_title", label: "Welcome headline", type: "text" },
+      { k: "welcome_text", label: "Welcome message", type: "textarea", rows: 3 },
+    ],
+  },
+  {
     id: "bonuses", group: "Courses", key: "bonuses", title: "Designer X bonuses", icon: "gift", view: "/courses/designer-x",
     type: "list", itemTitle: (x) => x.title || "New bonus", itemSub: (x) => x.label,
     newItem: () => ({ label: "BONUS", title: "", body: "", value: "Included", note: "" }),

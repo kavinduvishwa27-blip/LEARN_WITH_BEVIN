@@ -4,14 +4,47 @@ description: Complete your Designer X enrollment.
 noindex: true
 bodyclass: page-success
 ---
+<!-- After checkout. Bank transfer: the student uploads the slip here, the website checks it
+     (/api/slip) and, once the payment is confirmed, shows the batch group link right here. -->
 <section class="page-hero center" style="min-height:100svh">
   <div class="mesh-bg" aria-hidden="true"></div>
   <div class="container container-sm rel">
-    <div class="form-success" style="display:block;padding:0"><div class="tick" style="width:84px;height:84px;font-size:34px">✓</div></div>
-    <p class="eyebrow">Enrollment started</p>
-    <h1 style="margin-inline:auto">You're almost in<span data-first></span>.</h1>
-    <p class="lead" data-paid-msg>Your seat is confirmed as soon as your payment is received. Two quick steps:</p>
+    <div data-head>
+      <div class="form-success" style="display:block;padding:0"><div class="tick" style="width:84px;height:84px;font-size:34px">✓</div></div>
+      <p class="eyebrow">Enrollment started</p>
+      <h1 style="margin-inline:auto">You're almost in<span data-first></span>.</h1>
+      <p class="lead" data-paid-msg>Your seat is confirmed as soon as your payment is received. Two quick steps:</p>
+    </div>
 
+    <!-- Payment confirmed: the group link -->
+    <div class="card mt-4 slip-done" data-done hidden>
+      <div class="slip-done-tick" aria-hidden="true">✓</div>
+      <p class="eyebrow no-line" style="color:var(--success)">Payment confirmed</p>
+      <h2 class="h3" data-welcome-title>Welcome to Designer X!</h2>
+      <p class="muted" data-welcome-text></p>
+      <a class="btn btn-primary btn-lg btn-block" data-group-link target="_blank" rel="noopener" hidden>
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 1.9 17.7L.3 23.6l6-1.6a11.8 11.8 0 0 0 5.7 1.5A11.8 11.8 0 0 0 20.5 3.5z"/></svg>
+        Join the batch group
+      </a>
+      <p class="note-box" data-no-group hidden>Your group link is on its way. We will add you on WhatsApp shortly.</p>
+      <div class="slip-receipt" data-receipt></div>
+      <p class="small muted">Keep this page or your reference <b data-ref-done></b>. You can open the group link here again at any time.</p>
+    </div>
+
+    <!-- Waiting: the slip is being checked -->
+    <div class="card mt-4 slip-wait" data-wait hidden aria-live="polite">
+      <div class="slip-spin" aria-hidden="true"></div>
+      <h2 class="h3" data-wait-title>Please wait a moment</h2>
+      <p class="muted" data-wait-text>We're confirming your payment. This usually takes under a minute, so please keep this page open.</p>
+      <ul class="slip-steps" data-steps>
+        <li>Reading your slip</li>
+        <li>Matching your reference</li>
+        <li>Checking the amount and our account</li>
+        <li>Confirming your seat</li>
+      </ul>
+    </div>
+
+    <!-- Bank transfer + slip upload -->
     <div class="card mt-4" style="text-align:left" data-bank-steps>
       <p class="eyebrow no-line">Step 1 · Transfer <b style="color:var(--text)" data-amount></b></p>
       <div class="bank-box mt-2">
@@ -19,19 +52,37 @@ bodyclass: page-success
         <div><span>Branch</span><b>{{ site.bank.branch }}</b></div>
         <div><span>Account name</span><b>{{ site.bank.account_name }}</b></div>
         <div><span>Account number</span><b>{{ site.bank.account_no }} <button class="copy-btn" data-copy="{{ site.bank.account_no }}">Copy</button></b></div>
-        <div><span>Reference</span><b><span data-ref>Your name</span> <button class="copy-btn" data-copy-ref>Copy</button></b></div>
+        <div><span>Reference</span><b><span data-ref>Your reference</span> <button class="copy-btn" data-copy-ref>Copy</button></b></div>
       </div>
+      <p class="note-box mt-2"><b>Important:</b> type your reference <b data-ref-2></b> in the <b>remarks</b> (or description) box when you make the transfer. That is how we match your payment instantly.</p>
       <p class="note-box mt-2" data-balance-note hidden>After your deposit, pay the remaining <b></b>. We will remind you on WhatsApp.</p>
-      <p class="eyebrow no-line mt-4">Step 2 · Send your slip</p>
-      <p class="muted mt-1">Send a photo of the transfer slip on WhatsApp. We confirm your seat and add you to the batch group, usually within a few hours.</p>
-      <a class="btn btn-primary btn-lg btn-block mt-2" data-wa-slip target="_blank" rel="noopener" href="https://wa.me/{{ site.contact.whatsapp }}">
-        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 1.9 17.7L.3 23.6l6-1.6a11.8 11.8 0 0 0 5.7 1.5A11.8 11.8 0 0 0 20.5 3.5z"/></svg>
-        Send slip on WhatsApp
-      </a>
+
+      <p class="eyebrow no-line mt-4" data-upload-title>Step 2 · Upload your slip</p>
+      <p class="muted mt-1">Upload a screenshot, photo or PDF of the slip. We check it straight away and show your batch group link here.</p>
+      <p class="slip-msg" data-slip-msg hidden></p>
+      <label class="slip-drop mt-2" data-drop>
+        <input type="file" accept="image/*,application/pdf" data-file class="sr-only">
+        <span class="slip-drop-icon" aria-hidden="true">↑</span>
+        <b>Upload payment slip</b>
+        <span class="small muted">Tap to choose, or drop the file here. JPG, PNG or PDF.</span>
+      </label>
+      <p class="small muted mt-2">Having trouble? <a class="link-arrow" data-wa-slip target="_blank" rel="noopener" href="https://wa.me/{{ site.contact.whatsapp }}">Send the slip on WhatsApp instead</a></p>
     </div>
 
-    <div class="grid-3 mt-4" style="text-align:left">
-      <div class="card"><b>What happens next</b><p class="muted mt-1" style="font-size:14.5px">You get a WhatsApp and email confirmation with your student portal login.</p></div>
+    <!-- Opened on another phone: find the enrollment -->
+    <form class="card mt-4 slip-find" data-find hidden>
+      <h2 class="h3">Find your enrollment</h2>
+      <p class="muted">Enter the reference you got at checkout and the WhatsApp number you used.</p>
+      <div class="form-row">
+        <label class="field"><span class="label">Reference</span><input class="input" name="ref" placeholder="FCX-..." autocomplete="off" required></label>
+        <label class="field"><span class="label">WhatsApp number</span><input class="input" name="phone" type="tel" placeholder="07X XXX XXXX" autocomplete="tel" required></label>
+      </div>
+      <button class="btn btn-primary" type="submit">Continue <span class="arrow">→</span></button>
+      <p class="slip-msg" data-find-msg hidden></p>
+    </form>
+
+    <div class="grid-3 mt-4" style="text-align:left" data-next>
+      <div class="card"><b>What happens next</b><p class="muted mt-1" style="font-size:14.5px">As soon as your payment is confirmed, the batch group link appears on this page. We also message you on WhatsApp.</p></div>
       <div class="card"><b>Before day one</b><p class="muted mt-1" style="font-size:14.5px">Create a free Figma account and join the batch group. We send the Zoom link 1 hour before each class.</p></div>
       <div class="card"><b>Meanwhile</b><p class="muted mt-1" style="font-size:14.5px"><a href="/learning-paths" class="link-arrow">Start the free learning path →</a></p></div>
     </div>
@@ -39,29 +90,189 @@ bodyclass: page-success
 </section>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+  const $ = (s) => document.querySelector(s);
   let o = {};
   try { o = JSON.parse(localStorage.getItem("fc_order") || "{}"); } catch {}
   const C = (window.FC && FC.SITE.cohort) || {};
+  const cur = C.currency || "LKR";
+  const money = (n) => `${cur} ${Number(n || 0).toLocaleString("en-US")}`;
   const params = new URLSearchParams(location.search);
-  if (o.name) document.querySelector("[data-first]").textContent = ", " + o.name.split(" ")[0];
-  const ref = params.get("order_id") || o.ref || "";
-  if (ref) document.querySelector("[data-ref]").textContent = ref;
-  document.querySelector("[data-copy-ref]").addEventListener("click", async () => { try { await navigator.clipboard.writeText(ref); FC.toast("Reference copied"); } catch {} });
-  document.querySelector("[data-amount]").textContent = (C.currency || "LKR") + " " + (o.amount || C.price_full);
+  let ref = params.get("order_id") || o.ref || "";
+  let phone = o.phone || "";
+
+  const els = { done: $("[data-done]"), wait: $("[data-wait]"), bank: $("[data-bank-steps]"), find: $("[data-find]"), head: $("[data-head]"), msg: $("[data-slip-msg]") };
+  const show = (which) => { for (const k of ["done", "wait", "bank", "find"]) els[k].hidden = !which.includes(k); };
+  const say = (el, text, kind) => { el.hidden = !text; el.textContent = text || ""; el.className = "slip-msg" + (kind ? " " + kind : ""); };
+
+  const fillRef = () => {
+    document.querySelectorAll("[data-ref], [data-ref-2], [data-ref-done]").forEach((el) => (el.textContent = ref || "Your reference"));
+    const wa = $("[data-wa-slip]");
+    wa.href = wa.href.split("?")[0] + "?text=" + encodeURIComponent(`Hi! Here is my Designer X payment slip. Reference: ${ref}. Name: ${o.name || ""}`);
+  };
+  if (o.name) $("[data-first]").textContent = ", " + o.name.split(" ")[0];
+  $("[data-copy-ref]").addEventListener("click", async () => { try { await navigator.clipboard.writeText(ref); FC.toast("Reference copied"); } catch {} });
+  $("[data-amount]").textContent = cur + " " + (o.amount || C.price_full);
   if (o.plan === "deposit") {
-    const due = C.balance_due_human || o.balance_due;
-    const note = document.querySelector("[data-balance-note]");
+    const note = $("[data-balance-note]");
     note.hidden = false;
-    note.querySelector("b").textContent = `${C.currency || "LKR"} ${o.balance || C.balance} by ${due}`;
+    note.querySelector("b").textContent = `${cur} ${o.balance || C.balance} by ${C.balance_due_human || o.balance_due}`;
   }
-  const wa = document.querySelector("[data-wa-slip]");
-  wa.href += "?text=" + encodeURIComponent(`Hi! Here is my Designer X payment slip. Reference: ${ref}. Name: ${o.name || ""}`);
-  // Returned from PayHere card payment
-  if (params.get("paid") === "1") {
-    document.querySelector("[data-bank-steps]").style.display = "none";
-    document.querySelector("h1").firstChild.textContent = "You're in";
-    document.querySelector("[data-paid-msg]").textContent = "Payment received. Your confirmation and student portal login are on the way to WhatsApp and email.";
-    FC.track("purchase", { value: +(String(o.amount || "").replace(/\D/g, "")), currency: "LKR", reference: ref });
+  fillRef();
+
+  const api = async (body) => {
+    const r = await fetch("/api/slip", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ reference: ref, phone, ...body }) });
+    const data = await r.json().catch(() => ({ ok: false, error: "Could not reach the server. Please check your connection." }));
+    if (!r.ok || !data.ok) throw Object.assign(new Error(data.error || "Something went wrong."), { status: r.status });
+    return data;
+  };
+
+  // The animated steps while the slip is checked
+  let stepTimer;
+  const runSteps = (on) => {
+    clearInterval(stepTimer);
+    const items = [...document.querySelectorAll("[data-steps] li")];
+    items.forEach((li) => li.classList.remove("on", "done"));
+    if (!on) return;
+    let i = 0;
+    items[0].classList.add("on");
+    stepTimer = setInterval(() => {
+      if (i >= items.length - 1) return;
+      items[i].classList.replace("on", "done");
+      items[++i].classList.add("on");
+    }, 6000);
+  };
+
+  let poll, tracked = false, paidChecks = 0;
+  const paidReturn = params.get("paid") === "1";
+  const render = (s) => {
+    clearTimeout(poll);
+    if (paidReturn && s.state === "unpaid" && paidChecks++ < 30) { poll = setTimeout(refresh, 5000); return; }
+    runSteps(false);
+    els.head.hidden = s.state === "confirmed";
+    if (s.state === "confirmed") {
+      show(s.balance > 0 && !s.balance_checking ? ["done", "bank"] : ["done"]);
+      if (s.welcome_title) $("[data-welcome-title]").textContent = s.welcome_title;
+      $("[data-welcome-text]").textContent = s.welcome_text || "";
+      const link = $("[data-group-link]");
+      link.hidden = !s.group_link;
+      if (s.group_link) link.href = s.group_link;
+      $("[data-no-group]").hidden = !!s.group_link;
+      $("[data-receipt]").innerHTML = `<div><span>Reference</span><b></b></div><div><span>Paid</span><b>${money(s.amount_paid)}</b></div>` +
+        (s.balance > 0 ? `<div><span>Balance</span><b>${money(s.balance)}${s.balance_due ? " by " + new Date(s.balance_due + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : ""}</b></div>` : "");
+      $("[data-receipt] b").textContent = s.reference;
+      if (s.balance > 0) {
+        $("[data-amount]").textContent = money(s.balance);
+        $("[data-upload-title]").textContent = s.balance_checking ? "Balance slip" : "Paying the balance? Upload that slip here";
+        $("[data-balance-note]").hidden = true;
+      }
+      if (s.balance_checking) say(els.msg, "We're checking your balance slip. It will show here once confirmed.");
+      if (!tracked) { tracked = true; FC.track("purchase", { value: s.amount_paid, currency: "LKR", reference: s.reference }); }
+      return;
+    }
+    if (s.state === "review") {
+      show(["wait"]);
+      $("[data-wait-title]").textContent = "Thanks! We're checking your slip";
+      $("[data-wait-text]").textContent = "It needs a quick look from our team, usually within a few hours. You can close this page: come back here any time, and we'll also message you on WhatsApp. Your group link appears here as soon as it's confirmed.";
+      $("[data-steps]").hidden = true;
+      poll = setTimeout(refresh, 30000);
+      return;
+    }
+    show(["bank"]);
+    if (s.state === "retry" || s.state === "rejected") say(els.msg, s.slip?.note || "Please upload your slip again.", "warn");
+    else if (s.state === "cancelled") say(els.msg, "This enrollment was cancelled. Please contact us on WhatsApp.", "warn");
+  };
+
+  const refresh = async () => {
+    try { render(await api({ action: "status" })); }
+    catch (e) {
+      if (e.status === 404) { show(["bank", "find"]); say($("[data-find-msg]"), ""); }
+      else poll = setTimeout(refresh, 30000);
+    }
+  };
+
+  // Images are made smaller in the browser (kept sharp enough to read), PDFs are sent as they are
+  const MAX = 1_000_000;
+  const toBase64 = (blob) => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(",")[1]); r.onerror = rej; r.readAsDataURL(blob); });
+  async function prepare(file) {
+    if (file.type === "application/pdf") {
+      if (file.size > MAX) throw new Error("This PDF is too large. Please upload a screenshot of the slip instead.");
+      return { type: file.type, name: file.name, data: await toBase64(file) };
+    }
+    if (!/^image\//.test(file.type)) throw new Error("Please upload an image or PDF of your slip.");
+    let src;
+    try { src = await createImageBitmap(file); }
+    catch { throw new Error("This image type can't be opened here. Please upload a screenshot (JPG or PNG) of the slip."); }
+    let max = 2200, q = 0.9, blob;
+    for (let i = 0; i < 6; i++) {
+      const s = Math.min(1, max / Math.max(src.width, src.height));
+      const c = Object.assign(document.createElement("canvas"), { width: Math.round(src.width * s), height: Math.round(src.height * s) });
+      const g = c.getContext("2d");
+      g.fillStyle = "#fff"; g.fillRect(0, 0, c.width, c.height);
+      g.drawImage(src, 0, 0, c.width, c.height);
+      blob = await new Promise((r) => c.toBlob(r, "image/jpeg", q));
+      if (blob && blob.size <= MAX) break;
+      q = Math.max(0.6, q - 0.08); max = Math.round(max * 0.85);
+    }
+    if (!blob || blob.size > MAX) throw new Error("This image is too large. Please upload a screenshot of the slip.");
+    return { type: "image/jpeg", name: file.name, data: await toBase64(blob) };
+  }
+
+  async function upload(file) {
+    if (!file) return;
+    if (!ref || !phone) { show(["bank", "find"]); say($("[data-find-msg]"), "Please enter your reference and WhatsApp number first.", "warn"); return; }
+    say(els.msg, "");
+    let prepared;
+    try { prepared = await prepare(file); } catch (e) { say(els.msg, e.message, "warn"); return; }
+    els.head.hidden = true;
+    show(["wait"]);
+    $("[data-steps]").hidden = false;
+    $("[data-wait-title]").textContent = "Please wait a moment";
+    $("[data-wait-text]").textContent = "We're confirming your payment. This usually takes under a minute, so please keep this page open.";
+    runSteps(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    try {
+      const s = await api({ action: "upload", file: prepared });
+      if (s.result === "confirmed") document.querySelectorAll("[data-steps] li").forEach((li) => { li.classList.remove("on"); li.classList.add("done"); });
+      await new Promise((r) => setTimeout(r, s.result === "confirmed" ? 700 : 0));
+      els.head.hidden = false;
+      render(s);
+      if (s.result === "retry") window.scrollTo({ top: els.bank.offsetTop - 100, behavior: "smooth" });
+    } catch (e) {
+      runSteps(false);
+      els.head.hidden = false;
+      show(["bank"]);
+      say(els.msg, e.message, "warn");
+    }
+  }
+
+  const input = $("[data-file]"), drop = $("[data-drop]");
+  input.addEventListener("change", () => { upload(input.files[0]); input.value = ""; });
+  drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("over"); });
+  drop.addEventListener("dragleave", () => drop.classList.remove("over"));
+  drop.addEventListener("drop", (e) => { e.preventDefault(); drop.classList.remove("over"); upload(e.dataTransfer.files[0]); });
+
+  $("[data-find]").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    ref = e.target.ref.value.trim().toUpperCase();
+    phone = e.target.phone.value.trim();
+    try { localStorage.setItem("fc_order", JSON.stringify({ ...o, ref, phone })); } catch {}
+    fillRef();
+    try { render(await api({ action: "status" })); }
+    catch (err) { say($("[data-find-msg]"), err.message, "warn"); }
+  });
+
+  // Returned from a PayHere card payment: the payment is confirmed by PayHere in the background
+  if (paidReturn) {
+    els.bank.hidden = true;
+    $("h1").firstChild.textContent = "Payment received";
+    $("[data-paid-msg]").textContent = "Thank you! We're confirming it now. Your batch group link appears here in a moment.";
+    show(["wait"]);
+    runSteps(true);
+  }
+  if (ref && phone) refresh();
+  else {
+    show(["bank", "find"]);
+    if (ref) $("[data-find]").ref.value = ref;
   }
 });
 </script>

@@ -141,6 +141,7 @@ export async function stats(env, origin) {
     revenue: await n("SELECT COALESCE(SUM(amount_paid), 0) AS n FROM enrollments WHERE status != 'cancelled'"),
     outstanding: await n("SELECT COALESCE(SUM(amount_due - amount_paid), 0) AS n FROM enrollments WHERE status IN ('pending', 'deposit')"),
     balances_overdue: await n("SELECT COUNT(*) AS n FROM enrollments WHERE status = 'deposit' AND balance_due IS NOT NULL AND balance_due < ?", slDate()),
+    slips_review: await n("SELECT COUNT(*) AS n FROM slips WHERE status IN ('review', 'checking')"),
     balances_due_soon: await n("SELECT COUNT(*) AS n FROM enrollments WHERE status = 'deposit' AND balance_due IS NOT NULL AND balance_due >= ? AND balance_due <= ?", slDate(), slDate(3)),
     seats_left: cohort.seats_left, seats: cohort.seats, cohort: cohort.name, currency: cohort.currency || "LKR",
     leads_per_day: perDay,

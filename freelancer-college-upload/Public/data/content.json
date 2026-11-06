@@ -476,5 +476,10 @@
       }
     ]
   },
-  "events": []
+  "events": [],
+  "students": {
+    "group_link": "",
+    "welcome_title": "Welcome to Designer X!",
+    "welcome_text": "Your payment is confirmed and your seat is yours. Join the batch group below. Class links, the timetable and announcements are shared there."
+  }
 }

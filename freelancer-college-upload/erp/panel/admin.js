@@ -49,6 +49,7 @@ const ICONS = {
   gear: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
   star: '<path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/>',
   megaphone: '<path d="M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1zM16 8a5 5 0 0 1 0 8M19 5a9 9 0 0 1 0 14"/>',
+  receipt: '<path d="M4 2v20l3-2 3 2 2-2 2 2 3-2 3 2V2l-3 2-3-2-2 2-2-2-3 2z"/><path d="M8 8h8M8 12h8M8 16h5"/>',
   image: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>',
   upload: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>',
   up: '<path d="M18 15l-6-6-6 6"/>', down: '<path d="M6 9l6 6 6-6"/>', copy: '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
@@ -170,6 +171,7 @@ function renderShell() {
         <a class="nav-a" href="#/dashboard" data-nav="dashboard">${icon("dashboard")}Dashboard</a>
         <a class="nav-a" href="#/leads" data-nav="leads">${icon("leads")}Leads<span class="badge" data-badge="leads" hidden></span></a>
         <a class="nav-a" href="#/enrollments" data-nav="enrollments">${icon("enroll")}Enrollments<span class="badge" data-badge="enrollments" hidden></span></a>
+        <a class="nav-a" href="#/slips" data-nav="slips">${icon("receipt")}Payment slips<span class="badge" data-badge="slips" hidden></span></a>
         <a class="nav-a" href="#/media" data-nav="media">${icon("image")}Images</a>
         ${Object.entries(groups).map(([g, list]) => `<div class="nav-group">${esc(g)}</div>${list.map((s) => `<a class="nav-a" href="#/content/${s.id}" data-nav="content/${s.id}">${icon(s.icon)}${esc(s.title)}</a>`).join("")}`).join("")}
         <div class="nav-group">System</div>
@@ -196,6 +198,7 @@ async function refreshBadges() {
     const set = (k, n) => { const b = $(`[data-badge="${k}"]`); if (b) { b.hidden = !n; b.textContent = n; } };
     set("leads", s.leads_new);
     set("enrollments", s.enrollments.pending || 0);
+    set("slips", s.slips_review || 0);
   } catch {}
 }
 
@@ -219,6 +222,7 @@ async function route() {
     else if (h === "enrollments") await viewEnrollments(page);
     else if (h === "activity") await viewActivity(page);
     else if (h === "media") await viewMedia(page);
+    else if (h === "slips") await viewSlips(page);
     else if (h === "setup") await viewSetup(page);
     else if (h.startsWith("content/")) viewContent(page, SECTIONS.find((s) => s.id === h.slice(8)));
     else page.innerHTML = `<div class="empty">Page not found.</div>`;
@@ -244,6 +248,7 @@ async function viewDashboard(page) {
     <div class="kpis">
       <div class="card kpi"><div class="l">Leads, last 7 days</div><div class="n">${s.leads_7d}</div><a href="#/leads">${s.leads_total} total →</a></div>
       <div class="card kpi"><div class="l">New leads to contact</div><div class="n">${s.leads_new}</div><a href="#/leads">Open leads →</a></div>
+      <div class="card kpi"${s.slips_review ? ' style="border-color:rgba(180,83,9,.4)"' : ""}><div class="l">Slips to check</div><div class="n"${s.slips_review ? ' style="color:var(--amber)"' : ""}>${s.slips_review || 0}</div><a href="#/slips">Open slips →</a></div>
       <div class="card kpi"><div class="l">Awaiting payment</div><div class="n">${e.pending || 0}</div><a href="#/enrollments">Review →</a></div>
       <div class="card kpi"${s.balances_overdue ? ' style="border-color:rgba(200,30,39,.4)"' : ""}><div class="l">Overdue balances</div><div class="n"${s.balances_overdue ? ' style="color:var(--brand)"' : ""}>${s.balances_overdue || 0}</div><a href="#/enrollments" data-overdue-link>${s.balances_due_soon ? `${s.balances_due_soon} due in 3 days · ` : ""}View →</a></div>
       <div class="card kpi"><div class="l">Collected</div><div class="n" style="font-size:24px">${money(s.revenue, s.currency)}</div><span class="small muted">${money(s.outstanding, s.currency)} outstanding</span></div>
@@ -464,7 +469,7 @@ async function reloadContent() { try { state.content = await api("content"); } c
 async function viewActivity(page) {
   setTitle("Activity log");
   const r = await api("audit?limit=200");
-  const NAMES = { "content.save": "Updated website content", "content.reset": "Reset content to default", "lead.update": "Updated a lead", "lead.delete": "Deleted a lead", "enrollment.create": "New enrollment", "enrollment.update": "Updated an enrollment", "enrollment.delete": "Deleted an enrollment", "media.upload": "Uploaded an image", "media.delete": "Deleted an image" };
+  const NAMES = { "content.save": "Updated website content", "content.reset": "Reset content to default", "lead.update": "Updated a lead", "lead.delete": "Deleted a lead", "enrollment.create": "New enrollment", "enrollment.update": "Updated an enrollment", "enrollment.delete": "Deleted an enrollment", "media.upload": "Uploaded an image", "media.delete": "Deleted an image", "slip.confirmed": "Slip confirmed automatically", "slip.review": "Slip sent for checking", "slip.unreadable": "Slip could not be read", "slip.approve": "Approved a slip", "slip.reject": "Rejected a slip" };
   page.innerHTML = `<div class="card"><div class="table-wrap"><table><thead><tr><th>When</th><th>Who</th><th>What</th><th>Details</th></tr></thead><tbody>${r.rows.map((a) => {
     let det = a.detail;
     try { const o = JSON.parse(a.detail); det = typeof o === "object" ? Object.entries(o).map(([k, v]) => `${k}: ${v}`).join(", ") : o; } catch {}
@@ -493,6 +498,96 @@ async function viewSetup(page) {
       </div>
     </div>`;
   $("[data-backup]").addEventListener("click", () => download("backup", "backup.json"));
+}
+
+/* ============================================================ payment slips */
+const SLIP_LABELS = { checking: "Checking now", confirmed: "Confirmed automatically", review: "Needs checking", retry: "Unreadable, asked to re-upload", approved: "Approved by you", rejected: "Rejected" };
+const SLIP_CLASS = { checking: "s-contacted", confirmed: "s-paid", approved: "s-paid", review: "s-interested", retry: "s-new", rejected: "s-not_interested" };
+const slipBadge = (s) => `<span class="badge ${SLIP_CLASS[s] || ""}">${esc(SLIP_LABELS[s] || s)}</span>`;
+const parseJson = (s, d) => { try { return JSON.parse(s) ?? d; } catch { return d; } };
+
+async function viewSlips(page) {
+  setTitle("Payment slips");
+  const f = { status: "review", offset: 0, limit: 50 };
+  const cur = state.content.data.site.cohort.currency || "LKR";
+  page.innerHTML = `
+    <div class="notice" style="margin-bottom:14px">Students upload their bank slip after checkout. The website reads it and checks the reference, amount, your account number, date and transaction number, and looks for signs of editing. A slip that passes every check is confirmed automatically and the student gets the group link at once. Anything else waits here for you.</div>
+    <div class="toolbar"><div class="row" data-tabs>${[["review", "Needs checking"], ["", "All slips"], ["confirmed", "Confirmed automatically"], ["approved", "Approved by you"], ["rejected", "Rejected"]].map(([v, l]) => `<button class="btn btn-sm ${v === f.status ? "btn-dark" : "btn-line"}" data-v="${v}">${l}</button>`).join("")}</div></div>
+    <div class="card"><div class="table-wrap"><table><thead><tr><th>Uploaded</th><th>Student</th><th>Reference</th><th>Amount read</th><th>Result</th></tr></thead><tbody id="rows"></tbody></table></div><div class="pager" id="pager"></div></div>`;
+  $$("[data-tabs] button", page).forEach((b) => b.addEventListener("click", () => {
+    f.status = b.dataset.v; f.offset = 0;
+    $$("[data-tabs] button", page).forEach((x) => x.className = `btn btn-sm ${x === b ? "btn-dark" : "btn-line"}`);
+    load();
+  }));
+  async function load() {
+    const r = await api(`slips?${new URLSearchParams(f)}`);
+    $("#rows").innerHTML = r.rows.length ? r.rows.map((s) => {
+      const why = parseJson(s.reasons, []);
+      return `<tr data-id="${s.id}">
+        <td class="small">${fmtDate(s.created_at)}</td>
+        <td><b>${esc(s.name || "")}</b><div class="sub">${esc(s.phone || "")}</div></td>
+        <td class="small">${esc(s.reference)}<div class="sub">${s.plan === "deposit" ? "Deposit plan" : "Pay in full"}</div></td>
+        <td>${s.amount ? money(s.amount, cur) : `<span class="muted">-</span>`}<div class="sub">${s.slip_date ? esc(fmtDay(s.slip_date + "T12:00:00")) : ""}</div></td>
+        <td>${slipBadge(s.status)}${why.length ? `<div class="sub">${esc(why[0])}${why.length > 1 ? ` (+${why.length - 1} more)` : ""}</div>` : ""}</td>
+      </tr>`;
+    }).join("") : `<tr><td colspan="5"><div class="empty">${f.status === "review" ? "Nothing to check. Every slip so far was handled automatically." : "No slips here yet."}</div></td></tr>`;
+    pager($("#pager"), r.total, f, load);
+    $$("#rows tr[data-id]").forEach((tr) => tr.addEventListener("click", () => openSlip(+tr.dataset.id, () => { load(); refreshBadges(); })));
+  }
+  await load();
+}
+
+async function openSlip(id, reload) {
+  const s = await api(`slips/${id}`);
+  const cur = state.content.data.site.cohort.currency || "LKR";
+  const x = parseJson(s.extracted, null);
+  const why = parseJson(s.reasons, []);
+  const open = s.status === "review" || s.status === "retry";
+  const remaining = Math.max(0, (s.amount_due || 0) - (s.amount_paid || 0));
+  const row = (k, v) => v ? `<dt>${k}</dt><dd>${esc(v)}</dd>` : "";
+  const d = drawer(`Slip #${s.id} · ${s.reference}`, `
+    <div class="grid">
+      <div>${slipBadge(s.status)}${s.decided_by ? ` <span class="small muted">by ${esc(s.decided_by)}, ${fmtDate(s.decided_at)}</span>` : ""}</div>
+      <div class="slip-view" data-view><div class="spinner"></div></div>
+      <div class="card pad"><h3 style="font-size:15px;margin-bottom:8px">Checks</h3>${why.length
+        ? `<ul class="slip-reasons">${why.map((w) => `<li>${esc(w)}</li>`).join("")}</ul>`
+        : s.status === "confirmed" || s.status === "approved" ? `<p class="small" style="color:var(--green)">All checks passed.</p>` : `<p class="small muted">No problems found.</p>`}</div>
+      <dl class="kv">
+        <dt>Student</dt><dd><b>${esc(s.name || "")}</b> · ${esc(s.phone || "")}${waLink(s.phone) ? ` · <a href="${waLink(s.phone)}" target="_blank" rel="noopener">WhatsApp</a>` : ""}</dd>
+        <dt>Enrollment</dt><dd>${s.plan === "deposit" ? "Deposit plan" : "Pay in full"} · paid ${money(s.amount_paid, cur)} of ${money(s.amount_due, cur)}</dd>
+      </dl>
+      ${x ? `<details class="item" open><summary style="padding:10px 12px;font-weight:600">What the slip says</summary><dl class="kv" style="padding:4px 14px 14px">
+        ${row("Amount", x.amount ? `${x.currency || ""} ${x.amount}` : "")}${row("Date", [x.date, x.time].filter(Boolean).join(" "))}${row("Status", x.transfer_status)}
+        ${row("To account", x.payee_account)}${row("To name", x.payee_name)}${row("To bank", x.payee_bank)}${row("From", x.payer_name)}
+        ${row("Remarks", x.remarks)}${row("Bank transaction no.", x.transaction_id)}${row("Editing risk", x.tamper_risk)}${row("Readability", x.legibility)}${row("Notes", x.notes)}
+      </dl></details>` : ""}
+      ${s.student_note && s.status !== "approved" ? `<div class="notice warn">Shown to the student: ${esc(s.student_note)}</div>` : ""}
+      ${open ? `<div class="card pad grid">
+        <h3 style="font-size:15px">Your decision</h3>
+        <label class="field"><span class="lbl">Amount received (${esc(cur)})</span><input class="input" data-amt inputmode="numeric" value="${s.amount ? Math.min(s.amount, remaining || s.amount) : remaining}"><span class="hint">Check your bank account first. Approving records this payment and shows the student their group link.</span></label>
+        <label class="field"><span class="lbl">Message to the student if you reject</span><textarea class="input" rows="2" data-note placeholder="For example: We could not find this payment in our account. Please send us your slip on WhatsApp."></textarea></label>
+      </div>` : ""}
+    </div>`,
+    open ? `<button class="btn btn-danger" data-reject>Reject</button><button class="btn btn-dark" data-approve>Approve payment</button>` : `<button class="btn btn-line" data-close-d>Close</button>`);
+  // the slip itself
+  try {
+    const blob = await (await api(`slips/${id}/file`, { raw: true })).blob();
+    const url = URL.createObjectURL(blob);
+    $("[data-view]", d.el).innerHTML = s.file_type === "application/pdf"
+      ? `<iframe src="${url}" title="Slip PDF"></iframe><a class="small" href="${url}" target="_blank" rel="noopener">Open the PDF in a new tab</a>`
+      : `<a href="${url}" target="_blank" rel="noopener" title="Open full size"><img src="${url}" alt="Payment slip"></a>`;
+  } catch { $("[data-view]", d.el).innerHTML = `<div class="notice red">The slip file could not be loaded.</div>`; }
+  $("[data-close-d]", d.el)?.addEventListener("click", d.close);
+  $("[data-approve]", d.el)?.addEventListener("click", async () => {
+    const amount = $("[data-amt]", d.el).value;
+    if (!confirm(`Record ${cur} ${amount} as received from ${s.name} and give them the group link?`)) return;
+    try { await api(`slips/${id}/approve`, { method: "POST", body: { amount } }); toast("Approved. The student now sees the group link."); d.close(); reload?.(); } catch (e) { toast(e.message, true); }
+  });
+  $("[data-reject]", d.el)?.addEventListener("click", async () => {
+    const note = $("[data-note]", d.el).value.trim();
+    if (!confirm("Reject this slip? The student sees your message on their page.")) return;
+    try { await api(`slips/${id}/reject`, { method: "POST", body: { note } }); toast("Rejected"); d.close(); reload?.(); } catch (e) { toast(e.message, true); }
+  });
 }
 
 /* ============================================================ images */

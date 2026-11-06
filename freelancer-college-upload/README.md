@@ -38,6 +38,12 @@ The site rebuilds automatically whenever you save a file. On macOS or Linux, use
 - **Pop-up announcement:** a window that appears a few seconds after someone opens the site, with
   your message, an optional image and a button (`#book-seat` opens seat booking). Each visitor sees a
   new message once, then again after the number of days you choose. Preview it at `/?popup=preview`.
+- **Payment slips:** after a bank transfer, the student uploads the slip on the checkout
+  confirmation page. Claude reads it (`ANTHROPIC_API_KEY` needed) and the code checks the reference,
+  amount, your account number (Settings > Bank details), date, transfer status, the bank's transaction
+  number, duplicates and signs of editing. A slip that passes every check confirms the payment and
+  shows the batch group link (Courses > Student group) right away; anything else goes to
+  **Payment slips** for you to approve or reject, and the student's page updates by itself.
 - **Images:** upload from any image field or the Images page. Photos are shrunk in the browser,
   stored in the database and served at `/media/...`, so there is nothing extra to set up.
 - **Activity log** of every change, and a **one-click backup** of everything.

@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Save the order locally for the success page, before the lead form redirects
   form.addEventListener("submit", () => {
-    try { localStorage.setItem("fc_order", JSON.stringify({ ref, plan: form.plan.value, method: form.method.value, name: form.name.value, amount: form.plan.value === "deposit" ? C.deposit : C.price_full, balance: C.balance, balance_due: C.balance_due_human })); } catch {}
+    try { localStorage.setItem("fc_order", JSON.stringify({ ref, plan: form.plan.value, method: form.method.value, name: form.name.value, phone: form.phone.value, amount: form.plan.value === "deposit" ? C.deposit : C.price_full, balance: C.balance, balance_due: C.balance_due_human })); } catch {}
   }, true);
 
   // Card payments: ask the server for a signed PayHere checkout, post to PayHere
