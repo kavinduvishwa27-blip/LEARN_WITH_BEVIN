@@ -22,6 +22,36 @@ bodyclass: page-success
       <p class="eyebrow no-line" style="color:var(--success)">Payment confirmed</p>
       <h2 class="h3" data-welcome-title>Welcome to Designer X!</h2>
       <p class="muted" data-welcome-text></p>
+      <!-- Student details (replaced the Google Form). The group link unlocks once this is sent. -->
+      <form class="slip-profile" data-profile hidden novalidate>
+        <p class="note-box"><b>One last step:</b> tell us a little about yourself, then your batch group link appears.</p>
+        <div class="form-row">
+          <label class="field"><span class="label">Full name</span><input class="input" name="name" autocomplete="name" required></label>
+          <label class="field"><span class="label">Email address</span><input class="input" name="email" type="email" autocomplete="email" required></label>
+        </div>
+        <div class="form-row">
+          <label class="field"><span class="label">Age</span><input class="input" name="age" type="number" inputmode="numeric" min="13" max="80" required></label>
+          <label class="field"><span class="label">Home town</span><input class="input" name="city" autocomplete="address-level2" required></label>
+        </div>
+        <fieldset class="field slip-choice"><legend class="label">Gender</legend>
+          <label><input type="radio" name="gender" value="Female" required> Female</label>
+          <label><input type="radio" name="gender" value="Male"> Male</label>
+          <label><input type="radio" name="gender" value="Prefer not to say"> Prefer not to say</label>
+        </fieldset>
+        <fieldset class="field slip-choice"><legend class="label">Are you currently studying at a university?</legend>
+          <label><input type="radio" name="studying" value="Yes" required> Yes</label>
+          <label><input type="radio" name="studying" value="No"> No</label>
+        </fieldset>
+        <label class="field" data-uni hidden><span class="label">Which university?</span><input class="input" name="university"></label>
+        <label class="field"><span class="label">How did you find us?</span>
+          <select class="input" name="source" required>
+            <option value="">Choose one</option>
+            <option>TikTok</option><option>Facebook</option><option>YouTube</option><option>Instagram</option><option>WhatsApp</option><option>Friend or family</option><option>Google</option><option>Other</option>
+          </select>
+        </label>
+        <p class="slip-msg warn" data-profile-msg hidden></p>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to the batch group <span class="arrow">→</span></button>
+      </form>
       <a class="btn btn-primary btn-lg btn-block" data-group-link target="_blank" rel="noopener" hidden>
         <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 1.9 17.7L.3 23.6l6-1.6a11.8 11.8 0 0 0 5.7 1.5A11.8 11.8 0 0 0 20.5 3.5z"/></svg>
         Join the batch group
@@ -153,10 +183,17 @@ document.addEventListener("DOMContentLoaded", () => {
       show(s.balance > 0 && !s.balance_checking ? ["done", "bank"] : ["done"]);
       if (s.welcome_title) $("[data-welcome-title]").textContent = s.welcome_title;
       $("[data-welcome-text]").textContent = s.welcome_text || "";
+      // student details first, then the group link
+      const pf = $("[data-profile]");
+      pf.hidden = !!s.profile_done;
+      if (!s.profile_done && s.prefill && !pf.dataset.filled) {
+        pf.dataset.filled = "1";
+        for (const k of ["name", "email", "city"]) if (s.prefill[k] && !pf.elements[k].value) pf.elements[k].value = s.prefill[k];
+      }
       const link = $("[data-group-link]");
-      link.hidden = !s.group_link;
+      link.hidden = !s.profile_done || !s.group_link;
       if (s.group_link) link.href = s.group_link;
-      $("[data-no-group]").hidden = !!s.group_link;
+      $("[data-no-group]").hidden = !s.profile_done || !!s.group_link;
       $("[data-receipt]").innerHTML = `<div><span>Reference</span><b></b></div><div><span>Paid</span><b>${money(s.amount_paid)}</b></div>` +
         (s.balance > 0 ? `<div><span>Balance</span><b>${money(s.balance)}${s.balance_due ? " by " + new Date(s.balance_due + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" }) : ""}</b></div>` : "");
       $("[data-receipt] b").textContent = s.reference;
@@ -250,6 +287,25 @@ document.addEventListener("DOMContentLoaded", () => {
   drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("over"); });
   drop.addEventListener("dragleave", () => drop.classList.remove("over"));
   drop.addEventListener("drop", (e) => { e.preventDefault(); drop.classList.remove("over"); upload(e.dataTransfer.files[0]); });
+
+  const pf = $("[data-profile]");
+  pf.addEventListener("change", () => { const uni = pf.elements.studying.value === "Yes"; $("[data-uni]").hidden = !uni; pf.elements.university.required = uni; });
+  pf.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = $("[data-profile-msg]");
+    if (!pf.checkValidity()) { say(msg, "Please answer every question.", "warn"); pf.reportValidity(); return; }
+    const btn = pf.querySelector("button[type=submit]");
+    btn.disabled = true;
+    const profile = Object.fromEntries(["name", "email", "age", "city", "gender", "studying", "university", "source"].map((k) => [k, pf.elements[k].value]));
+    try {
+      const s = await api({ action: "profile", profile });
+      say(msg, "");
+      render(s);
+      FC.toast("Thank you! Your group link is ready.");
+      $("[data-group-link]").scrollIntoView({ behavior: "smooth", block: "center" });
+    } catch (err) { say(msg, err.message, "warn"); }
+    btn.disabled = false;
+  });
 
   $("[data-find]").addEventListener("submit", async (e) => {
     e.preventDefault();

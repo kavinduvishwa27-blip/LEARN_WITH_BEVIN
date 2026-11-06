@@ -171,6 +171,7 @@ function renderShell() {
         <a class="nav-a" href="#/dashboard" data-nav="dashboard">${icon("dashboard")}Dashboard</a>
         <a class="nav-a" href="#/leads" data-nav="leads">${icon("leads")}Leads<span class="badge" data-badge="leads" hidden></span></a>
         <a class="nav-a" href="#/enrollments" data-nav="enrollments">${icon("enroll")}Enrollments<span class="badge" data-badge="enrollments" hidden></span></a>
+        <a class="nav-a" href="#/students" data-nav="students">${icon("leads")}Students</a>
         <a class="nav-a" href="#/slips" data-nav="slips">${icon("receipt")}Payment slips<span class="badge" data-badge="slips" hidden></span></a>
         <a class="nav-a" href="#/media" data-nav="media">${icon("image")}Images</a>
         ${Object.entries(groups).map(([g, list]) => `<div class="nav-group">${esc(g)}</div>${list.map((s) => `<a class="nav-a" href="#/content/${s.id}" data-nav="content/${s.id}">${icon(s.icon)}${esc(s.title)}</a>`).join("")}`).join("")}
@@ -223,6 +224,7 @@ async function route() {
     else if (h === "activity") await viewActivity(page);
     else if (h === "media") await viewMedia(page);
     else if (h === "slips") await viewSlips(page);
+    else if (h === "students") await viewStudents(page);
     else if (h === "setup") await viewSetup(page);
     else if (h.startsWith("content/")) viewContent(page, SECTIONS.find((s) => s.id === h.slice(8)));
     else page.innerHTML = `<div class="empty">Page not found.</div>`;
@@ -420,6 +422,10 @@ async function openEnrollment(id, reload) {
     ${id ? `<dl class="kv"><dt>Reference</dt><dd><b>${esc(e.reference)}</b></dd><dt>Created</dt><dd>${fmtDate(e.created_at)}</dd><dt>Status</dt><dd>${statusBadge(e.status)}</dd><dt>Balance</dt><dd><b>${money(Math.max(0, e.amount_due - e.amount_paid), cur)}</b> still due${e.balance_due && e.status === "deposit" ? `<br><span class="small">by <b>${fmtDay(e.balance_due + "T12:00:00")}</b>${e.balance_due < slToday() ? ' <span class="badge s-interested">Overdue</span>' : ""}</span>` : ""}</dd></dl>
     <div class="row">${wa ? `<a class="btn btn-line btn-sm" href="${wa}?text=${encodeURIComponent(`Hi ${e.name.split(" ")[0]}, this is Freelancer College about your Designer X seat (${e.reference}).`)}" target="_blank" rel="noopener">WhatsApp</a>` : ""}${e.email ? `<a class="btn btn-line btn-sm" href="mailto:${esc(e.email)}">Email</a>` : ""}</div>
     <div class="card pad" style="background:#fcfbfa"><div class="lbl" style="font-weight:600;margin-bottom:8px">Record a payment</div><div class="money-row"><input class="input" type="number" min="0" step="100" placeholder="Amount received (${cur})" data-pay><button class="btn btn-dark" data-record>Record</button></div><p class="small muted" style="margin-top:6px">Adds to the amount paid and updates the status and seats automatically.</p></div>` : ""}
+    ${id && e.profile_at ? `<div class="card pad"><div class="lbl" style="font-weight:600;margin-bottom:8px">Student details</div><dl class="kv">
+      <dt>Age</dt><dd>${esc(e.age)}</dd><dt>Gender</dt><dd>${esc(e.gender)}</dd><dt>Home town</dt><dd>${esc(e.city)}</dd>
+      <dt>University</dt><dd>${e.studying === "Yes" ? esc(e.university) : "Not studying"}</dd><dt>Found us via</dt><dd>${esc(e.source)}</dd>
+      <dt>Google Sheet</dt><dd>${sheetBadge(e)}</dd></dl></div>` : id && (e.status === "deposit" || e.status === "paid") ? `<div class="notice warn">This student has not filled in their details yet. They see the form on their checkout page, and the group link unlocks once they do.</div>` : ""}
     <div class="form">
       ${input("name", "Full name", "text", false)}
       ${input("phone", "WhatsApp")}${input("email", "Email", "email")}
@@ -469,7 +475,7 @@ async function reloadContent() { try { state.content = await api("content"); } c
 async function viewActivity(page) {
   setTitle("Activity log");
   const r = await api("audit?limit=200");
-  const NAMES = { "content.save": "Updated website content", "content.reset": "Reset content to default", "lead.update": "Updated a lead", "lead.delete": "Deleted a lead", "enrollment.create": "New enrollment", "enrollment.update": "Updated an enrollment", "enrollment.delete": "Deleted an enrollment", "media.upload": "Uploaded an image", "media.delete": "Deleted an image", "slip.confirmed": "Slip confirmed automatically", "slip.review": "Slip sent for checking", "slip.unreadable": "Slip could not be read", "slip.approve": "Approved a slip", "slip.reject": "Rejected a slip" };
+  const NAMES = { "content.save": "Updated website content", "content.reset": "Reset content to default", "lead.update": "Updated a lead", "lead.delete": "Deleted a lead", "enrollment.create": "New enrollment", "enrollment.update": "Updated an enrollment", "enrollment.delete": "Deleted an enrollment", "media.upload": "Uploaded an image", "media.delete": "Deleted an image", "slip.confirmed": "Slip confirmed automatically", "slip.review": "Slip sent for checking", "slip.unreadable": "Slip could not be read", "slip.approve": "Approved a slip", "slip.reject": "Rejected a slip", "student.profile": "A student filled in their details" };
   page.innerHTML = `<div class="card"><div class="table-wrap"><table><thead><tr><th>When</th><th>Who</th><th>What</th><th>Details</th></tr></thead><tbody>${r.rows.map((a) => {
     let det = a.detail;
     try { const o = JSON.parse(a.detail); det = typeof o === "object" ? Object.entries(o).map(([k, v]) => `${k}: ${v}`).join(", ") : o; } catch {}
@@ -498,6 +504,105 @@ async function viewSetup(page) {
       </div>
     </div>`;
   $("[data-backup]").addEventListener("click", () => download("backup", "backup.json"));
+}
+
+/* ============================================================ students */
+const sheetBadge = (e) => !e.profile_at ? `<span class="muted">-</span>`
+  : e.sheet_status === "added" ? `<span class="badge s-paid">Added</span>`
+  : e.sheet_status ? `<span class="badge s-interested" title="${esc(e.sheet_status)}">Not added</span>` : `<span class="badge">Waiting</span>`;
+
+async function viewStudents(page) {
+  setTitle("Students");
+  const f = { q: "", offset: 0, limit: 50 };
+  const cur = state.content.data.site.cohort.currency || "LKR";
+  $("#top-actions").innerHTML = `<button class="btn btn-line btn-sm" data-sheet>Connect Google Sheet</button><button class="btn btn-dark btn-sm" data-export>Download Excel (CSV)</button>`;
+  $("[data-export]").addEventListener("click", () => download(`students.csv?${new URLSearchParams({ q: f.q })}`, "students.csv"));
+  $("[data-sheet]").addEventListener("click", () => openSheetSetup());
+  page.innerHTML = `
+    <div class="notice" style="margin-bottom:14px">Everyone whose payment is confirmed. After paying, students fill in their details on their checkout page (this replaced the Google Form), and the batch group link unlocks. Each one is also added to your Google Sheet once it is connected.</div>
+    <div class="toolbar"><input class="input search" type="search" placeholder="Search name, phone, email, town, university" data-f="q"></div>
+    <div class="card"><div class="table-wrap"><table><thead><tr><th>Student</th><th>Age / gender</th><th>Home town</th><th>University</th><th>Found us</th><th>Paid</th><th>Sheet</th></tr></thead><tbody id="rows"></tbody></table></div><div class="pager" id="pager"></div></div>`;
+  let t;
+  $("[data-f=q]", page).addEventListener("input", (e) => { clearTimeout(t); t = setTimeout(() => { f.q = e.target.value.trim(); f.offset = 0; load(); }, 250); });
+  async function load() {
+    const r = await api(`students?${new URLSearchParams(f)}`);
+    $("#rows").innerHTML = r.rows.length ? r.rows.map((e) => `
+      <tr data-id="${e.id}">
+        <td><b>${esc(e.name)}</b><div class="sub">${esc(e.phone)}${e.email ? " · " + esc(e.email) : ""}</div></td>
+        <td>${e.profile_at ? `${esc(e.age)}<div class="sub">${esc(e.gender)}</div>` : `<span class="badge s-new">Details missing</span>`}</td>
+        <td>${esc(e.city || "")}</td>
+        <td>${e.profile_at ? (e.studying === "Yes" ? esc(e.university) : `<span class="muted">No</span>`) : ""}</td>
+        <td>${esc(e.source || "")}</td>
+        <td>${money(e.amount_paid, cur)}<div class="sub">${e.status === "paid" ? "Paid in full" : "Deposit"}</div></td>
+        <td>${sheetBadge(e)}${e.profile_at && e.sheet_status !== "added" ? `<div><button class="btn btn-line btn-sm" data-sync="${e.id}" style="margin-top:4px">Add to sheet</button></div>` : ""}</td>
+      </tr>`).join("") : `<tr><td colspan="7"><div class="empty">No confirmed students yet.</div></td></tr>`;
+    pager($("#pager"), r.total, f, load);
+    $$("#rows tr[data-id]").forEach((tr) => tr.addEventListener("click", (ev) => { if (!ev.target.closest("[data-sync]")) openEnrollment(+tr.dataset.id, load); }));
+    $$("[data-sync]").forEach((b) => b.addEventListener("click", async () => {
+      b.disabled = true;
+      try { const res = await api(`students/${b.dataset.sync}/sync`, { method: "POST" }); res.ok ? toast("Added to the Google Sheet") : toast(res.error, true); } catch (err) { toast(err.message, true); }
+      load();
+    }));
+  }
+  await load();
+}
+
+const appsScript = (token) => `// Freelancer College: adds each new student from the website to this sheet.
+// Paste this in Extensions > Apps Script, then Deploy > New deployment > Web app.
+const TOKEN = "${token}";
+const SHEET_NAME = "Form responses 1";
+
+function doPost(e) {
+  let data = {};
+  try { data = JSON.parse(e.postData.contents); } catch (err) {}
+  if (!data.token || data.token !== TOKEN) return reply({ ok: false, error: "wrong token" });
+  if (data.test) return reply({ ok: true });
+  const book = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = book.getSheetByName(SHEET_NAME) || book.getSheets()[0];
+  ["Reference", "Plan", "Paid (LKR)"].forEach(function (title, i) {
+    const cell = sheet.getRange(1, 12 + i);
+    const now = String(cell.getValue());
+    if (!now || /^Column \\d+$/.test(now)) cell.setValue(title);
+  });
+  const row = (data.row || []).slice(0, 20).map(function (v) {
+    return typeof v === "string" && /^[=+\\-@]/.test(v) ? "'" + v : v;
+  });
+  sheet.appendRow([new Date()].concat(row));
+  return reply({ ok: true });
+}
+
+function reply(o) {
+  return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);
+}`;
+
+async function openSheetSetup() {
+  let s;
+  try { s = await api("sheet/setup", { method: "POST" }); } catch (e) { return toast(e.message, true); }
+  await reloadContent();
+  const code = appsScript(s.token);
+  const d = drawer("Connect your Google Sheet", `
+    <div class="grid">
+      <p class="muted">Each student who fills in their details is added as a new row in your responses sheet, in the same columns as the old Google Form. This takes about 2 minutes, once.</p>
+      <ol class="steps">
+        <li>Open your sheet (<b>November Intake (Responses)</b>) and click <b>Extensions &gt; Apps Script</b>.</li>
+        <li>Delete everything in the editor, paste the code below, and click <b>Save</b>.<br><button class="btn btn-dark btn-sm" data-copy-code style="margin-top:8px">Copy the code</button></li>
+        <li>Click <b>Deploy &gt; New deployment</b>, choose type <b>Web app</b>, set <b>Execute as: Me</b> and <b>Who has access: Anyone</b>, then click <b>Deploy</b>. Google asks you to allow access to your sheet the first time: allow it.</li>
+        <li>Copy the <b>Web app URL</b> and paste it here, then click <b>Connect</b>.</li>
+      </ol>
+      <label class="field"><span class="lbl">Web app URL</span><input class="input" data-url placeholder="https://script.google.com/macros/s/.../exec" value="${esc(s.url)}"></label>
+      <details class="item"><summary style="padding:10px 12px;font-weight:600">Show the code</summary><pre class="code">${esc(code)}</pre></details>
+      <p class="small muted">The code contains a private key that only your website knows, so nobody else can add rows to your sheet. Keep it to yourself.</p>
+    </div>`, `<button class="btn btn-dark" data-connect>Connect</button>`);
+  $("[data-copy-code]", d.el).addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(code); toast("Code copied. Paste it in Apps Script."); } catch { toast("Open 'Show the code' and copy it from there.", true); }
+  });
+  $("[data-connect]", d.el).addEventListener("click", async () => {
+    const btn = $("[data-connect]", d.el);
+    btn.disabled = true; btn.textContent = "Checking...";
+    try { await api("sheet/test", { method: "POST", body: { url: $("[data-url]", d.el).value.trim() } }); await reloadContent(); toast("Connected. New students will appear in your sheet."); d.close(); }
+    catch (e) { toast(e.message, true); }
+    btn.disabled = false; btn.textContent = "Connect";
+  });
 }
 
 /* ============================================================ payment slips */

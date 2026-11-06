@@ -3,6 +3,7 @@
 import { verifyAdmin, authMethods } from "./auth.js";
 import { ensureSchema, all, first, run, now, audit } from "./db.js";
 import { getRawContent, isEditableKey, saveContent, resetContent } from "./content.js";
+import { listStudents, syncToSheet, sheetSetup, testSheet, STUDENT_CSV } from "./students.js";
 import { listSlips, getSlip, getSlipFile, approveSlip, rejectSlip, SlipError } from "./slips.js";
 import { listMedia, saveMedia, getMedia, deleteMedia, mediaResponse, MEDIA_ID } from "./media.js";
 import {
@@ -123,6 +124,17 @@ export async function handleAdmin(request, env, origin) {
       }
     }
     if (path === "payments") return json({ rows: await all(env.DB, "SELECT * FROM payments ORDER BY created_at DESC LIMIT ? OFFSET ?", limit, offset) });
+
+    // ---------- Students ----------
+    if (path === "students" && method === "GET") return json(await listStudents(env, { ...q, limit, offset }));
+    if (path === "students.csv") return csv(toCsv((await listStudents(env, { ...q, limit: 100000, offset: 0 })).rows, STUDENT_CSV), `students-${now().slice(0, 10)}.csv`);
+    m = /^students\/(\d+)\/sync$/.exec(path);
+    if (m && method === "POST") return json(await syncToSheet(env, origin, +m[1]));
+    if (path === "sheet/setup" && method === "POST") return json(await sheetSetup(env, origin, who));
+    if (path === "sheet/test" && method === "POST") {
+      try { return json(await testSheet(env, origin, (await body(request)).url, who)); }
+      catch (e) { return json({ error: e.message }, 400); }
+    }
 
     // ---------- Payment slips ----------
     if (path === "slips" && method === "GET") return json(await listSlips(env, { status: q.status, limit, offset }));

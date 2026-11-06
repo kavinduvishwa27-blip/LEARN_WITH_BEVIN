@@ -44,6 +44,10 @@ The site rebuilds automatically whenever you save a file. On macOS or Linux, use
   number, duplicates and signs of editing. A slip that passes every check confirms the payment and
   shows the batch group link (Courses > Student group) right away; anything else goes to
   **Payment slips** for you to approve or reject, and the student's page updates by itself.
+- **Students:** after a payment is confirmed, the student fills in their details (age, gender, home
+  town, university, how they found you) on the same page, and only then does the group link appear.
+  This replaced the Google Form. Everyone is listed under **Students** (CSV export) and added as a row
+  to your Google Sheet once it is connected (**Students > Connect Google Sheet** shows the 2-minute setup).
 - **Images:** upload from any image field or the Images page. Photos are shrunk in the browser,
   stored in the database and served at `/media/...`, so there is nothing extra to set up.
 - **Activity log** of every change, and a **one-click backup** of everything.

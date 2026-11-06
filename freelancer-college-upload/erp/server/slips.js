@@ -66,7 +66,10 @@ export async function slipStatus(env, origin, e) {
   else if (e.status === "deposit" || e.status === "paid") {
     out.state = "confirmed";
     const s = (await getRawContent(env, origin)).raw.students || {};
-    out.group_link = s.group_link || "";
+    out.profile_done = !!e.profile_at;
+    // their checkout answers, so the details form starts filled in
+    out.prefill = { name: e.name || "", email: e.email || "", city: e.city || "" };
+    out.group_link = e.profile_at ? s.group_link || "" : "";
     out.welcome_title = s.welcome_title || "";
     out.welcome_text = s.welcome_text || "";
     out.balance_checking = !!pendingSlip;

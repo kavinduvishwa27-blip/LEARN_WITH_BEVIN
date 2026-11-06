@@ -1,10 +1,11 @@
 // POST /api/slip
 // The checkout confirmation page uses this to upload a bank slip and to check the payment status.
-// Body: { action: "status" | "upload", reference, phone, file?: { type, data (base64), name } }
+// Body: { action: "status" | "upload" | "profile", reference, phone, file?: { type, data (base64), name }, profile?: {...} }
 // The reference and the WhatsApp number from checkout must match, or nothing is returned.
 import { json, clean, dispatch } from "./shared.js";
 import { ensureSchema } from "./db.js";
 import { findEnrollment, slipStatus, submitSlip, SlipError } from "./slips.js";
+import { cleanProfile, saveProfile, syncToSheet } from "./students.js";
 
 export async function onRequestPost({ request, env, waitUntil }) {
   if (!env.DB) return json({ ok: false, error: "Payments cannot be checked right now. Please send your slip on WhatsApp." }, 503);
@@ -15,6 +16,17 @@ export async function onRequestPost({ request, env, waitUntil }) {
   const e = await findEnrollment(env, clean(b.reference, 40), clean(b.phone, 40));
   if (!e) return json({ ok: false, error: "We could not find an enrollment with that reference and WhatsApp number." }, 404);
   const origin = new URL(request.url).origin;
+
+  if (b.action === "profile") {
+    if (e.status !== "deposit" && e.status !== "paid") return json({ ok: false, error: "Your payment is not confirmed yet." }, 409);
+    const { profile, error } = cleanProfile(b.profile || {});
+    if (error) return json({ ok: false, error }, 422);
+    const first = !e.profile_at;
+    await saveProfile(env, e, profile);
+    if (first) waitUntil(syncToSheet(env, origin, e.id).catch((err) => console.log("sheet sync failed", err && err.message)));
+    const fresh = await findEnrollment(env, e.reference, e.phone);
+    return json({ ok: true, ...(await slipStatus(env, origin, fresh)) });
+  }
 
   if (b.action === "upload") {
     let r;

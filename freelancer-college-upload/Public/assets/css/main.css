@@ -1132,3 +1132,12 @@ input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border-radius
 .slip-receipt span { color: var(--text-muted); }
 .slip-find { display: grid; gap: 14px; text-align: left; }
 @media (prefers-reduced-motion: reduce) { .slip-spin, .slip-steps li.on::before { animation-duration: 2.5s; } }
+
+/* ---------- Student details after payment ---------- */
+.slip-profile { display: grid; gap: 14px; width: 100%; max-width: 560px; text-align: left; }
+.slip-choice { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.slip-choice legend { width: 100%; margin-bottom: 8px; }
+.slip-choice label { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(--border-strong); cursor: pointer; font-size: 15px; }
+.slip-choice label:has(input:checked) { border-color: var(--brand); background: var(--brand-soft); }
+.slip-choice input { accent-color: var(--brand); margin: 0; }
+@media (max-width: 640px) { .slip-profile .form-row { grid-template-columns: 1fr; } }

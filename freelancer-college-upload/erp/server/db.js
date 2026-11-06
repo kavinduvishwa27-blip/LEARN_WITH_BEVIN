@@ -73,6 +73,15 @@ const SCHEMA = [
 // Columns added after the first release. Adding one that already exists fails harmlessly.
 const MIGRATIONS = [
   "ALTER TABLE enrollments ADD COLUMN balance_due TEXT",
+  // student details (replaced the Google Form sent after payment)
+  "ALTER TABLE enrollments ADD COLUMN age TEXT",
+  "ALTER TABLE enrollments ADD COLUMN gender TEXT",
+  "ALTER TABLE enrollments ADD COLUMN studying TEXT",
+  "ALTER TABLE enrollments ADD COLUMN university TEXT",
+  "ALTER TABLE enrollments ADD COLUMN source TEXT",
+  "ALTER TABLE enrollments ADD COLUMN profile_at TEXT",
+  "ALTER TABLE enrollments ADD COLUMN sheet_status TEXT",
+  "ALTER TABLE enrollments ADD COLUMN sheet_at TEXT",
 ];
 
 let ready = null;
